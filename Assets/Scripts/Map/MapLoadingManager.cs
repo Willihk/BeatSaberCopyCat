@@ -6,15 +6,21 @@ using System.IO.Compression;
 
 public class MapLoadingManager : MonoBehaviour
 {
+    public static MapLoadingManager Instance;
 
-    // Use this for initialization
-    void Start()
+    public MapData MapData;
+
+    private void Awake()
     {
-        MapData data = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(@"C:\Users\will1400\Documents\Temp\BeatSaber Songs\46859b08c6398b6d16e4301b9d6ce4b25ee6ba71\ExpertPlusStandard.dat"));
-
-        Debug.Log(data.Notes.Count);
-
+        if (Instance == null)
+            Instance = this;
     }
 
-   
+    void Start()
+    {
+        MapData data = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(@"C:\Users\will1400\Documents\Temp\BeatSaber Songs\Current\CurrentData.dat"));
+
+        Debug.Log(data.Notes.Count);
+        MapData = data;
+    }
 }
