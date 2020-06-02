@@ -41,20 +41,11 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (mapData == null)
-        {
-            mapData = MapLoadingManager.Instance.MapData;
-            if (mapData == null)
-                return;
-        }
-
-        //if (!hasSpawned)
-            //SpawnAllNotes();
-
-        SpawnNeededNotes();
-    }
+    //private void Update()
+    //{
+    //    if (!hasSpawned)
+    //        SpawnAllNotes();
+    //}
 
 
     void SpawnNeededNotes()
@@ -75,8 +66,6 @@ public class NoteSpawner : MonoBehaviour
     void SpawnAllNotes()
     {
         mapData = MapLoadingManager.Instance.MapData;
-        if (mapData == null)
-            return;
 
         foreach (var note in mapData.Notes)
         {

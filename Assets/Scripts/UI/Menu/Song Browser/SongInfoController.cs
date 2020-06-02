@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SongInfoController : MonoBehaviour
 {
+    [SerializeField]
+    private Image songBackgroundImage;
     [SerializeField]
     private TextMeshProUGUI songNameText;
     [SerializeField]
@@ -13,9 +17,16 @@ public class SongInfoController : MonoBehaviour
     [SerializeField]
     GameObject difficultyTabPrefab;
 
-    public void DisplaySong(AvailableSongData songData)
+    AvailableSongData songData;
+
+    public void DisplaySong(AvailableSongData songData, GameObject selectedSongObject)
     {
+        this.songData = songData;
+
+        songBackgroundImage.sprite = selectedSongObject.GetComponent<SongEntryController>().CoverImage.sprite;
         songNameText.text = songData.SongInfoFileData.SongName;
+
+
         SetupDifficulty(songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
     }
 
@@ -29,13 +40,21 @@ public class SongInfoController : MonoBehaviour
 
         for (int i = 0; i < availableDifficulties.Length; i++)
         {
-            var buttonObject = difficultyTabGroup.tabButtons[i].transform;
+            var buttonObject = difficultyTabGroup.TabButtons[i].transform;
             buttonObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = availableDifficulties[i].Replace("Plus", "+");
         }
 
         for (int i = availableDifficulties.Length; i < difficultyTabGroup.transform.childCount; i++)
         {
-            Destroy(difficultyTabGroup.tabButtons[i].gameObject);
+            Destroy(difficultyTabGroup.TabButtons[i].gameObject);
         }
+
+        difficultyTabGroup.OnTabSelected(difficultyTabGroup.TabButtons[0]);
+    }
+
+    public void PlayLevel()
+    {
+        CurrentSongDataManager.Instance.SetData(songData, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+        CurrentSongDataManager.Instance.PlayLevel();
     }
 }

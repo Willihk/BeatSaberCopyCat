@@ -7,66 +7,65 @@ using UnityEngine.Events;
 [Serializable]
 public class TabGroup : MonoBehaviour
 {
-    public List<TabButton> tabButtons;
+    public List<TabButton> TabButtons;
 
     public UnityEvent<TabButton> OnTabSelection;
 
-    [SerializeField]
-    TabButton selectedTab;
+    public TabButton SelectedTab;
 
     private void Awake()
     {
         if (OnTabSelection == null)
             OnTabSelection = new UnityEvent<TabButton>();
 
-        if (tabButtons == null)
-            tabButtons = new List<TabButton>();
+        if (TabButtons == null)
+            TabButtons = new List<TabButton>();
         else
         {
-            foreach (TabButton tabButton in tabButtons)
+            foreach (TabButton tabButton in TabButtons)
             {
                 tabButton.SetTabGroup(this);
-                tabButton.SetColor(UIPointerEvent.Idle);
+                tabButton.SetState(UIPointerEvent.Idle);
             }
 
-            if (tabButtons.Count > 0)
-                OnTabSelected(tabButtons[0]);
+            if (TabButtons.Count > 0)
+                OnTabSelected(TabButtons[0]);
         }
     }
 
     public void SelectLeft()
     {
-        int targetIndex = tabButtons.IndexOf(selectedTab) - 1;
+        int targetIndex = TabButtons.IndexOf(SelectedTab) - 1;
         if (targetIndex < 0)
-            targetIndex = tabButtons.Count - 1;
-        OnTabSelected(tabButtons[targetIndex % tabButtons.Count]);
+            targetIndex = TabButtons.Count - 1;
+        OnTabSelected(TabButtons[targetIndex % TabButtons.Count]);
 
-        if (!selectedTab.gameObject.activeSelf)
+        if (!SelectedTab.gameObject.activeSelf)
             SelectLeft();
     }
 
     public void SelectRight()
     {
-        OnTabSelected(tabButtons[(tabButtons.IndexOf(selectedTab) + 1) % tabButtons.Count]);
+        OnTabSelected(TabButtons[(TabButtons.IndexOf(SelectedTab) + 1) % TabButtons.Count]);
 
-        if (!selectedTab.gameObject.activeSelf)
+        if (!SelectedTab.gameObject.activeSelf)
             SelectRight();
     }
 
     public void Subscribe(TabButton tabButton)
     {
-        if (!tabButtons.Contains(tabButton))
+        if (!TabButtons.Contains(tabButton))
         {
-            tabButtons.Add(tabButton);
-            tabButton.SetColor(UIPointerEvent.Idle);
+            TabButtons.Add(tabButton);
+            tabButton.SetState(UIPointerEvent.Idle);
         }
     }
 
     public void Unbscribe(TabButton tabButton)
     {
-        if (tabButtons.Contains(tabButton))
+        if (TabButtons.Contains(tabButton))
         {
-            tabButtons.Remove(tabButton);
+            TabButtons.Remove(tabButton);
         }
     }
 
@@ -74,8 +73,8 @@ public class TabGroup : MonoBehaviour
     {
         ResetTabs();
 
-        if (tabButton != selectedTab)
-            tabButton.SetColor(UIPointerEvent.Hover);
+        if (tabButton != SelectedTab)
+            tabButton.SetState(UIPointerEvent.Hover);
     }
 
     public void OnTabExit(TabButton tabButton)
@@ -85,24 +84,24 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabSelected(TabButton tabButton)
     {
-        if (selectedTab != null)
-            selectedTab.Deselect();
+        if (SelectedTab != null)
+            SelectedTab.Deselect();
 
-        selectedTab = tabButton;
-        selectedTab.Select();
+        SelectedTab = tabButton;
+        SelectedTab.Select();
 
         OnTabSelection.Invoke(tabButton);
 
         ResetTabs();
-        tabButton.SetColor(UIPointerEvent.Selected);
+        tabButton.SetState(UIPointerEvent.Selected);
     }
 
     public void ResetTabs()
     {
-        foreach (TabButton tabButton in tabButtons)
+        foreach (TabButton tabButton in TabButtons)
         {
-            if (tabButton != selectedTab)
-                tabButton.SetColor(UIPointerEvent.Idle);
+            if (tabButton != SelectedTab)
+                tabButton.SetState(UIPointerEvent.Idle);
         }
     }
 }

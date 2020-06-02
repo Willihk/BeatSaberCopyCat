@@ -38,7 +38,7 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandl
         OnEnable();
     }
 
-    public void SetColor(UIPointerEvent pointerEvent)
+    public void SetState(UIPointerEvent pointerEvent)
     {
         foreach (var item in Transitions)
         {

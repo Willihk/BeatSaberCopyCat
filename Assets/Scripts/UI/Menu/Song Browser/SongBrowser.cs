@@ -29,7 +29,7 @@ public class SongBrowser : MonoBehaviour
 
     public void SongSelected(TabButton tabButton)
     {
-        infoController.DisplaySong(AvailableSongs[tabGroup.tabButtons.IndexOf(tabButton)]);
+        infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
     }
 
     void DisplaySongs()

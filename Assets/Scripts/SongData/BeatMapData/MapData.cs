@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class MapData
 {
-    public class BPMChanx
+    [Serializable]
+    public struct BPMChanx
     {
 
         public double _BPM { get; set; }
@@ -15,13 +18,12 @@ public class MapData
 
     }
 
-    public class CustomData
+    [Serializable]
+    public struct CustomData
     {
 
         public int _time { get; set; }
         public IList<BPMChanx> _BPMChanges { get; set; }
-        public IList<object> _bookmarks { get; set; }
-
     }
 
     public string _version { get; set; }
