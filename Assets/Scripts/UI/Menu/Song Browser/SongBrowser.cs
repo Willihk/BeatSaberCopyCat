@@ -16,6 +16,8 @@ public class SongBrowser : MonoBehaviour
     Transform songEntryHolder;
     [SerializeField]
     TabGroup tabGroup;
+    [SerializeField]
+    SongInfoController infoController;
 
     string customSongFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Temp\BeatSaber Songs\";
 
@@ -27,7 +29,7 @@ public class SongBrowser : MonoBehaviour
 
     public void SongSelected(TabButton tabButton)
     {
-
+        infoController.DisplaySong(AvailableSongs[tabGroup.tabButtons.IndexOf(tabButton)]);
     }
 
     void DisplaySongs()

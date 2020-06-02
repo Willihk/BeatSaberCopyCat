@@ -91,6 +91,8 @@ public class TabGroup : MonoBehaviour
         selectedTab = tabButton;
         selectedTab.Select();
 
+        OnTabSelection.Invoke(tabButton);
+
         ResetTabs();
         tabButton.SetColor(UIPointerEvent.Selected);
     }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 36803499}
   - component: {fileID: 36803498}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,6 +341,7 @@ MonoBehaviour:
     type: 3}
   songEntryHolder: {fileID: 2024963170}
   tabGroup: {fileID: 2024963173}
+  infoController: {fileID: 848080913}
 --- !u!1 &386223279
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +354,7 @@ GameObject:
   - component: {fileID: 386223282}
   - component: {fileID: 386223281}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -974,7 +975,7 @@ GameObject:
   - component: {fileID: 704243807}
   - component: {fileID: 704243806}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,7 +1128,7 @@ GameObject:
   - component: {fileID: 721343207}
   - component: {fileID: 721343206}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1396,6 +1397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0d89249953c9046b9c121d3e489a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songNameText: {fileID: 1769772940}
+  difficultyTabGroup: {fileID: 0}
 --- !u!1 &850695090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,7 +2136,7 @@ GameObject:
   - component: {fileID: 1418173752}
   - component: {fileID: 1418173751}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
