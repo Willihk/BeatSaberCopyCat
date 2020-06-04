@@ -171,8 +171,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3305316815273550153}
-  - component: {fileID: -6752184371049022666}
   - component: {fileID: 6849471849971178940}
+  - component: {fileID: 7350372535825264933}
   m_Layer: 8
   m_Name: Note
   m_TagString: Untagged
@@ -196,24 +196,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6752184371049022666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3305316815273550154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dce26f20d3eabb44b60b00da9cf25de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noteColorRenderer: {fileID: 3305316815020514319}
-  redMaterial: {fileID: 2100000, guid: 1911b3b862cc32b448586f44f2a0a97f, type: 2}
-  blueMaterial: {fileID: 2100000, guid: 47d961f1a8b819b4f941bc835c3d235a, type: 2}
-  redLayer: 10
-  blueLayer: 11
-  visualTransform: {fileID: 3305316815020514305}
 --- !u!65 &6849471849971178940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -225,5 +207,17 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7350372535825264933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3305316815273550154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e69a77649b6f144ab5c0dc71958d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

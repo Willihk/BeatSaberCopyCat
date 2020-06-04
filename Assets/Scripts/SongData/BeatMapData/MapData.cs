@@ -33,7 +33,7 @@ public class MapData
     public IList<EventData> Events { get; set; }
 
     [JsonProperty("_notes")]
-    public IList<NoteData> Notes { get; set; }
+    public IList<NoteSpawnData> Notes { get; set; }
 
     [JsonProperty("_obstacles")]
     public IList<ObstacleData> Obstacles { get; set; }

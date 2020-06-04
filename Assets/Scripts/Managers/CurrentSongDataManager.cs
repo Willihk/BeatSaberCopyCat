@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Collections;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +40,14 @@ public class CurrentSongDataManager : MonoBehaviour
         mapLoad.completed += (AsyncOperation operation) =>
         {
             SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
+            NoteSpawningSystem spawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
+
+            NativeArray<NoteSpawnData> noteSpawnDatas = new NativeArray<NoteSpawnData>(MapData.Notes.ToArray(), Allocator.TempJob);
+            spawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
+
+            noteSpawnDatas.Dispose();
+
+            GameManager.Instance.IsPlaying = true;
         };
     }
 

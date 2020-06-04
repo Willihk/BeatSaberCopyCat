@@ -13,15 +13,22 @@ public class SaberSystem : SystemBase
 
         Entities.ForEach((ref SaberData saberData, ref Translation translation, ref Rotation rotation) =>
         {
+            saberData.PreviousPosition = translation.Value;
+
             var hit = ECSRaycast.Raycast(translation.Value, translation.Value + (math.forward(rotation.Value) * saberData.Length));
 
             if (hit.Entity == Entity.Null)
                 return;
 
+            Debug.Log(hit.Entity);
+
             //if (Vector3.Angle(translation.Value - saberData.PreviousPosition, quaternion.rot) > 130)
             //{
             commandBuffer.DestroyEntity(hit.Entity);
             //}
-        }).Run();
+        }).WithoutBurst().Run();
+
+        commandBuffer.Playback(EntityManager);
+        commandBuffer.Dispose();
     }
 }

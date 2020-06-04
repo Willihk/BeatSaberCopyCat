@@ -2,7 +2,7 @@
 using System.Collections;
 using Newtonsoft.Json;
 
-public struct NoteData
+public struct NoteSpawnData
 {
     [JsonProperty("_time")]
     public double Time { get; set; }
