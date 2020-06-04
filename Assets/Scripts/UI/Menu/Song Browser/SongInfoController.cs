@@ -32,7 +32,7 @@ public class SongInfoController : MonoBehaviour
 
     void SetupDifficulty(string[] availableDifficulties)
     {
-        for (int i = 0; i < availableDifficulties.Length - difficultyTabGroup.transform.childCount; i++)
+        for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length ; i++)
         {
             var tabButtonObject = Instantiate(difficultyTabPrefab, difficultyTabGroup.transform);
             tabButtonObject.GetComponent<TabButton>().SetTabGroup(difficultyTabGroup);
