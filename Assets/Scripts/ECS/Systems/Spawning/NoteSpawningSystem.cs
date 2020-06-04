@@ -105,14 +105,16 @@ public class NoteSpawningSystem : SystemBase
                 euler = new float3(0, 0, 45);
                 break;
             case CutDirection.Any:
-                //visualTransform.localScale = new Vector3(0.05f, 0.1f, 0.1f);
-                //visualTransform.position = new Vector3(0, 0, visualTransform.position.z);
+                var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
+                EntityManager.SetComponentData(linkedGroup[2].Value, new NonUniformScale { Value = new float3(0.05f, 0.1f, 0.1f) });
+                EntityManager.SetComponentData(linkedGroup[2].Value, new Translation { Value = new float3(0, 0, -0.237f) });
                 break;
             default:
                 break;
         }
 
         EntityManager.SetComponentData(noteEntity, new Rotation { Value = quaternion.Euler(euler) });
+        EntityManager.SetComponentData(noteEntity, new Note { Data = note });
 
         if (note.Type == 0)
         {
