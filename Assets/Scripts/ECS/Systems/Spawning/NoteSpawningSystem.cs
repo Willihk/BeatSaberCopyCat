@@ -11,6 +11,8 @@ public class NoteSpawningSystem : SystemBase
 {
     public NativeList<NoteSpawnData> notesToSpawn;
 
+    private const float SpawnTimeOffset = 5;
+
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
@@ -61,7 +63,7 @@ public class NoteSpawningSystem : SystemBase
         {
             var note = notesToSpawn[i];
 
-            if (note.Time - 10 <= currentTime)
+            if (note.Time - SpawnTimeOffset <= currentTime)
             {
                 SpawnNote(note);
                 notesToSpawn.RemoveAtSwapBack(i);
@@ -129,6 +131,6 @@ public class NoteSpawningSystem : SystemBase
 
     float GetNeededOffset(double timeToSpawn)
     {
-        return (float)(10 * CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed + CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpStartBeatOffset);
+        return (float)(SpawnTimeOffset * CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed + CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpStartBeatOffset);
     }
 }

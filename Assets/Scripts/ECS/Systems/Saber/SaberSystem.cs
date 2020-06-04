@@ -13,8 +13,6 @@ public class SaberSystem : SystemBase
 
         Entities.ForEach((ref SaberData saberData, ref Translation translation, ref Rotation rotation) =>
         {
-            saberData.PreviousPosition = translation.Value;
-
             var hit = ECSRaycast.Raycast(translation.Value, translation.Value + (math.forward(rotation.Value) * saberData.Length));
 
             if (hit.Entity == Entity.Null)
@@ -22,10 +20,17 @@ public class SaberSystem : SystemBase
 
             Debug.Log(hit.Entity);
 
-            //if (Vector3.Angle(translation.Value - saberData.PreviousPosition, quaternion.rot) > 130)
-            //{
-            commandBuffer.DestroyEntity(hit.Entity);
-            //}
+            quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
+
+            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
+
+            float angle = Vector3.Angle(translation.Value - saberData.PreviousPosition, matrix.MultiplyPoint(Vector3.up));
+            if (angle > 130)
+            {
+                commandBuffer.DestroyEntity(hit.Entity);
+            }
+
+            saberData.PreviousPosition = translation.Value;
         }).WithoutBurst().Run();
 
         commandBuffer.Playback(EntityManager);
