@@ -12,7 +12,7 @@ public class MovementSystem : SystemBase
         float deltaTime = Time.DeltaTime;
         Entities.ForEach((ref Translation translation, ref MoveSpeed moveSpeed) =>
         {
-            translation.Value += moveSpeed.Value * deltaTime;
+            translation.Value.z += moveSpeed.Value * deltaTime;
         }).Schedule();
     }
 }
