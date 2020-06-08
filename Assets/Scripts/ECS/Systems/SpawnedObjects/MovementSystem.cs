@@ -8,7 +8,7 @@ public class NoteMovementSystem : SystemBase
     {
         float deltaTime = Time.DeltaTime;
         float moveSpeed = CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed;
-        Entities.WithAll<Note>().ForEach((ref Translation translation) =>
+        Entities.WithAny<Note, Obstacle>().ForEach((ref Translation translation) =>
         {
             translation.Value.z -= moveSpeed * deltaTime;
         }).Schedule(Dependency).Complete();

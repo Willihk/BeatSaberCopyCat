@@ -16,7 +16,7 @@ public class NoteSpawningSystem : SystemBase
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
-    float3 spawnPointOffset = new float3(1, 1, 0);
+    float3 spawnPointOffset = new float3(.8f, .8f, 0);
 
     float3[] spawnPoints = new float3[12];
 

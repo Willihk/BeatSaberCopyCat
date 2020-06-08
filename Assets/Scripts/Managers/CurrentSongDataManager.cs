@@ -21,11 +21,6 @@ public class CurrentSongDataManager : MonoBehaviour
 
     public MapData MapData;
 
-    [SerializeField]
-    AudioSource audioSource;
-
-    AudioClip songAudioClip;
-
 
     private void Awake()
     {
@@ -33,53 +28,6 @@ public class CurrentSongDataManager : MonoBehaviour
             Instance = this;
 
         DontDestroyOnLoad(this);
-    }
-
-    public void PlayLevel()
-    {
-        SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
-
-        SceneManager.LoadScene((int)SceneIndexes.Loading, LoadSceneMode.Additive);
-
-        LoadLevelData();
-        var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
-
-
-        mapLoad.completed += (AsyncOperation operation) =>
-        {
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
-            NoteSpawningSystem spawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
-
-            NativeArray<NoteSpawnData> noteSpawnDatas = new NativeArray<NoteSpawnData>(MapData.Notes.ToArray(), Allocator.TempJob);
-            spawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
-
-            noteSpawnDatas.Dispose();
-
-            GameManager.Instance.IsPlaying = true;
-            audioSource.Play();
-        };
-
-        StartCoroutine(GetAudioClip());
-    }
-
-
-    IEnumerator GetAudioClip()
-    {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip($"file://{SelectedSongData.DirectoryPath}/{SelectedSongData.SongInfoFileData.SongFilename}", AudioType.OGGVORBIS))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
-                songAudioClip = songClip;
-                audioSource.clip = songClip;
-            }
-        }
     }
 
     public void LoadLevelData()

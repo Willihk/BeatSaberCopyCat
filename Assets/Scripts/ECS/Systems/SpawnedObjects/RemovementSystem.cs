@@ -9,7 +9,7 @@ public class NoteRemovementSystem : SystemBase
     {
         EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
-        Entities.WithAll<Note>().ForEach((Entity entity, ref Translation translation) =>
+        Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref Translation translation) =>
         {
             if (translation.Value.z < -10)
             {

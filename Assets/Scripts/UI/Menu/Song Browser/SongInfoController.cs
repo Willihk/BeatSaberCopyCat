@@ -55,6 +55,6 @@ public class SongInfoController : MonoBehaviour
     public void PlayLevel()
     {
         CurrentSongDataManager.Instance.SetData(songData, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
-        CurrentSongDataManager.Instance.PlayLevel();
+        GameManager.Instance.PlayLevel();
     }
 }
