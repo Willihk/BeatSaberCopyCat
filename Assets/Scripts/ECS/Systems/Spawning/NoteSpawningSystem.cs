@@ -65,11 +65,27 @@ public class NoteSpawningSystem : SystemBase
 
             if (note.Time - SpawnTimeOffset <= currentTime)
             {
-                SpawnNote(note);
+                if (note.Type == 3)
+                {
+                    SpawnBomb(note);
+                }
+                else
+                {
+                    SpawnNote(note);
+                }
                 notesToSpawn.RemoveAtSwapBack(i);
                 i--;
             }
         }
+    }
+
+    void SpawnBomb(NoteSpawnData note)
+    {
+        var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset(note.Time))) });
+
+        EntityManager.SetComponentData(noteEntity, new Note { Data = note });
+
     }
 
     void SpawnNote(NoteSpawnData note)

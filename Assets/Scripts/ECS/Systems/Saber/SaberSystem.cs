@@ -32,6 +32,11 @@ public class SaberSystem : SystemBase
                     commandBuffer.DestroyEntity(hit.Entity);
                 }
             }
+            else if (note.Data.Type == 3)
+            {
+                // Hit Bomb
+                Debug.LogWarning("Saber hit a bomb");
+            }
 
             saberData.PreviousPosition = translation.Value;
         }).WithoutBurst().Run();

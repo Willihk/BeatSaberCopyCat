@@ -9,11 +9,19 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying;
 
+    public float CurrentSongTime;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
 
         SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+    }
+
+    private void Update()
+    {
+        if (IsPlaying)
+            CurrentSongTime += Time.deltaTime;
     }
 }
