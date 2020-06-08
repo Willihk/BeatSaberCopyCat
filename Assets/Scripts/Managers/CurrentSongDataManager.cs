@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class CurrentSongDataManager : MonoBehaviour
@@ -18,6 +20,12 @@ public class CurrentSongDataManager : MonoBehaviour
     public DifficultyBeatmap SelectedDifficultyMap;
 
     public MapData MapData;
+
+    [SerializeField]
+    AudioSource audioSource;
+
+    AudioClip songAudioClip;
+
 
     private void Awake()
     {
@@ -48,7 +56,30 @@ public class CurrentSongDataManager : MonoBehaviour
             noteSpawnDatas.Dispose();
 
             GameManager.Instance.IsPlaying = true;
+            audioSource.Play();
         };
+
+        StartCoroutine(GetAudioClip());
+    }
+
+
+    IEnumerator GetAudioClip()
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip($"file://{SelectedSongData.DirectoryPath}/{SelectedSongData.SongInfoFileData.SongFilename}", AudioType.OGGVORBIS))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
+                songAudioClip = songClip;
+                audioSource.clip = songClip;
+            }
+        }
     }
 
     public void LoadLevelData()
