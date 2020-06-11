@@ -8,8 +8,6 @@ public class ObstacleSpawningSystem : SystemBase
 {
     public NativeList<ObstacleData> obstaclesToSpawn;
 
-    private const float SpawnTimeOffset = 5;
-
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
@@ -44,7 +42,7 @@ public class ObstacleSpawningSystem : SystemBase
         {
             var obstacle = obstaclesToSpawn[i];
 
-            if (obstacle.Time - SpawnTimeOffset <= GameManager.Instance.CurrentSongTime)
+            if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentSongTime)
             {
                 SpawnObstacle(obstacle);
 
@@ -77,7 +75,7 @@ public class ObstacleSpawningSystem : SystemBase
             lineLayer = 2;
         }
 
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(lineIndex, lineLayer) + new float3(0, 0, GetNeededOffset(obstacle.Time))) });
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(lineIndex, lineLayer) + new float3(0, 0, GetNeededOffset())) });
 
 
         EntityManager.SetComponentData(noteEntity, new CompositeScale { Value = scale });
@@ -86,11 +84,11 @@ public class ObstacleSpawningSystem : SystemBase
 
     float3 GetSpawnPosition(float lineIndex, float lineLayer)
     {
-        return new float3(lineIndex * spawnPointOffset.x, lineLayer * spawnPointOffset.y, 0);
+        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.6f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
     }
 
-    float GetNeededOffset(double timeToSpawn)
+    float GetNeededOffset()
     {
-        return (float)(SpawnTimeOffset * CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed + CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpStartBeatOffset);
+        return CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance;
     }
 }

@@ -594,8 +594,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 10, y: 100, z: 60}
-  - {x: 10, y: -100, z: 60}
+  - {x: -1.1273084, y: 86.48681, z: 65.71}
+  - {x: 26.70731, y: -111.56681, z: 65.71}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -604,7 +604,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.35051537
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -665,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlueMaterial: {fileID: 0}
   RedMaterial: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 621645433}
   laserLength: 100
 --- !u!1 &805946936
 GameObject:
@@ -929,8 +929,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 10, y: 100, z: 60}
-  - {x: 10, y: -100, z: 60}
+  - {x: -14.773736, y: 83.58617, z: 70}
+  - {x: 40.353733, y: -108.66617, z: 70}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -939,7 +939,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.35051537
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlueMaterial: {fileID: 0}
   RedMaterial: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 977063376}
   laserLength: 100
 --- !u!1 &1020423469
 GameObject:
@@ -1205,8 +1205,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 10, y: 100, z: 60}
-  - {x: 10, y: -100, z: 60}
+  - {x: -27.883663, y: 78.81455, z: 74.270004}
+  - {x: 53.463665, y: -103.894554, z: 74.270004}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1215,7 +1215,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.35051537
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlueMaterial: {fileID: 0}
   RedMaterial: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 1165435748}
   laserLength: 100
 --- !u!1 &1172305894
 GameObject:
@@ -1383,8 +1383,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 10, y: 100, z: 60}
-  - {x: 10, y: -100, z: 60}
+  - {x: 12.79, y: 87.46, z: 60.57}
+  - {x: 12.79, y: -112.54, z: 60.57}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1393,7 +1393,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.35051537
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1454,7 +1454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlueMaterial: {fileID: 0}
   RedMaterial: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 1321478003}
   laserLength: 100
 --- !u!1 &1380661146
 GameObject:

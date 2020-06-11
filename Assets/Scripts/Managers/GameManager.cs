@@ -40,7 +40,9 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (IsPlaying)
-            CurrentSongTime += Time.deltaTime;
+        {
+            CurrentSongTime += 1 * (CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat + 1) * Time.deltaTime;
+        }
     }
 
     public void PlayLevel()
@@ -93,8 +95,13 @@ public class GameManager : MonoBehaviour
         mapLoad.completed += (AsyncOperation operation) =>
         {
             SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
-            audioSource.Play();
+            Invoke("PlaySong", CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration);
         };
+    }
+
+    void PlaySong()
+    {
+        audioSource.Play();
     }
 
     IEnumerator GetAudioClip()

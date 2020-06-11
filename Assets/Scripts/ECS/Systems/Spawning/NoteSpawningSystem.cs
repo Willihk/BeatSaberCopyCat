@@ -11,33 +11,19 @@ public class NoteSpawningSystem : SystemBase
 {
     public NativeList<NoteSpawnData> notesToSpawn;
 
-    private const float SpawnTimeOffset = 5;
-
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
-    float3 spawnPointOffset = new float3(.8f, .8f, 0);
-
-    float3[] spawnPoints = new float3[12];
-
-    float currentTime;
-
+    Material redEmissiveMaterial;
     Material redMaterial;
 
     protected override void OnCreate()
     {
-        redMaterial = Resources.Load<Material>("Materials/Note/Emissive/Red Emissive");
+        redEmissiveMaterial = Resources.Load<Material>("Materials/Note/Emissive/Red Emissive");
+        redMaterial = Resources.Load<Material>("Materials/Note/Note Red");
         notesToSpawn = new NativeList<NoteSpawnData>(Allocator.Persistent);
 
         defaultQuery = GetEntityQuery(new EntityQueryDesc { All = new ComponentType[] { typeof(Entity) } });
-
-        for (int y = 0; y < 3; y++)
-        {
-            for (int x = 0; x < 4; x++)
-            {
-                spawnPoints[y * 4 + x] = new float3(x * spawnPointOffset.x, y * spawnPointOffset.y, 0);
-            }
-        }
     }
 
     protected override void OnDestroy()
@@ -49,7 +35,6 @@ public class NoteSpawningSystem : SystemBase
     {
         if (GameManager.Instance.IsPlaying)
         {
-            currentTime += Time.DeltaTime;
             SpawnNeededNotes();
         }
     }
@@ -63,7 +48,7 @@ public class NoteSpawningSystem : SystemBase
         {
             var note = notesToSpawn[i];
 
-            if (note.Time - SpawnTimeOffset <= currentTime)
+            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentSongTime)
             {
                 if (note.Type == 3)
                 {
@@ -82,7 +67,7 @@ public class NoteSpawningSystem : SystemBase
     void SpawnBomb(NoteSpawnData note)
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset(note.Time))) });
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset()) });
 
         EntityManager.SetComponentData(noteEntity, new Note { Data = note });
 
@@ -91,7 +76,7 @@ public class NoteSpawningSystem : SystemBase
     void SpawnNote(NoteSpawnData note)
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Note");
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset(note.Time))) });
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset()) });
 
         float3 euler = float3.zero;
 
@@ -136,19 +121,26 @@ public class NoteSpawningSystem : SystemBase
         {
             var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
 
-            var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[2].Value);
+            var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[1].Value);
             renderMesh.material = redMaterial;
+            EntityManager.SetSharedComponentData(linkedGroup[1].Value, renderMesh);
+
+            // needs to be reassigned because of structural change
+            linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
+
+            renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[2].Value);
+            renderMesh.material = redEmissiveMaterial;
             EntityManager.SetSharedComponentData(linkedGroup[2].Value, renderMesh);
         }
     }
 
-    float3 GetSpawnPosition(int lineIndex, int lineLayer)
+    float3 GetSpawnPosition(float lineIndex, float lineLayer)
     {
-        return spawnPoints[lineLayer * 4 + lineIndex];
+        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.6f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
     }
 
-    float GetNeededOffset(double timeToSpawn)
+    float GetNeededOffset()
     {
-        return (float)(SpawnTimeOffset * CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed + CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpStartBeatOffset);
+        return CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance;
     }
 }
