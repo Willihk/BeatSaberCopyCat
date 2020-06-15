@@ -48,7 +48,7 @@ public class NoteSpawningSystem : SystemBase
         {
             var note = notesToSpawn[i];
 
-            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentSongTime)
+            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
             {
                 if (note.Type == 3)
                 {

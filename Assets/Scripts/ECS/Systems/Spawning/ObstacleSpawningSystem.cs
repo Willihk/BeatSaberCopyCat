@@ -42,7 +42,7 @@ public class ObstacleSpawningSystem : SystemBase
         {
             var obstacle = obstaclesToSpawn[i];
 
-            if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentSongTime)
+            if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
             {
                 SpawnObstacle(obstacle);
 

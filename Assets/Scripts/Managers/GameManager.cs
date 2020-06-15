@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying;
 
+    public float CurrentBeat;
     public float CurrentSongTime;
 
     [SerializeField]
@@ -36,11 +37,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
+private void Update()
     {
         if (IsPlaying)
         {
-            CurrentSongTime += 1 * (CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat + 1) * Time.deltaTime;
+            CurrentBeat += 1 * (CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat + 1) * Time.deltaTime;
         }
     }
 

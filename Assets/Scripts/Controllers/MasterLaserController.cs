@@ -91,7 +91,6 @@ public class MasterLaserController : MonoBehaviour
                         else
                             laserControllers[i].SetRotation(-value);
                     }
-                    Debug.Log("rotating");
                     break;
                 default:
                     break;

@@ -45,7 +45,7 @@ public class EventPlayingSystem : SystemBase
         {
             var eventInfo = eventsToPlay[i];
 
-            if (eventInfo.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentSongTime)
+            if (eventInfo.Time + CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
             {
                 PlayEvent(eventInfo);
 
