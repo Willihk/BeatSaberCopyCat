@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
-using UnityEditor.Build.Pipeline;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -72,8 +71,15 @@ public class GameManager : MonoBehaviour
         obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
         obstacleSpawnDatas.Dispose();
 
+        // Load Events
+        EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
+        NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(CurrentSongDataManager.Instance.MapData.Events.ToArray(), Allocator.TempJob);
+        eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
+        eventsToPlay.Dispose();
+
         Debug.Log("Notes: " + CurrentSongDataManager.Instance.MapData.Notes.Count);
         Debug.Log("Obstacles: " + CurrentSongDataManager.Instance.MapData.Obstacles.Count);
+        Debug.Log("Events: " + CurrentSongDataManager.Instance.MapData.Events.Count);
 
         StartCoroutine(Loading());
     }

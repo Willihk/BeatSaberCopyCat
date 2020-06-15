@@ -16,7 +16,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9eeaa30e-c7af-42ca-b7d1-4634fbbe051c\"\n    },\n    \"m_Name\": \"EmissionIntensity\",\n    \"m_DefaultReferenceName\": \"Vector1_6E1AF49D\",\n    \"m_OverrideReferenceName\": \"\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": 15.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 20.0\n    }\n}"
+            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9eeaa30e-c7af-42ca-b7d1-4634fbbe051c\"\n    },\n    \"m_Name\": \"EmissionIntensity\",\n    \"m_DefaultReferenceName\": \"Vector1_6E1AF49D\",\n    \"m_OverrideReferenceName\": \"_EmissionIntensity\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": 15.0,\n    \"m_FloatType\": 1,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 20.0\n    }\n}"
         },
         {
             "typeInfo": {

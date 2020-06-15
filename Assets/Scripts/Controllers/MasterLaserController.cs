@@ -10,7 +10,7 @@ public class MasterLaserController : MonoBehaviour
     List<LaserController> laserControllers;
 
     [SerializeField]
-    int supportedEventType; 
+    EventType[] supportedEventTypes;
 
     [SerializeField]
     Material blueMaterial;
@@ -30,34 +30,50 @@ public class MasterLaserController : MonoBehaviour
 
     private void PlayEvent(int type, int value)
     {
-        if (type == supportedEventType)
+        if (supportedEventTypes.Any(x => (int)x == type))
         {
-            if (value > 4)
+            switch (type)
             {
-                value -= 4;
-                laserControllers.ForEach(x => x.SetMaterial(blueMaterial));
-            }
-            else
-            {
-                laserControllers.ForEach(x => x.SetMaterial(redMaterial));
-            }
-
-            switch (value)
-            {
-                case 0:
-                    laserControllers.ForEach(x => x.TurnOff());
-                    break;
-                case 1:
-                    laserControllers.ForEach(x => x.TurnOn());
-                    break;
                 case 2:
-                    laserControllers.ForEach(x => x.Flash());
-                    break;
                 case 3:
-                    laserControllers.ForEach(x => x.Fade());
+                    if (value > 4)
+                    {
+                        value -= 4;
+                        laserControllers.ForEach(x => x.SetMaterial(blueMaterial));
+                    }
+                    else
+                    {
+                        laserControllers.ForEach(x => x.SetMaterial(redMaterial));
+                    }
+
+                    switch (value)
+                    {
+                        case 0:
+                            laserControllers.ForEach(x => x.TurnOff());
+                            break;
+                        case 1:
+                            laserControllers.ForEach(x => x.TurnOn());
+                            break;
+                        case 2:
+                            laserControllers.ForEach(x => x.Flash());
+                            break;
+                        case 3:
+                            laserControllers.ForEach(x => x.Fade());
+                            break;
+                        default:
+                            break;
+                    }
                     break;
+                case 12:
                 case 13:
-                    // Rotate
+                    for (int i = 0; i < laserControllers.Count; i++)
+                    {
+                        if (i % 2 == 0)
+                            laserControllers[i].SetRotation(value);
+                        else
+                            laserControllers[i].SetRotation(-value);
+                    }
+                    Debug.Log("rotating");
                     break;
                 default:
                     break;
