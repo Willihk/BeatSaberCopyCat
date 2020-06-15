@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPlaying: 0
+  CurrentBeat: 0
   CurrentSongTime: 0
   audioSource: {fileID: 454897304}
 --- !u!4 &454897302

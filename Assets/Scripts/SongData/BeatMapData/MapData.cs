@@ -22,7 +22,7 @@ public class MapData
     public struct CustomData
     {
 
-        public int _time { get; set; }
+        public double _time { get; set; }
         public IList<BPMChanx> _BPMChanges { get; set; }
     }
 
