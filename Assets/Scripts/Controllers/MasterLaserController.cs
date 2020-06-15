@@ -7,6 +7,8 @@ using System.Linq;
 public class MasterLaserController : MonoBehaviour
 {
     [SerializeField]
+    bool findLaserControllersInChildren = false;
+    [SerializeField]
     List<LaserController> laserControllers;
 
     [SerializeField]
@@ -22,10 +24,25 @@ public class MasterLaserController : MonoBehaviour
         if (laserControllers == null)
             laserControllers = new List<LaserController>();
 
+        if (findLaserControllersInChildren)
+            GetLasersInChildReqursive(transform);
+
         blueMaterial = new Material(blueMaterial);
         redMaterial = new Material(redMaterial);
 
         World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
+    }
+
+    void GetLasersInChildReqursive(Transform child)
+    {
+        foreach (Transform item in child)
+        {
+            if (item.TryGetComponent(out LaserController laserController))
+            {
+                laserControllers.Add(laserController);
+            }
+            GetLasersInChildReqursive(item);
+        }
     }
 
     private void PlayEvent(int type, int value)
@@ -34,6 +51,7 @@ public class MasterLaserController : MonoBehaviour
         {
             switch (type)
             {
+                case 0:
                 case 2:
                 case 3:
                     if (value > 4)
