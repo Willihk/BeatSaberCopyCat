@@ -19,10 +19,11 @@ public class SongBrowser : MonoBehaviour
     [SerializeField]
     SongInfoController infoController;
 
-    string customSongFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Temp\BeatSaber Songs\";
+    readonly string customSongFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Beat Saber Songs\";
 
     private void Start()
     {
+        EnsureSongFolderExists();
         LoadSongs();
         DisplaySongs();
     }
@@ -30,6 +31,14 @@ public class SongBrowser : MonoBehaviour
     public void SongSelected(TabButton tabButton)
     {
         infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
+    }
+
+    void EnsureSongFolderExists()
+    {
+        if (!Directory.Exists(customSongFolderPath))
+        {
+            Directory.CreateDirectory(customSongFolderPath);
+        }
     }
 
     void DisplaySongs()
@@ -50,6 +59,9 @@ public class SongBrowser : MonoBehaviour
 
     void LoadSongs()
     {
+        if (!Directory.Exists(customSongFolderPath))
+            return;
+
         List<string> directoryPaths = Directory.GetDirectories(customSongFolderPath, "*", SearchOption.TopDirectoryOnly).ToList();
 
         foreach (var item in directoryPaths)
