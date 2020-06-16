@@ -9,7 +9,7 @@ public class MasterLaserController : MonoBehaviour
     [SerializeField]
     bool findLaserControllersInChildren = false;
     [SerializeField]
-    List<LaserController> laserControllers;
+    List<LaserControllerBase> laserControllers;
 
     [SerializeField]
     EventType[] supportedEventTypes;
@@ -22,7 +22,7 @@ public class MasterLaserController : MonoBehaviour
     private void Start()
     {
         if (laserControllers == null)
-            laserControllers = new List<LaserController>();
+            laserControllers = new List<LaserControllerBase>();
 
         if (findLaserControllersInChildren)
             GetLasersInChildReqursive(transform);
@@ -37,7 +37,7 @@ public class MasterLaserController : MonoBehaviour
     {
         foreach (Transform item in child)
         {
-            if (item.TryGetComponent(out LaserController laserController))
+            if (item.TryGetComponent(out LaserControllerBase laserController))
             {
                 laserControllers.Add(laserController);
             }
