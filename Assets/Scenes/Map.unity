@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 1730059}
   - component: {fileID: 1730062}
   - component: {fileID: 1730061}
-  - component: {fileID: 1730060}
   - component: {fileID: 1730063}
   m_Layer: 0
   m_Name: Laser (2)
@@ -157,19 +156,6 @@ Transform:
   m_Father: {fileID: 316357705}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!65 &1730060
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730058}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1730061
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -394,54 +380,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0.8062825, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!1 &42581798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 42581800}
-  - component: {fileID: 42581799}
-  m_Layer: 0
-  m_Name: Post Processing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &42581799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42581798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
---- !u!4 &42581800
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42581798}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.763526, y: -4.24295, z: -8.614693}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!21 &92396595
 Material:
   serializedVersion: 6
@@ -950,14 +888,13 @@ GameObject:
   - component: {fileID: 248578227}
   - component: {fileID: 248578230}
   - component: {fileID: 248578229}
-  - component: {fileID: 248578228}
   m_Layer: 0
   m_Name: Pillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &248578227
 Transform:
   m_ObjectHideFlags: 0
@@ -972,19 +909,6 @@ Transform:
   m_Father: {fileID: 550523190}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &248578228
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248578226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &248578229
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1272,7 +1196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374234362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1208071880}
@@ -1308,7 +1232,6 @@ GameObject:
   - component: {fileID: 377385288}
   - component: {fileID: 377385287}
   - component: {fileID: 377385286}
-  - component: {fileID: 377385285}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -1316,19 +1239,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &377385285
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377385284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &377385286
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1386,7 +1296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377385284}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -12.5, z: 190.84}
+  m_LocalPosition: {x: 0, y: -9.5, z: 190.84}
   m_LocalScale: {x: 10.569967, y: 1, z: 371.89227}
   m_Children: []
   m_Father: {fileID: 550523190}
@@ -2702,7 +2612,6 @@ GameObject:
   - component: {fileID: 994575885}
   - component: {fileID: 994575888}
   - component: {fileID: 994575887}
-  - component: {fileID: 994575886}
   - component: {fileID: 994575889}
   m_Layer: 0
   m_Name: Laser (3)
@@ -2725,19 +2634,6 @@ Transform:
   m_Father: {fileID: 316357705}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!65 &994575886
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 994575884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &994575887
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2930,7 +2826,7 @@ Transform:
   m_Children:
   - {fileID: 1020423470}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165435746
 GameObject:
@@ -3126,7 +3022,8 @@ MonoBehaviour:
   ringGap: {x: 0, y: 0, z: 30}
   ringObject: {fileID: 316357704}
   rings:
-  - {fileID: 8384576688156260361}
+  - {fileID: 316357704}
+  supportedEventTypes: 08000000
 --- !u!1 &1172305894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,7 +3055,7 @@ Transform:
   - {fileID: 1899615296}
   - {fileID: 1170679206}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1208071879
 GameObject:
@@ -3189,7 +3086,7 @@ Transform:
   m_GameObject: {fileID: 1208071879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.01, y: 0.17, z: 98.3}
-  m_LocalScale: {x: 1, y: 1, z: 300}
+  m_LocalScale: {x: 1, y: 1, z: 322}
   m_Children: []
   m_Father: {fileID: 374234363}
   m_RootOrder: 0
@@ -3497,98 +3394,6 @@ MonoBehaviour:
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1321478003}
   laserLength: 100
---- !u!1 &1380661146
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1380661148}
-  - component: {fileID: 1380661147}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &1380661147
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380661146}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 6
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &1380661148
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1380661146}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!21 &1428593930
 Material:
   serializedVersion: 6
@@ -4069,7 +3874,7 @@ Material:
     - _DstBlend: 0
     - _EmissionIntensity: 15
     - _EnvironmentReflections: 1
-    - _FadeAmount: 1
+    - _FadeAmount: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -4412,7 +4217,7 @@ Transform:
   m_GameObject: {fileID: 1557844662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.5, y: 0.17, z: 98.3}
-  m_LocalScale: {x: 1, y: 1, z: 300}
+  m_LocalScale: {x: 1, y: 1, z: 322}
   m_Children: []
   m_Father: {fileID: 374234363}
   m_RootOrder: 1
@@ -4651,7 +4456,6 @@ GameObject:
   - component: {fileID: 1619922707}
   - component: {fileID: 1619922710}
   - component: {fileID: 1619922709}
-  - component: {fileID: 1619922708}
   - component: {fileID: 1619922711}
   m_Layer: 0
   m_Name: Laser (1)
@@ -4674,19 +4478,6 @@ Transform:
   m_Father: {fileID: 316357705}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1619922708
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1619922706}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1619922709
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4960,7 +4751,7 @@ Transform:
   m_Children:
   - {fileID: 430218970}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1728577901
 MonoBehaviour:
@@ -5053,7 +4844,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1786948155
 GameObject:
@@ -5618,7 +5409,6 @@ GameObject:
   - component: {fileID: 1901272188}
   - component: {fileID: 1901272191}
   - component: {fileID: 1901272190}
-  - component: {fileID: 1901272189}
   - component: {fileID: 1901272192}
   m_Layer: 0
   m_Name: Laser
@@ -5641,19 +5431,6 @@ Transform:
   m_Father: {fileID: 316357705}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1901272189
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901272187}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1901272190
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5729,14 +5506,13 @@ GameObject:
   - component: {fileID: 1916167090}
   - component: {fileID: 1916167093}
   - component: {fileID: 1916167092}
-  - component: {fileID: 1916167091}
   m_Layer: 0
   m_Name: Pillar (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1916167090
 Transform:
   m_ObjectHideFlags: 0
@@ -5751,19 +5527,6 @@ Transform:
   m_Father: {fileID: 550523190}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1916167091
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916167089}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1916167092
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5992,7 +5755,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1985672222
 GameObject:
@@ -6151,14 +5914,13 @@ GameObject:
   - component: {fileID: 2011006906}
   - component: {fileID: 2011006909}
   - component: {fileID: 2011006908}
-  - component: {fileID: 2011006907}
   m_Layer: 0
   m_Name: Floor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2011006906
 Transform:
   m_ObjectHideFlags: 0
@@ -6173,19 +5935,6 @@ Transform:
   m_Father: {fileID: 550523190}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2011006907
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011006905}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2011006908
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6522,7 +6271,7 @@ GameObject:
   - component: {fileID: 5239950444904344854}
   - component: {fileID: 8024566138857626076}
   m_Layer: 0
-  m_Name: Ring
+  m_Name: Ring Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
