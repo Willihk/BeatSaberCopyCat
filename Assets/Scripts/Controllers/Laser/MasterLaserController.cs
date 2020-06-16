@@ -52,6 +52,7 @@ public class MasterLaserController : MonoBehaviour
             switch (type)
             {
                 case 0:
+                case 1:
                 case 2:
                 case 3:
                     if (value > 4)

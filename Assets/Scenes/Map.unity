@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 1730062}
   - component: {fileID: 1730061}
   - component: {fileID: 1730060}
+  - component: {fileID: 1730063}
   m_Layer: 0
   m_Name: Laser (2)
   m_TagString: Untagged
@@ -218,6 +219,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730058}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1730063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserIntensity: 15
+  laserFlashIntensity: 30
+  renderer: {fileID: 0}
 --- !u!21 &37393380
 Material:
   serializedVersion: 6
@@ -627,13 +643,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 170386603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 170386606}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &170386606
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -818,13 +834,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 214848932}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 214848935}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &214848935
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1107,6 +1123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 316357705}
+  - component: {fileID: 316357706}
   m_Layer: 0
   m_Name: Ring
   m_TagString: Untagged
@@ -1133,6 +1150,23 @@ Transform:
   m_Father: {fileID: 1170679206}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &316357706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316357704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  findLaserControllersInChildren: 1
+  laserControllers: []
+  supportedEventTypes: 01000000
+  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
+  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
 --- !u!21 &316870559
 Material:
   serializedVersion: 6
@@ -1642,13 +1676,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 621645431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 621645433}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &629076367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1690,13 +1724,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 629076367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 629076370}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &629076370
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1934,13 +1968,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 701980330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 701980333}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &727768130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,13 +2016,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 727768130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 727768133}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &727768133
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2131,16 +2165,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 763970821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5abe75e9c3a2da419b267c7b4d05273, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  findLaserControllersInChildren: 0
-  laserControllers:
-  - {fileID: 1862376612}
-  - {fileID: 701980334}
-  - {fileID: 1891148997}
-  - {fileID: 1529963627}
-  supportedEventTypes: 030000000d000000
+  findLaserControllersInChildren: 1
+  laserControllers: []
+  supportedEventTypes: 0300000003000000
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
 --- !u!1 &805946936
@@ -2187,15 +2217,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 805946936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5abe75e9c3a2da419b267c7b4d05273, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  findLaserControllersInChildren: 0
-  laserControllers:
-  - {fileID: 1321478004}
-  - {fileID: 621645434}
-  - {fileID: 977063377}
-  - {fileID: 1165435749}
+  findLaserControllersInChildren: 1
+  laserControllers: []
   supportedEventTypes: 020000000c000000
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
@@ -2608,13 +2634,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 977063374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 977063376}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &994575884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,6 +2653,7 @@ GameObject:
   - component: {fileID: 994575888}
   - component: {fileID: 994575887}
   - component: {fileID: 994575886}
+  - component: {fileID: 994575889}
   m_Layer: 0
   m_Name: Laser (3)
   m_TagString: Untagged
@@ -2710,6 +2737,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994575884}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &994575889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994575884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserIntensity: 15
+  laserFlashIntensity: 30
+  renderer: {fileID: 0}
 --- !u!1 &1020423469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,13 +3021,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1165435746}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1165435748}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &1170679205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,7 +3044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1170679206
 Transform:
   m_ObjectHideFlags: 0
@@ -3287,13 +3329,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321478001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1321478003}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &1380661146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3587,13 +3629,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429338316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1429338319}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1429338319
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4027,13 +4069,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1529963623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1529963626}
-  laserLength: 1000
+  laserLength: 100
 --- !u!1 &1530038131
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,13 +4117,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1530038131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1530038134}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1530038134
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4221,13 +4263,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1575018731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1575018734}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1575018734
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4338,6 +4380,7 @@ GameObject:
   - component: {fileID: 1619922710}
   - component: {fileID: 1619922709}
   - component: {fileID: 1619922708}
+  - component: {fileID: 1619922711}
   m_Layer: 0
   m_Name: Laser (1)
   m_TagString: Untagged
@@ -4421,6 +4464,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619922706}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1619922711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619922706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserIntensity: 15
+  laserFlashIntensity: 30
+  renderer: {fileID: 0}
 --- !u!21 &1639518680
 Material:
   serializedVersion: 6
@@ -4687,7 +4745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1742850295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5abe75e9c3a2da419b267c7b4d05273, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
@@ -4766,13 +4824,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786948155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1786948158}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1786948158
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4912,13 +4970,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862376610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1862376613}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1862376613
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5156,13 +5214,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1891148993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1891148996}
-  laserLength: 1000
+  laserLength: 100
 --- !u!21 &1894550533
 Material:
   serializedVersion: 6
@@ -5288,6 +5346,7 @@ GameObject:
   - component: {fileID: 1901272191}
   - component: {fileID: 1901272190}
   - component: {fileID: 1901272189}
+  - component: {fileID: 1901272192}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -5371,6 +5430,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901272187}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1901272192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901272187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserIntensity: 15
+  laserFlashIntensity: 30
+  renderer: {fileID: 0}
 --- !u!1 &1916167089
 GameObject:
   m_ObjectHideFlags: 0
@@ -5688,13 +5762,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1985672222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 1985672225}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &1985672225
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -6009,13 +6083,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2081222705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f49820cab81f1b4cbbb55de5bd50c38, type: 3}
+  m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserIntensity: 15
   laserFlashIntensity: 30
   lineRenderer: {fileID: 2081222708}
-  laserLength: 1000
+  laserLength: 100
 --- !u!120 &2081222708
 LineRenderer:
   m_ObjectHideFlags: 0
