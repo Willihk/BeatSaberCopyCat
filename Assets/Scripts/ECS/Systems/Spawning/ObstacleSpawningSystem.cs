@@ -84,7 +84,7 @@ public class ObstacleSpawningSystem : SystemBase
 
     float3 GetSpawnPosition(float lineIndex, float lineLayer)
     {
-        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.6f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
+        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.3f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
     }
 
     float GetNeededOffset()
