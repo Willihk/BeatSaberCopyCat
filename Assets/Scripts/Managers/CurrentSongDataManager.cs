@@ -60,9 +60,8 @@ public class CurrentSongDataManager : MonoBehaviour
             BPM = SelectedSongData.SongInfoFileData.BeatsPerMinute,
             NoteJumpSpeed = SelectedDifficultyMap.NoteJumpMovementSpeed,
             NoteJumpStartBeatOffset = (float)SelectedDifficultyMap.NoteJumpStartBeatOffset,
-            SecondEquivalentOfBeat = 60f / SelectedSongData.SongInfoFileData.BeatsPerMinute,
+            SecondEquivalentOfBeat = (double)60 / SelectedSongData.SongInfoFileData.BeatsPerMinute,
         };
-
         // Taken from SpawnDistanceCalc by kyle1413
 
         float num4 = 1f;
@@ -82,7 +81,7 @@ public class CurrentSongDataManager : MonoBehaviour
         }
 
         SongSpawningInfo.HalfJumpDuration = num9;
-        SongSpawningInfo.DistanceToMove = SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
-        SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * SongSpawningInfo.SecondEquivalentOfBeat * num9 * 2;
+        SongSpawningInfo.DistanceToMove = (float)SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
+        SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (float)SongSpawningInfo.SecondEquivalentOfBeat * num9 * 2;
     }
 }

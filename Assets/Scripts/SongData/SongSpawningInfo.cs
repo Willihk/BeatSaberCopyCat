@@ -7,8 +7,8 @@ public struct SongSpawningInfo
     public float NoteJumpSpeed;
     public float NoteJumpStartBeatOffset;
 
-    public float SecondEquivalentOfBeat;
-    public float HalfJumpDuration;
+    public double SecondEquivalentOfBeat;
+    public double HalfJumpDuration;
 
     public float JumpDistance;
     public float DistanceToMove;

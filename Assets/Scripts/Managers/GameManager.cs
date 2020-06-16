@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlaying;
 
-    public float CurrentBeat;
-    public float CurrentSongTime;
+    public double CurrentBeat;
+    public double CurrentSongTime;
 
     [SerializeField]
     AudioSource audioSource;
@@ -37,11 +37,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-private void Update()
+    private void Update()
     {
         if (IsPlaying)
         {
-            CurrentBeat += 1 * (CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat + 1) * Time.deltaTime;
+            CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
         }
     }
 
@@ -102,7 +102,7 @@ private void Update()
         mapLoad.completed += (AsyncOperation operation) =>
         {
             SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
-            Invoke("PlaySong", CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration);
+            Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
         };
     }
 
