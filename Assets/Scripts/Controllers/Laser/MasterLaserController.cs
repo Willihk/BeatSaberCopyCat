@@ -55,6 +55,7 @@ public class MasterLaserController : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
+                case 4:
                     if (value > 4)
                     {
                         value -= 4;
