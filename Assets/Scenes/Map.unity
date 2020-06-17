@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 0}
 --- !u!21 &37393380
 Material:
@@ -301,86 +301,6 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!21 &40473011
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Blue Laser (Instance) (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 8dcf998c6112e9b49af5a1679ec5069d,
-    type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - Vector1_6E1AF49D: 15
-    - _AlphaClip: 0
-    - _Blend: 0
-    - _BumpScale: 1
-    - _Cull: 2
-    - _Cutoff: 0.5
-    - _DstBlend: 0
-    - _EmissionIntensity: 15
-    - _EnvironmentReflections: 1
-    - _FadeAmount: 0
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _OcclusionStrength: 1
-    - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
-    m_Colors:
-    - _Albedo: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0.8062825, b: 1, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
---- !u!21 &92396595
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -584,8 +504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 170386606}
   laserLength: 100
 --- !u!120 &170386606
@@ -775,8 +695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 214848935}
   laserLength: 100
 --- !u!120 &214848935
@@ -1091,86 +1011,6 @@ MonoBehaviour:
   supportedEventTypes: 01000000
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
---- !u!21 &316870559
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Blue Laser (Instance) (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 8dcf998c6112e9b49af5a1679ec5069d,
-    type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - Vector1_6E1AF49D: 15
-    - _AlphaClip: 0
-    - _Blend: 0
-    - _BumpScale: 1
-    - _Cull: 2
-    - _Cutoff: 0.5
-    - _DstBlend: 0
-    - _EmissionIntensity: 15
-    - _EnvironmentReflections: 1
-    - _FadeAmount: 0
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _OcclusionStrength: 1
-    - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
-    m_Colors:
-    - _Albedo: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0.8062825, b: 1, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &374234362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1376,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621645431}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1548,7 +1388,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 316870559}
+  - {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1570,8 +1410,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -27.327309, y: 86.48681, z: 65.71}
-  - {x: 0.5073084, y: -111.56681, z: 65.71}
+  - {x: -27.327309, y: 90.186806, z: 82.78}
+  - {x: 0.5073084, y: -107.86681, z: 82.78}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -1639,8 +1479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 621645433}
   laserLength: 100
 --- !u!1 &629076367
@@ -1687,8 +1527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 629076370}
   laserLength: 100
 --- !u!120 &629076370
@@ -1828,7 +1668,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701980330}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1862,8 +1702,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 151.96347, y: 977.728, z: 65.71}
-  - {x: -126.38346, y: -1002.808, z: 65.71}
+  - {x: 26.707346, y: 90.18679, z: 82.78}
+  - {x: -1.1273446, y: -107.8668, z: 82.78}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -1931,8 +1771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 701980333}
   laserLength: 100
 --- !u!1 &727768130
@@ -1979,8 +1819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 727768133}
   laserLength: 100
 --- !u!120 &727768133
@@ -2494,7 +2334,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977063374}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2506,7 +2346,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1282397164}
+  - {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2528,8 +2368,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -40.973736, y: 83.58617, z: 70}
-  - {x: 14.153735, y: -108.66617, z: 70}
+  - {x: -40.973736, y: 87.28616, z: 87.07}
+  - {x: 14.153735, y: -104.96617, z: 87.07}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -2597,8 +2437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 977063376}
   laserLength: 100
 --- !u!1 &994575884
@@ -2695,8 +2535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 0}
 --- !u!1 &1020423469
 GameObject:
@@ -2867,7 +2707,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165435746}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2879,7 +2719,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1428593930}
+  - {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2901,8 +2741,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -54.083668, y: 78.81455, z: 74.270004}
-  - {x: 27.263664, y: -103.894554, z: 74.270004}
+  - {x: -54.083668, y: 82.51455, z: 91.340004}
+  - {x: 27.263664, y: -100.19456, z: 91.340004}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -2970,8 +2810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1165435748}
   laserLength: 100
 --- !u!1 &1170679205
@@ -3103,8 +2943,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 1208071883}
 --- !u!65 &1208071882
 BoxCollider:
@@ -3168,86 +3008,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208071879}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!21 &1282397164
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Blue Laser (Instance) (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 8dcf998c6112e9b49af5a1679ec5069d,
-    type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - Vector1_6E1AF49D: 15
-    - _AlphaClip: 0
-    - _Blend: 0
-    - _BumpScale: 1
-    - _Cull: 2
-    - _Cutoff: 0.5
-    - _DstBlend: 0
-    - _EmissionIntensity: 15
-    - _EnvironmentReflections: 1
-    - _FadeAmount: 0
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _OcclusionStrength: 1
-    - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
-    m_Colors:
-    - _Albedo: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0.8062825, b: 1, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1321478001
 GameObject:
   m_ObjectHideFlags: 0
@@ -3287,7 +3047,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321478001}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3299,7 +3059,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 92396595}
+  - {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3321,8 +3081,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -13.410001, y: 987.46, z: 60.57}
-  - {x: -13.410001, y: -1012.54, z: 60.57}
+  - {x: -13.410001, y: 91.159996, z: 77.64}
+  - {x: -13.410001, y: -108.840004, z: 77.64}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -3390,90 +3150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1321478003}
   laserLength: 100
---- !u!21 &1428593930
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Blue Laser (Instance) (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 8dcf998c6112e9b49af5a1679ec5069d,
-    type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - Vector1_6E1AF49D: 15
-    - _AlphaClip: 0
-    - _Blend: 0
-    - _BumpScale: 1
-    - _Cull: 2
-    - _Cutoff: 0.5
-    - _DstBlend: 0
-    - _EmissionIntensity: 15
-    - _EnvironmentReflections: 1
-    - _FadeAmount: 0
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
-    - _Metallic: 0
-    - _OcclusionStrength: 1
-    - _QueueOffset: 0
-    - _ReceiveShadows: 1
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZWrite: 1
-    m_Colors:
-    - _Albedo: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0.8062825, b: 1, a: 1}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
 --- !u!21 &1428929479
 Material:
   serializedVersion: 6
@@ -3598,8 +3278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1429338319}
   laserLength: 100
 --- !u!120 &1429338319
@@ -3935,7 +3615,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529963623}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3969,8 +3649,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 419.5263, y: 901.0057, z: 74.270004}
-  - {x: -393.9463, y: -926.08563, z: 74.270004}
+  - {x: 53.463627, y: 82.514565, z: 91.340004}
+  - {x: -27.883629, y: -100.19457, z: 91.340004}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -4038,8 +3718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1529963626}
   laserLength: 100
 --- !u!1 &1530038131
@@ -4086,8 +3766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1530038134}
   laserLength: 100
 --- !u!120 &1530038134
@@ -4234,8 +3914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 1557844666}
 --- !u!65 &1557844665
 BoxCollider:
@@ -4343,8 +4023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1575018734}
   laserLength: 100
 --- !u!120 &1575018734
@@ -4539,8 +4219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 0}
 --- !u!21 &1639518680
 Material:
@@ -4890,8 +4570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1786948158}
   laserLength: 100
 --- !u!120 &1786948158
@@ -5036,8 +4716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1862376613}
   laserLength: 100
 --- !u!120 &1862376613
@@ -5047,7 +4727,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862376610}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5081,8 +4761,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 12.79, y: 987.46, z: 60.57}
-  - {x: 12.79, y: -1012.54, z: 60.57}
+  - {x: 12.79, y: 91.159996, z: 77.64}
+  - {x: 12.79, y: -108.840004, z: 77.64}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -5177,7 +4857,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891148993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5211,8 +4891,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 288.4274, y: 948.72174, z: 70}
-  - {x: -262.84738, y: -973.8017, z: 70}
+  - {x: 40.353733, y: 87.28616, z: 87.07}
+  - {x: -14.773736, y: -104.96617, z: 87.07}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -5280,8 +4960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1891148996}
   laserLength: 100
 --- !u!21 &1894550533
@@ -5492,8 +5172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fec56f498b66ee418a933fbc6740607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   renderer: {fileID: 0}
 --- !u!1 &1916167089
 GameObject:
@@ -5801,8 +5481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 1985672225}
   laserLength: 100
 --- !u!120 &1985672225
@@ -6108,8 +5788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed10e283ad411cd49b2f758a39aeb163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserIntensity: 15
-  laserFlashIntensity: 30
+  laserIntensity: 10
+  laserFlashIntensity: 20
   lineRenderer: {fileID: 2081222708}
   laserLength: 100
 --- !u!120 &2081222708
