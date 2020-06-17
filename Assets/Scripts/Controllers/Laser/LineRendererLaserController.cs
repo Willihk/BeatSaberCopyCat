@@ -48,6 +48,8 @@ public class LineRendererLaserController : LaserControllerBase
     {
         base.TurnOff();
         lineRenderer.enabled = false;
+        if (rotationSpeed != 0)
+            transform.rotation = startRotation;
     }
 
     public override void TurnOn()

@@ -16,7 +16,8 @@ public class LaserControllerBase : MonoBehaviour
     public virtual void TurnOff()
     {
         material.SetFloat("_FadeAmount", 0);
-        transform.rotation = startRotation;
+
+        
     }
 
     public virtual void TurnOn()

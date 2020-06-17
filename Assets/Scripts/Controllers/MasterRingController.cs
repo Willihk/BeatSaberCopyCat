@@ -21,7 +21,6 @@ public class MasterRingController : MonoBehaviour
     [SerializeField]
     EventType[] supportedEventTypes;
 
-    Vector3 endRingRotation;
     float ringSpeed;
 
     private void Start()
@@ -59,15 +58,12 @@ public class MasterRingController : MonoBehaviour
 
         for (int i = 0; i < rings.Count; i++)
         {
-
-            //rings[i].transform.eulerAngles = Vector3.Lerp(rings[i].transform.eulerAngles, endRingRotation, 1.5f);
-            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * 100 * i * Time.deltaTime), Space.Self);
+            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * 6 * i * Time.deltaTime), Space.Self);
         }
     }
 
     void NewRotation()
     {
-        endRingRotation.z = Random.Range(-360, 361);
         ringSpeed = Random.Range(-10, 10);
     }
 
