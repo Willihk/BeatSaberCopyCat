@@ -25,6 +25,10 @@ public class MasterRingController : MonoBehaviour
     float ringSpeedMultiplier = 4;
 
     float ringSpeed;
+    float currentZoomLevel;
+    // 0 Default
+    // 1 zoom in
+    // 2 zoom out
 
     private void Start()
     {
@@ -47,9 +51,29 @@ public class MasterRingController : MonoBehaviour
         }
     }
 
+    void ZoomRings()
+    {
+        if (currentZoomLevel == 0)
+            return;
+
+        for (int i = 0; i < ringCount; i++)
+        {
+            Vector3 endPosition;
+            if (currentZoomLevel == 1)
+                endPosition = ringGap * (i + 1) * .6f;
+            else
+                endPosition = ringGap * (i + 1) * 1.6f;
+
+            Vector3 lerpedPosition = math.lerp(rings[i].transform.localPosition,endPosition, 2 * Time.deltaTime);
+
+            rings[i].transform.localPosition = lerpedPosition;
+        }
+    }
+
     private void Update()
     {
         RotateRingsIntoPosition();
+        ZoomRings();
     }
 
     void RotateRingsIntoPosition()
@@ -81,7 +105,14 @@ public class MasterRingController : MonoBehaviour
                     NewRotation();
                     break;
                 case 9:
-                    // Zoom
+                    if (currentZoomLevel == 0)
+                        currentZoomLevel = 2;
+                    else if (currentZoomLevel == 1)
+                        currentZoomLevel = 2;
+                    else if (currentZoomLevel == 2)
+                        currentZoomLevel = 1;
+
+                    Debug.Log("Zooming");
                     break;
                 default:
                     break;
