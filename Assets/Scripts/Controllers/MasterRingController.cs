@@ -21,6 +21,9 @@ public class MasterRingController : MonoBehaviour
     [SerializeField]
     EventType[] supportedEventTypes;
 
+    [SerializeField]
+    float ringSpeedMultiplier = 4;
+
     float ringSpeed;
 
     private void Start()
@@ -58,7 +61,7 @@ public class MasterRingController : MonoBehaviour
 
         for (int i = 0; i < rings.Count; i++)
         {
-            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * 6 * i * Time.deltaTime), Space.Self);
+            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * ringSpeedMultiplier * (i + 1) * Time.deltaTime), Space.Self);
         }
     }
 
@@ -76,6 +79,9 @@ public class MasterRingController : MonoBehaviour
             {
                 case 8:
                     NewRotation();
+                    break;
+                case 9:
+                    // Zoom
                     break;
                 default:
                     break;

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public bool IsPlaying;
 
     public double CurrentBeat;
-    public double CurrentSongTime;
+    public double LastBeat;
 
     [SerializeField]
     AudioSource audioSource;
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         if (IsPlaying)
         {
+            LastBeat = CurrentBeat;
             CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
         }
     }

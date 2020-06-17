@@ -56,7 +56,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 0
-    - _EmissionIntensity: 15
+    - _EmissionIntensity: 2
     - _EnvironmentReflections: 1
     - _FadeAmount: 0
     - _GlossMapScale: 0
