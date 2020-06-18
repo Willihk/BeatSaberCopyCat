@@ -33,6 +33,15 @@ public class SongBrowser : MonoBehaviour
         infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            infoController.DisplaySong(AvailableSongs[0], tabGroup.TabButtons[0].gameObject);
+        }
+    }
+
     void EnsureSongFolderExists()
     {
         if (!Directory.Exists(customSongFolderPath))

@@ -30,6 +30,15 @@ public class SongInfoController : MonoBehaviour
         SetupDifficulty(songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (songData.SongInfoFileData.SongFilename != string.Empty)
+                PlayLevel();
+        }
+    }
+
     void SetupDifficulty(string[] availableDifficulties)
     {
         for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length ; i++)
