@@ -21,7 +21,14 @@ public class MasterRingController : MonoBehaviour
     [SerializeField]
     EventType[] supportedEventTypes;
 
+    [SerializeField]
+    float ringSpeedMultiplier = 4;
+
     float ringSpeed;
+    float currentZoomLevel;
+    // 0 Default
+    // 1 zoom in
+    // 2 zoom out
 
     private void Start()
     {
@@ -44,9 +51,29 @@ public class MasterRingController : MonoBehaviour
         }
     }
 
+    void ZoomRings()
+    {
+        if (currentZoomLevel == 0)
+            return;
+
+        for (int i = 0; i < ringCount; i++)
+        {
+            Vector3 endPosition;
+            if (currentZoomLevel == 1)
+                endPosition = ringGap * (i + 1) * .6f;
+            else
+                endPosition = ringGap * (i + 1) * 1.6f;
+
+            Vector3 lerpedPosition = math.lerp(rings[i].transform.localPosition,endPosition, 2 * Time.deltaTime);
+
+            rings[i].transform.localPosition = lerpedPosition;
+        }
+    }
+
     private void Update()
     {
         RotateRingsIntoPosition();
+        ZoomRings();
     }
 
     void RotateRingsIntoPosition()
@@ -58,7 +85,7 @@ public class MasterRingController : MonoBehaviour
 
         for (int i = 0; i < rings.Count; i++)
         {
-            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * 6 * i * Time.deltaTime), Space.Self);
+            rings[i].transform.Rotate(new Vector3(0, 0, ringSpeed * ringSpeedMultiplier * (i + 1) * Time.deltaTime), Space.Self);
         }
     }
 
@@ -76,6 +103,16 @@ public class MasterRingController : MonoBehaviour
             {
                 case 8:
                     NewRotation();
+                    break;
+                case 9:
+                    if (currentZoomLevel == 0)
+                        currentZoomLevel = 2;
+                    else if (currentZoomLevel == 1)
+                        currentZoomLevel = 2;
+                    else if (currentZoomLevel == 2)
+                        currentZoomLevel = 1;
+
+                    Debug.Log("Zooming");
                     break;
                 default:
                     break;
