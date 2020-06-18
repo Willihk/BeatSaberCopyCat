@@ -15,9 +15,6 @@ public class TabGroup : MonoBehaviour
 
     private void Awake()
     {
-        if (OnTabSelection == null)
-            OnTabSelection = new UnityEvent<TabButton>();
-
         if (TabButtons == null)
             TabButtons = new List<TabButton>();
         else
@@ -90,7 +87,7 @@ public class TabGroup : MonoBehaviour
         SelectedTab = tabButton;
         SelectedTab.Select();
 
-        OnTabSelection.Invoke(tabButton);
+        OnTabSelection?.Invoke(tabButton);
 
         ResetTabs();
         tabButton.SetState(UIPointerEvent.Selected);

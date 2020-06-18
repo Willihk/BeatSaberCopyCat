@@ -1,6 +1,6 @@
 ﻿using System;
 
-public enum EventType
+public enum SongEventType
 {
     BackTopLasers = 0,
     TrackRingNeons = 1,

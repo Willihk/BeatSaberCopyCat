@@ -12,7 +12,7 @@ public class MasterLaserController : MonoBehaviour
     List<LaserControllerBase> laserControllers;
 
     [SerializeField]
-    EventType[] supportedEventTypes;
+    SongEventType[] supportedEventTypes;
 
     [SerializeField]
     Material blueMaterial;

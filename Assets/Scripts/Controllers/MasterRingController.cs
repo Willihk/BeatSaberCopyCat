@@ -19,7 +19,7 @@ public class MasterRingController : MonoBehaviour
     List<GameObject> rings;
 
     [SerializeField]
-    EventType[] supportedEventTypes;
+    SongEventType[] supportedEventTypes;
 
     float ringSpeed;
 
