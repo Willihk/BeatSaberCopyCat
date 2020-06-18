@@ -45,12 +45,9 @@ public class EventPlayingSystem : SystemBase
         {
             var eventInfo = eventsToPlay[i];
 
-            if (eventInfo.Time + CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
+            if (eventInfo.Time + CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration >= GameManager.Instance.LastBeat &&eventInfo.Time + CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
             {
                 PlayEvent(eventInfo);
-
-                eventsToPlay.RemoveAtSwapBack(i);
-                i--;
             }
         }
     }
