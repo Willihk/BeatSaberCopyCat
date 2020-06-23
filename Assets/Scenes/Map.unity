@@ -539,7 +539,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170386603}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -572,8 +572,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 532.2783, y: 834.24, z: 296.95}
-  - {x: -515.0983, y: -869.57996, z: 296.95}
+  - {x: 60.95883, y: 71.22099, z: 314.02002}
+  - {x: -43.77884, y: -99.160995, z: 314.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -729,7 +729,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214848932}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -762,8 +762,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -541.2987, y: 848.7698, z: 296.95}
-  - {x: 506.0787, y: -855.0497, z: 296.95}
+  - {x: -69.97887, y: 85.75096, z: 314.02002}
+  - {x: 34.758873, y: -84.63097, z: 314.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -1037,7 +1037,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 316357705}
-  - component: {fileID: 316357706}
   m_Layer: 0
   m_Name: Ring
   m_TagString: Untagged
@@ -1064,25 +1063,6 @@ Transform:
   m_Father: {fileID: 1170679206}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &316357706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316357704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  findLaserControllersInChildren: 1
-  laserControllers: []
-  supportedEventTypes: 01000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 2
-  laserFlashIntensity: 4
 --- !u!1 &374234362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,7 +1504,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621645431}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1685,7 +1665,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629076367}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1718,8 +1698,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 532.2783, y: 834.24, z: 326.94998}
-  - {x: -515.0983, y: -869.57996, z: 326.94998}
+  - {x: 60.95883, y: 71.22099, z: 344.02}
+  - {x: -43.77884, y: -99.160995, z: 344.02}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -1814,7 +1794,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701980330}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1847,8 +1827,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 26.707346, y: 90.18679, z: 82.78}
-  - {x: -1.1273446, y: -107.8668, z: 82.78}
+  - {x: 26.707346, y: 90.18679, z: 110.98}
+  - {x: -1.1273446, y: -107.8668, z: 110.98}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -1975,7 +1955,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727768130}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2008,8 +1988,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 532.2783, y: 834.24, z: 316.95}
-  - {x: -515.0983, y: -869.57996, z: 316.95}
+  - {x: 60.95883, y: 71.22099, z: 334.02002}
+  - {x: -43.77884, y: -99.160995, z: 334.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -2480,7 +2460,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977063374}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2850,7 +2830,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165435746}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2966,6 +2946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1170679206}
   - component: {fileID: 1170679207}
+  - component: {fileID: 1170679208}
   m_Layer: 0
   m_Name: Outer Rings
   m_TagString: Untagged
@@ -3007,6 +2988,25 @@ MonoBehaviour:
   - {fileID: 316357704}
   supportedEventTypes: 08000000
   ringSpeedMultiplier: 4
+--- !u!114 &1170679208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170679205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb70161709b72744aca7cd6cc85ec54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  findLaserControllersInChildren: 1
+  laserControllers: []
+  supportedEventTypes: 01000000
+  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
+  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
+  laserIntensity: 2
+  laserFlashIntensity: 4
 --- !u!1 &1172305894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,7 +3189,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321478001}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3429,7 +3429,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429338316}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3462,8 +3462,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 532.2783, y: 834.24, z: 306.95}
-  - {x: -515.0983, y: -869.57996, z: 306.95}
+  - {x: 60.95883, y: 71.22099, z: 324.02002}
+  - {x: -43.77884, y: -99.160995, z: 324.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -3752,7 +3752,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529963623}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3785,8 +3785,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 53.463627, y: 82.514565, z: 91.340004}
-  - {x: -27.883629, y: -100.19457, z: 91.340004}
+  - {x: 53.463627, y: 82.514565, z: 119.54}
+  - {x: -27.883629, y: -100.19457, z: 119.54}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -3913,7 +3913,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530038131}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3946,8 +3946,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -541.2987, y: 848.7698, z: 326.94998}
-  - {x: 506.0787, y: -855.0497, z: 326.94998}
+  - {x: -69.97887, y: 85.75096, z: 344.02}
+  - {x: 34.758873, y: -84.63097, z: 344.02}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -4153,7 +4153,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575018731}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4186,8 +4186,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -541.2987, y: 848.7698, z: 286.95}
-  - {x: 506.0787, y: -855.0497, z: 286.95}
+  - {x: -69.97887, y: 85.75096, z: 304.02002}
+  - {x: 34.758873, y: -84.63097, z: 304.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -4697,7 +4697,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786948155}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4730,8 +4730,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -541.2987, y: 848.7698, z: 316.95}
-  - {x: 506.0787, y: -855.0497, z: 316.95}
+  - {x: -69.97887, y: 85.75096, z: 334.02002}
+  - {x: 34.758873, y: -84.63097, z: 334.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -4842,7 +4842,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862376610}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4875,8 +4875,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 12.79, y: 91.159996, z: 77.64}
-  - {x: 12.79, y: -108.840004, z: 77.64}
+  - {x: 12.79, y: 91.159996, z: 105.840004}
+  - {x: 12.79, y: -108.840004, z: 105.840004}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -4971,7 +4971,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891148993}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5004,8 +5004,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 40.353733, y: 87.28616, z: 87.07}
-  - {x: -14.773736, y: -104.96617, z: 87.07}
+  - {x: 40.353733, y: 87.28616, z: 115.270004}
+  - {x: -14.773736, y: -104.96617, z: 115.270004}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -5533,7 +5533,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985672222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5566,8 +5566,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 532.2783, y: 834.24, z: 286.95}
-  - {x: -515.0983, y: -869.57996, z: 286.95}
+  - {x: 60.95883, y: 71.22099, z: 304.02002}
+  - {x: -43.77884, y: -99.160995, z: 304.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35
@@ -5836,7 +5836,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081222705}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5869,8 +5869,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -541.2986, y: 848.76984, z: 306.95}
-  - {x: 506.07858, y: -855.04974, z: 306.95}
+  - {x: -69.97887, y: 85.75096, z: 324.02002}
+  - {x: 34.758873, y: -84.63097, z: 324.02002}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.35

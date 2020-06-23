@@ -30,13 +30,16 @@ public class MasterRingController : MonoBehaviour
     // 1 zoom in
     // 2 zoom out
 
-    private void Start()
+    private void Awake()
     {
         if (rings == null)
             rings = new List<GameObject>();
 
         CreateRings();
+    }
 
+    private void Start()
+    {
         World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
     }
 
