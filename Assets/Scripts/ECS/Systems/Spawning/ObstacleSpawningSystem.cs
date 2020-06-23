@@ -11,8 +11,6 @@ public class ObstacleSpawningSystem : SystemBase
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
-    float3 spawnPointOffset = new float3(.8f, .8f, 0);
-
     protected override void OnCreate()
     {
         obstaclesToSpawn = new NativeList<ObstacleData>(Allocator.Persistent);
@@ -59,7 +57,7 @@ public class ObstacleSpawningSystem : SystemBase
         float4x4 scale = new float4x4
         {
             c0 = new float4(obstacle.Width, 0, 0, 0),
-            c1 = new float4(0, obstacle.Type == 0 ? spawnPointOffset.y * 3 : spawnPointOffset.y * 2, 0, 0),
+            c1 = new float4(0, obstacle.Type == 0 ? CurrentSongDataManager.Instance.SpawnPointOffset.y * 3 : CurrentSongDataManager.Instance.SpawnPointOffset.y * 2, 0, 0),
             c2 = new float4(0, 0, (float)obstacle.Duration, 0),
             c3 = new float4(0, 0, 0, 1)
         };

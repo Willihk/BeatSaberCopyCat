@@ -34,6 +34,11 @@ public class EntityPrefabManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        assetStore.Dispose();
+    }
+
     Entity ConvertGameObjectToEntity(GameObject gameObject)
     {
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, assetStore);

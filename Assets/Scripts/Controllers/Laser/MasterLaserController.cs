@@ -37,6 +37,10 @@ public class MasterLaserController : MonoBehaviour
         blueMaterial = new Material(blueMaterial);
         redMaterial = new Material(redMaterial);
 
+        blueMaterial.SetFloat("_EmissionIntensity", laserIntensity);
+        redMaterial.SetFloat("_EmissionIntensity", laserIntensity);
+
+
         currentMaterial = blueMaterial;
 
         World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;

@@ -1114,7 +1114,7 @@ MonoBehaviour:
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
   laserIntensity: 3
-  laserFlashIntensity: 6
+  laserFlashIntensity: 5
 --- !u!1 &377385284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2098,7 @@ MonoBehaviour:
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
   laserIntensity: 3
-  laserFlashIntensity: 6
+  laserFlashIntensity: 5
 --- !u!1 &805946936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,7 +2152,7 @@ MonoBehaviour:
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
   laserIntensity: 3
-  laserFlashIntensity: 6
+  laserFlashIntensity: 5
 --- !u!1 &868045469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4611,7 +4611,7 @@ MonoBehaviour:
   blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
   redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
   laserIntensity: 3
-  laserFlashIntensity: 6
+  laserFlashIntensity: 5
 --- !u!1 &1750210526
 GameObject:
   m_ObjectHideFlags: 0
