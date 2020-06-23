@@ -48,11 +48,5 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  },
-  "lock": {
-    "com.elringus.spriteglow": {
-      "revision": "package",
-      "hash": "05442994ffb7f6c679f648d702cdf888bd8c01dc"
-    }
   }
 }

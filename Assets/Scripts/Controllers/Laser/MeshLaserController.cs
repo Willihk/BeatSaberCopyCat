@@ -15,7 +15,6 @@ public class MeshLaserController : LaserControllerBase
         startRotation = transform.rotation;
 
         material = renderer.sharedMaterial;
-        TurnOff();
     }
 
     void Update()
@@ -24,16 +23,6 @@ public class MeshLaserController : LaserControllerBase
         {
             transform.Rotate(new Vector3(rotationSpeed * 2 * Time.deltaTime, 0, 0), Space.Self);
         }
-    }
-
-    public override void TurnOff()
-    {
-        base.TurnOff();
-    }
-
-    public override void TurnOn()
-    {
-        base.TurnOn();
     }
 
     public override void SetMaterial(Material material)
