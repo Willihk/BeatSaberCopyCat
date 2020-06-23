@@ -5,16 +5,24 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
+public class TabButtonSelected : UnityEvent<TabButton>
+{
+}
+
+[Serializable]
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton> TabButtons;
 
-    public UnityEvent<TabButton> OnTabSelection;
+    public TabButtonSelected OnTabSelection;
 
     public TabButton SelectedTab;
 
     private void Awake()
     {
+        if (OnTabSelection == null)
+            OnTabSelection = new TabButtonSelected();
+
         if (TabButtons == null)
             TabButtons = new List<TabButton>();
         else

@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[Serializable]
 public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     public UnityEvent OnTabSelected;
