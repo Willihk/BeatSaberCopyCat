@@ -39,15 +39,17 @@ public class EntityPrefabManager : MonoBehaviour
         assetStore.Dispose();
     }
 
-    Entity ConvertGameObjectToEntity(GameObject gameObject)
+    public Entity ConvertGameObjectToEntity(GameObject gameObject, bool addToPrefabs = true)
     {
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, assetStore);
 
         var entity = GameObjectConversionUtility.ConvertGameObjectHierarchy(gameObject, settings);
 
-        EntityManager.AddComponent<Prefab>(entity);
-
-        Prefabs.Add(gameObject.name, entity);
+        if (addToPrefabs)
+        {
+            EntityManager.AddComponent<Prefab>(entity);
+            Prefabs.Add(gameObject.name, entity);
+        }
 
         return entity;
     }

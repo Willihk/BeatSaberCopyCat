@@ -30,8 +30,6 @@ public class CurrentSongDataManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
-        DontDestroyOnLoad(this);
     }
 
     public void LoadLevelData()
