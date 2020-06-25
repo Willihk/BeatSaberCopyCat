@@ -10,7 +10,7 @@ public class AudioVisualizationSystem : SystemBase
     EntityQuery audioBarQuery;
     NativeArray<float> frequencyBands;
 
-    protected override void OnCreate()
+    protected override void OnStartRunning()
     {
         audioBarQuery = GetEntityQuery(new EntityQueryDesc
         {
