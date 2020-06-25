@@ -55,7 +55,7 @@ public class AudioVisualizationSystem : SystemBase
 
                 float3 endScale = math.lerp(
                     scale.Value,
-                    (visualizationData.ScaleMultiplier * FrequencyBands[visualizationData.FrequencyBand] * 15) + visualizationData.BaseScale,
+                    (visualizationData.ScaleMultiplier * FrequencyBands[visualizationData.FrequencyBand]) + visualizationData.BaseScale,
                     .3f);
                 scale.Value = endScale;
                 scaleDatas[i] = scale;

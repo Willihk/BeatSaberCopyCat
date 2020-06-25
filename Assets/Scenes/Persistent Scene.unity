@@ -439,9 +439,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioSource: {fileID: 454897304}
-  frequencyBandCount: 10
+  frequencyBandCount: 8
   audioSpectrum: []
-  frequencyBands: []
+  FrequencyBands: []
 --- !u!1 &690530003
 GameObject:
   m_ObjectHideFlags: 0
