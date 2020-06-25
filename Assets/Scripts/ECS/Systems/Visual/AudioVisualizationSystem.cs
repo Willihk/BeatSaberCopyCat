@@ -8,28 +8,33 @@ using Unity.Transforms;
 public class AudioVisualizationSystem : SystemBase
 {
     EntityQuery audioBarQuery;
+    NativeArray<float> frequencyBands;
 
     protected override void OnCreate()
     {
         audioBarQuery = GetEntityQuery(new EntityQueryDesc
         {
             All = new ComponentType[] { typeof(AudioVisualizationData), typeof(NonUniformScale)
-        }
-        });
+        }});
+
+        frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.frequencyBandCount, Allocator.Persistent);
+
     }
 
     protected override void OnUpdate()
     {
-        NativeArray<float> frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.FrequencyBands, Allocator.TempJob);
+        frequencyBands.CopyFrom(AudioSpectrumManager.Instance.FrequencyBands);
         var job = new VisualizeJob
         {
             FrequencyBands = frequencyBands,
             AudioVisualizationDataType = GetArchetypeChunkComponentType<AudioVisualizationData>(true),
             NonUniformScaleType = GetArchetypeChunkComponentType<NonUniformScale>(),
         };
-
         job.Schedule(audioBarQuery).Complete();
+    }
 
+    protected override void OnDestroy()
+    {
         frequencyBands.Dispose();
     }
 
