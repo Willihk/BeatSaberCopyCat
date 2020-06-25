@@ -18,4 +18,7 @@ public struct NoteSpawnData
 
     [JsonProperty("_cutDirection")]
     public int CutDirection { get; set; }
+
+    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
+    public CustomData CustomData { get; set; }
 }
