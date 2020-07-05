@@ -107,8 +107,8 @@ public class NoteSpawningSystem : SystemBase
                 break;
             case CutDirection.Any:
                 var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
-                EntityManager.SetComponentData(linkedGroup[2].Value, new NonUniformScale { Value = new float3(0.05f, 0.1f, 0.1f) });
-                EntityManager.SetComponentData(linkedGroup[2].Value, new Translation { Value = new float3(0, 0, -0.237f) });
+                EntityManager.SetComponentData(linkedGroup[1].Value, new NonUniformScale { Value = new float3(0.05f, 0.1f, 0.1f) });
+                EntityManager.SetComponentData(linkedGroup[1].Value, new Translation { Value = new float3(0, 0, -0.237f) });
                 break;
             default:
                 break;
@@ -121,16 +121,16 @@ public class NoteSpawningSystem : SystemBase
         {
             var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
 
-            var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[1].Value);
+            var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[0].Value);
             renderMesh.material = redMaterial;
-            EntityManager.SetSharedComponentData(linkedGroup[1].Value, renderMesh);
+            EntityManager.SetSharedComponentData(linkedGroup[0].Value, renderMesh);
 
             // needs to be reassigned because of structural change
             linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
 
-            renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[2].Value);
+            renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[1].Value);
             renderMesh.material = redEmissiveMaterial;
-            EntityManager.SetSharedComponentData(linkedGroup[2].Value, renderMesh);
+            EntityManager.SetSharedComponentData(linkedGroup[1].Value, renderMesh);
         }
     }
 
