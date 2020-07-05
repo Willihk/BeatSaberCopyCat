@@ -22,6 +22,6 @@ public struct ObstacleData
     [JsonProperty("_width")]
     public int Width { get; set; }
 
-    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
-    public CustomData CustomData { get; set; }
+    //[JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
+    //public CustomData CustomData { get; set; }
 }

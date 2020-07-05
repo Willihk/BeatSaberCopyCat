@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,6 +17,11 @@ public class SongInfoController : MonoBehaviour
     TabGroup difficultyTabGroup;
     [SerializeField]
     GameObject difficultyTabPrefab;
+    [SerializeField]
+    AudioSource songPreviewAudioSource;
+
+    [SerializeField, Header("Stats")]
+    private TextMeshProUGUI timeValueText;
 
     AvailableSongData songData;
 
@@ -28,6 +34,8 @@ public class SongInfoController : MonoBehaviour
 
 
         SetupDifficulty(songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
+        StartCoroutine(PreviewSong());
+        SetStats();
     }
 
     private void Update()
@@ -39,9 +47,14 @@ public class SongInfoController : MonoBehaviour
         }
     }
 
+    void SetStats()
+    {
+
+    }
+
     void SetupDifficulty(string[] availableDifficulties)
     {
-        for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length ; i++)
+        for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length; i++)
         {
             var tabButtonObject = Instantiate(difficultyTabPrefab, difficultyTabGroup.transform);
             tabButtonObject.GetComponent<TabButton>().SetTabGroup(difficultyTabGroup);
@@ -61,9 +74,38 @@ public class SongInfoController : MonoBehaviour
         difficultyTabGroup.OnTabSelected(difficultyTabGroup.TabButtons[0]);
     }
 
+    public IEnumerator PreviewSong()
+    {
+        songPreviewAudioSource.Stop();
+        //if (songPreviewAudioSource.clip != null)
+        //    songPreviewAudioSource.clip.UnloadAudioData();
+        if (songData.AudioClip == null)
+        {
+            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
+                $"file://{songData.DirectoryPath}/{songData.SongInfoFileData.SongFilename}",
+                AudioType.OGGVORBIS))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.isNetworkError)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    songData.AudioClip = DownloadHandlerAudioClip.GetContent(www);
+                }
+            }
+        }
+        songPreviewAudioSource.clip = songData.AudioClip;
+        songPreviewAudioSource.time = (float)songData.SongInfoFileData.PreviewStartTime;
+        songPreviewAudioSource.Play();
+    }
+
     public void PlayLevel()
     {
         CurrentSongDataManager.Instance.SetData(songData, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
         GameManager.Instance.PlayLevel();
     }
+
 }

@@ -41,5 +41,6 @@ public class MasterAudioBarController : MonoBehaviour
                 ScaleMultiplier = scaleMultiplier
             });
         }
+        entities.Dispose();
     }
 }

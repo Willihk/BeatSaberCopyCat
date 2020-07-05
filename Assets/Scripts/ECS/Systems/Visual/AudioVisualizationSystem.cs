@@ -33,7 +33,7 @@ public class AudioVisualizationSystem : SystemBase
         job.Schedule(audioBarQuery).Complete();
     }
 
-    protected override void OnDestroy()
+    protected override void OnStopRunning()
     {
         frequencyBands.Dispose();
     }

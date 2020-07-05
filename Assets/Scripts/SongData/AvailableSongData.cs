@@ -3,8 +3,9 @@ using System.Collections;
 using System;
 
 [Serializable]
-public struct AvailableSongData
+public class AvailableSongData
 {
-    public SongInfoFileData SongInfoFileData { get; set; }
+    public SongInfoFileData SongInfoFileData;
     public string DirectoryPath;
+    public AudioClip AudioClip;
 }

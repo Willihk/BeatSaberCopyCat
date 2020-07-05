@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Linq;
 using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 public class SongBrowser : MonoBehaviour
 {
@@ -99,5 +100,22 @@ public class SongBrowser : MonoBehaviour
         return false;
     }
 
+    IEnumerator GetAudioClip()
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
+            $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
+            AudioType.OGGVORBIS))
+        {
+            yield return www.SendWebRequest();
 
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
+    }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class MapData
+public struct MapData
 {
     [Serializable]
     public struct BPMChanx
