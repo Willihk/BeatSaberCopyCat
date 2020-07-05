@@ -29,6 +29,17 @@ public class SongBrowser : MonoBehaviour
         DisplaySongs();
     }
 
+    private void OnDestroy()
+    {
+        foreach (var item in AvailableSongs)
+        {
+            if (item != AvailableSongs[tabGroup.TabButtons.IndexOf(tabGroup.SelectedTab)])
+            {
+                item.AudioClip.UnloadAudioData();
+            }
+        }
+    }
+
     public void SongSelected(TabButton tabButton)
     {
         infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
@@ -98,24 +109,5 @@ public class SongBrowser : MonoBehaviour
         }
 
         return false;
-    }
-
-    IEnumerator GetAudioClip()
-    {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-            $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
-            AudioType.OGGVORBIS))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
-            }
-        }
     }
 }

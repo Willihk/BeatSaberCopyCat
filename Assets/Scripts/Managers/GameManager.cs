@@ -114,22 +114,29 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GetAudioClip()
     {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-            $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
-            AudioType.OGGVORBIS))
+        if (CurrentSongDataManager.Instance.SelectedSongData.AudioClip != null)
         {
-            audioSource.clip = null;
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError)
+            audioSource.clip = CurrentSongDataManager.Instance.SelectedSongData.AudioClip;
+        }
+        else
+        {
+            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
+                $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
+                AudioType.OGGVORBIS))
             {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
-                audioSource.clip = songClip;
+                audioSource.clip = null;
+
+                yield return www.SendWebRequest();
+
+                if (www.isNetworkError)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
+                    audioSource.clip = songClip;
+                }
             }
         }
     }
