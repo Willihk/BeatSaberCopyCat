@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public struct ObstacleData
+public struct RawObstacleData
 {
     [JsonProperty("_time")]
     public double Time { get; set; }
@@ -22,6 +22,6 @@ public struct ObstacleData
     [JsonProperty("_width")]
     public int Width { get; set; }
 
-    //[JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
-    //public CustomData CustomData { get; set; }
+    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
+    public CustomData CustomData { get; set; }
 }

@@ -33,7 +33,7 @@ public class SongBrowser : MonoBehaviour
     {
         foreach (var item in AvailableSongs)
         {
-            if (item != AvailableSongs[tabGroup.TabButtons.IndexOf(tabGroup.SelectedTab)])
+            if (item != AvailableSongs[tabGroup.TabButtons.IndexOf(tabGroup.SelectedTab)] && item.AudioClip != null)
             {
                 item.AudioClip.UnloadAudioData();
             }

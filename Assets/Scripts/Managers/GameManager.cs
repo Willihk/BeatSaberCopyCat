@@ -63,25 +63,25 @@ public class GameManager : MonoBehaviour
 
         // Load Notes
         NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
-        NativeArray<NoteSpawnData> noteSpawnDatas = new NativeArray<NoteSpawnData>(CurrentSongDataManager.Instance.MapData.Notes.ToArray(), Allocator.TempJob);
+        NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(CurrentSongDataManager.Instance.MapData.Notes, Allocator.TempJob);
         noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
         noteSpawnDatas.Dispose();
 
         // Load Obstacles
         ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
-        NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(CurrentSongDataManager.Instance.MapData.Obstacles.ToArray(), Allocator.TempJob);
+        NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(CurrentSongDataManager.Instance.MapData.Obstacles, Allocator.TempJob);
         obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
         obstacleSpawnDatas.Dispose();
 
         // Load Events
         EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
-        NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(CurrentSongDataManager.Instance.MapData.Events.ToArray(), Allocator.TempJob);
+        NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(CurrentSongDataManager.Instance.MapData.Events, Allocator.TempJob);
         eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
         eventsToPlay.Dispose();
 
-        Debug.Log("Notes: " + CurrentSongDataManager.Instance.MapData.Notes.Count);
-        Debug.Log("Obstacles: " + CurrentSongDataManager.Instance.MapData.Obstacles.Count);
-        Debug.Log("Events: " + CurrentSongDataManager.Instance.MapData.Events.Count);
+        Debug.Log("Notes: " + CurrentSongDataManager.Instance.MapData.Notes.Length);
+        Debug.Log("Obstacles: " + CurrentSongDataManager.Instance.MapData.Obstacles.Length);
+        Debug.Log("Events: " + CurrentSongDataManager.Instance.MapData.Events.Length);
 
         StartCoroutine(Loading());
     }
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
         while (!isLoaded)
         {
-            if (audioSource.clip != null)
+            if (audioSource.clip != null && !CurrentSongDataManager.Instance.MapData.Equals(null))
                 isLoaded = true;
 
             if (!isLoaded)
@@ -140,5 +140,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
 }

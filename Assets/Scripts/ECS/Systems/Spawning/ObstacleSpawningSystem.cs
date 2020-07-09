@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Numerics;
+using System.Threading;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class ObstacleSpawningSystem : SystemBase
 {
@@ -36,57 +43,99 @@ public class ObstacleSpawningSystem : SystemBase
         if (obstaclesToSpawn.IsCreated == false)
             return;
 
-        for (int i = 0; i < obstaclesToSpawn.Length; i++)
+        EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
+
+        var job = new SpawnJob
         {
-            var obstacle = obstaclesToSpawn[i];
-
-            if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
-            {
-                SpawnObstacle(obstacle);
-
-                obstaclesToSpawn.RemoveAtSwapBack(i);
-                i--;
-            }
-        }
-    }
-
-    private void SpawnObstacle(ObstacleData obstacle)
-    {
-        var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Wall");
-
-        float4x4 scale = new float4x4
-        {
-            c0 = new float4(obstacle.Width, 0, 0, 0),
-            c1 = new float4(0, obstacle.Type == 0 ? CurrentSongDataManager.Instance.SpawnPointOffset.y * 3 : CurrentSongDataManager.Instance.SpawnPointOffset.y * 2, 0, 0),
-            c2 = new float4(0, 0, (float)obstacle.Duration, 0),
-            c3 = new float4(0, 0, 0, 1)
+            CommandBuffer = commandBuffer,
+            obstaclesToSpawn = obstaclesToSpawn,
+            CurrentBeat = GameManager.Instance.CurrentBeat,
+            LastBeat = GameManager.Instance.LastBeat,
+            HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
+            JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
+            Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
         };
-        float lineIndex = obstacle.LineIndex + (obstacle.Width / 2);
-        float lineLayer = 0;
+        job.Schedule().Complete();
 
-        if (obstacle.Type == 0)
-        {
-            lineLayer = 1;
-        }
-        else if (obstacle.Type == 1)
-        {
-            lineLayer = 2;
-        }
+        //Stopwatch stopwatch = new Stopwatch();
+        //stopwatch.Start();
+        //for (int i = 0; i < obstaclesToSpawn.Length; i++)
+        //{
+        //    var obstacle = obstaclesToSpawn[i];
 
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = (GetSpawnPosition(lineIndex, lineLayer) + new float3(0, 0, GetNeededOffset())) });
+        //    if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat && obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration >= GameManager.Instance.LastBeat)
+        //    {
+        //        //SpawnObstacle(obstacle);
 
+        //        var entity = EntityPrefabManager.Instance.SpawnEntityPrefab(commandBuffer, "Wall");
 
-        EntityManager.SetComponentData(noteEntity, new CompositeScale { Value = scale });
-        EntityManager.SetComponentData(noteEntity, new Obstacle { Data = obstacle });
-    }
+        //        var scale = float4x4.Scale(obstacle.TransformData.Scale);
 
-    float3 GetSpawnPosition(float lineIndex, float lineLayer)
-    {
-        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.3f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
+        //        commandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
+
+        //        commandBuffer.SetComponent(entity, new CompositeScale
+        //        {
+        //            Value = scale
+        //        });
+
+        //        commandBuffer.SetComponent(entity, new Rotation { Value = quaternion.Euler(obstacle.TransformData.LocalRotation) });
+
+        //        //obstaclesToSpawn.RemoveAtSwapBack(i);
+        //        //i--;
+        //    }
+
+        //}
+        //stopwatch.Stop();
+        //Debug.Log(stopwatch.ElapsedMilliseconds);
+        commandBuffer.Playback(EntityManager);
+        commandBuffer.Dispose();
     }
 
     float GetNeededOffset()
     {
         return CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance;
+    }
+
+    [BurstCompile]
+    struct SpawnJob : IJob
+    {
+        public EntityCommandBuffer CommandBuffer;
+        public NativeList<ObstacleData> obstaclesToSpawn;
+        public double HalfJumpDuration;
+        public double CurrentBeat;
+        public double LastBeat;
+        public float JumpDistance;
+        public Entity Entity;
+
+        public void Execute()
+        {
+            for (int i = 0; i < obstaclesToSpawn.Length; i++)
+            {
+                var obstacle = obstaclesToSpawn[i];
+
+                if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >=LastBeat)
+                {
+                    var entity = CommandBuffer.Instantiate(Entity);
+                    CommandBuffer.RemoveComponent<Prefab>(entity);
+                    float4x4 scale = new float4x4
+                    {
+                        c0 = new float4(obstacle.TransformData.Scale.x, 0, 0, 0),
+                        c1 = new float4(0, obstacle.TransformData.Scale.y, 0, 0),
+                        c2 = new float4(0, 0, obstacle.TransformData.Scale.z, 0),
+                        c3 = new float4(0, 0, 0, 1)
+                    };
+
+                    CommandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
+
+                    CommandBuffer.SetComponent(entity, new CompositeScale
+                    {
+                        Value = scale
+                    });
+
+                    CommandBuffer.SetComponent(entity, new Rotation { Value = quaternion.Euler(obstacle.TransformData.LocalRotation) });
+                }
+
+            }
+        }
     }
 }

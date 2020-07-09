@@ -30,11 +30,9 @@ public struct MapData
     public CustomData _customData { get; set; }
 
     [JsonProperty("_events")]
-    public IList<EventData> Events { get; set; }
+    public EventData[] Events { get; set; }
 
-    [JsonProperty("_notes")]
-    public IList<NoteSpawnData> Notes { get; set; }
+    public NoteData[] Notes { get; set; }
 
-    [JsonProperty("_obstacles")]
-    public IList<ObstacleData> Obstacles { get; set; }
+    public ObstacleData[] Obstacles { get; set; }
 }

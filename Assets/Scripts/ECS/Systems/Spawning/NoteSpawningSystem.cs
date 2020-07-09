@@ -9,7 +9,7 @@ using Unity.Rendering;
 
 public class NoteSpawningSystem : SystemBase
 {
-    public NativeList<NoteSpawnData> notesToSpawn;
+    public NativeList<NoteData> notesToSpawn;
 
     // Needs to be here to run the system
     EntityQuery defaultQuery;
@@ -21,7 +21,7 @@ public class NoteSpawningSystem : SystemBase
     {
         redEmissiveMaterial = Resources.Load<Material>("Materials/Note/Emissive/Red Emissive");
         redMaterial = Resources.Load<Material>("Materials/Note/Note Red");
-        notesToSpawn = new NativeList<NoteSpawnData>(Allocator.Persistent);
+        notesToSpawn = new NativeList<NoteData>(Allocator.Persistent);
 
         defaultQuery = GetEntityQuery(new EntityQueryDesc { All = new ComponentType[] { typeof(Entity) } });
     }
@@ -64,47 +64,22 @@ public class NoteSpawningSystem : SystemBase
         }
     }
 
-    void SpawnBomb(NoteSpawnData note)
+    void SpawnBomb(NoteData note)
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset()) });
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
 
-        EntityManager.SetComponentData(noteEntity, new Note { Data = note });
+        EntityManager.SetComponentData(noteEntity, new Note {Type = note.Type, CutDirection = note.CutDirection});
 
     }
 
-    void SpawnNote(NoteSpawnData note)
+    void SpawnNote(NoteData note)
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Note");
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = GetSpawnPosition(note.LineIndex, note.LineLayer) + new float3(0, 0, GetNeededOffset()) });
 
-        float3 euler = float3.zero;
 
         switch ((CutDirection)note.CutDirection)
         {
-            case CutDirection.Upwards:
-                euler = new float3(0, 0, 180);
-                break;
-            case CutDirection.Downwards:
-                break;
-            case CutDirection.TowardsLeft:
-                euler = new float3(0, 0, -90);
-                break;
-            case CutDirection.TowardsRight:
-                euler = new float3(0, 0, 90);
-                break;
-            case CutDirection.TowardsTopLeft:
-                euler = new float3(0, 0, -135);
-                break;
-            case CutDirection.TowardsTopRight:
-                euler = new float3(0, 0, 135);
-                break;
-            case CutDirection.TowardsBottomLeft:
-                euler = new float3(0, 0, -45);
-                break;
-            case CutDirection.TowardsBottomRight:
-                euler = new float3(0, 0, 45);
-                break;
             case CutDirection.Any:
                 var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
                 EntityManager.SetComponentData(linkedGroup[1].Value, new NonUniformScale { Value = new float3(0.05f, 0.1f, 0.1f) });
@@ -114,8 +89,10 @@ public class NoteSpawningSystem : SystemBase
                 break;
         }
 
-        EntityManager.SetComponentData(noteEntity, new Rotation { Value = quaternion.Euler(euler) });
-        EntityManager.SetComponentData(noteEntity, new Note { Data = note });
+        EntityManager.SetComponentData(noteEntity, new Rotation { Value = quaternion.Euler(note.TransformData.LocalRotation) });
+        EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
+
+        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection});
 
         if (note.Type == 0)
         {
@@ -132,11 +109,6 @@ public class NoteSpawningSystem : SystemBase
             renderMesh.material = redEmissiveMaterial;
             EntityManager.SetSharedComponentData(linkedGroup[1].Value, renderMesh);
         }
-    }
-
-    float3 GetSpawnPosition(float lineIndex, float lineLayer)
-    {
-        return new float3(lineIndex * CurrentSongDataManager.Instance.SpawnPointOffset.x - 1.3f, lineLayer * CurrentSongDataManager.Instance.SpawnPointOffset.y, 0);
     }
 
     float GetNeededOffset()

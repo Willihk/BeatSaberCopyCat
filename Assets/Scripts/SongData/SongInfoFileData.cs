@@ -107,14 +107,14 @@ public struct DifficultyBeatmapCustomData
     public long EditorOldOffset { get; set; }
 
     [JsonProperty("_warnings")]
-    public object[] Warnings { get; set; }
+    public string[] Warnings { get; set; }
 
     [JsonProperty("_information")]
-    public object[] Information { get; set; }
+    public string[] Information { get; set; }
 
     [JsonProperty("_suggestions")]
-    public object[] Suggestions { get; set; }
+    public string[] Suggestions { get; set; }
 
     [JsonProperty("_requirements")]
-    public object[] Requirements { get; set; }
+    public string[] Requirements { get; set; }
 }

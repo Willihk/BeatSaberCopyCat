@@ -4,5 +4,6 @@ using Unity.Entities;
 [GenerateAuthoringComponent]
 public struct Note : IComponentData
 {
-    public NoteSpawnData Data;
+    public int Type;
+    public int CutDirection;
 }

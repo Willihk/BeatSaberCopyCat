@@ -21,20 +21,20 @@ public class SaberSystem : SystemBase
             if (EntityManager.HasComponent<Note>(hit.Entity))
             {
                 var note = EntityManager.GetComponentData<Note>(hit.Entity);
-                if (note.Data.Type == saberData.AffectsType)
+                if (note.Type == saberData.AffectsType)
                 {
                     quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
                     float angle = Vector3.Angle(translation.Value - saberData.PreviousPosition, matrix.MultiplyPoint(Vector3.up));
-                    if (angle > 130 || note.Data.CutDirection == 8)
+                    if (angle > 130 || note.CutDirection == 8)
                     {
                         // TODO Reward player with points
 
                         commandBuffer.DestroyEntity(hit.Entity);
                     }
                 }
-                else if (note.Data.Type == 3)
+                else if (note.Type == 3)
                 {
                     // Hit Bomb
                     Debug.LogWarning("Saber hit a bomb");

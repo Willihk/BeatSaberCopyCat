@@ -2,7 +2,7 @@
 using System.Collections;
 using Newtonsoft.Json;
 
-public struct NoteSpawnData
+public struct RawNoteData
 {
     [JsonProperty("_time")]
     public double Time { get; set; }
@@ -19,6 +19,6 @@ public struct NoteSpawnData
     [JsonProperty("_cutDirection")]
     public int CutDirection { get; set; }
 
-    //[JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
-    //public CustomData CustomData { get; set; }
+    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
+    public CustomData CustomData { get; set; }
 }

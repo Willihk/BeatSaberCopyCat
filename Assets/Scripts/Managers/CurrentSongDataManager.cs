@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ public class CurrentSongDataManager : MonoBehaviour
     public DifficultyBeatmap SelectedDifficultyMap;
 
     public MapData MapData;
+    public JObject MapJsonObject;
 
     public float3 SpawnPointOffset = new float3(.8f, .8f, 0);
 
@@ -37,7 +39,59 @@ public class CurrentSongDataManager : MonoBehaviour
         if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
         {
             MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+
+            MapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+            ConvertNotes();
+            ConvertObstacles();
         }
+    }
+
+    void ConvertNotes()
+    {
+        bool usesNoodleExtensions = false;
+        if (SelectedDifficultyMap.CustomData.Requirements != null)
+            usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
+
+        Debug.Log(usesNoodleExtensions);
+
+        var rawData = ((JArray)MapJsonObject["_notes"]).ToObject<RawNoteData[]>();
+        var notedata = new NoteData[rawData.Length];
+
+        for (int i = 0; i < rawData.Length; i++)
+        {
+            NoteData note;
+            if (usesNoodleExtensions)
+                note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(rawData[i], SpawnPointOffset);
+            else
+                note = PlacementHelper.ConvertNoteDataWithVanillaMethod(rawData[i], SpawnPointOffset);
+
+            notedata[i] = note;
+        }
+
+        MapData.Notes = notedata;
+    }
+
+    void ConvertObstacles()
+    {
+        bool usesNoodleExtensions = false;
+        if (SelectedDifficultyMap.CustomData.Requirements != null)
+            usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
+
+        var rawData = ((JArray)MapJsonObject["_obstacles"]).ToObject<RawObstacleData[]>();
+        var obstacleDatas = new ObstacleData[rawData.Length];
+
+        for (int i = 0; i < rawData.Length; i++)
+        {
+            ObstacleData obstacle;
+            if (usesNoodleExtensions)
+                obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(rawData[i], SpawnPointOffset);
+            else
+                obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(rawData[i], SpawnPointOffset);
+
+            obstacleDatas[i] = obstacle;
+        }
+
+        MapData.Obstacles = obstacleDatas;
     }
 
     public void SetData(AvailableSongData songData, string difficulty)
