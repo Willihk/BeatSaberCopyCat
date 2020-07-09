@@ -70,13 +70,11 @@ public class NoteSpawningSystem : SystemBase
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
 
         EntityManager.SetComponentData(noteEntity, new Note {Type = note.Type, CutDirection = note.CutDirection});
-
     }
 
     void SpawnNote(NoteData note)
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Note");
-
 
         switch ((CutDirection)note.CutDirection)
         {
