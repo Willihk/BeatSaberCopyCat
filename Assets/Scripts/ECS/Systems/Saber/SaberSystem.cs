@@ -16,7 +16,6 @@ public class SaberSystem : SystemBase
             var hit = ECSRaycast.Raycast(translation.Value, translation.Value + (math.forward(rotation.Value) * saberData.Length));
 
             if (hit.Entity == Entity.Null)
-                return;
 
             if (EntityManager.HasComponent<Note>(hit.Entity))
             {
