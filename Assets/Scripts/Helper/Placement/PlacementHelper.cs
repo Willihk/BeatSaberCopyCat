@@ -88,7 +88,7 @@ public class PlacementHelper
             Time = rawObstacleData.Time,
             TransformData = new TransformData
             {
-                Position = GetVanillaPosition(lineIndex, lineLayer, spawnPointOffset) + scale.c0.x / 2 + new float3(1.3f, 0, 0),
+                Position = GetVanillaPosition(lineIndex, lineLayer, spawnPointOffset),
                 Scale = new float3(scale.c0.x, scale.c1.y, scale.c2.z),
             },
         };

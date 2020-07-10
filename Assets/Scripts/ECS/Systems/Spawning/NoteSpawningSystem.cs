@@ -69,7 +69,7 @@ public class NoteSpawningSystem : SystemBase
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
 
-        EntityManager.SetComponentData(noteEntity, new Note {Type = note.Type, CutDirection = note.CutDirection});
+        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
     }
 
     void SpawnNote(NoteData note)
@@ -87,10 +87,13 @@ public class NoteSpawningSystem : SystemBase
                 break;
         }
 
-        EntityManager.SetComponentData(noteEntity, new Rotation { Value = quaternion.Euler(note.TransformData.LocalRotation) });
+
+        var rotation = EntityManager.GetComponentData<Rotation>(noteEntity);
+
+        EntityManager.SetComponentData(noteEntity, new Rotation { Value = math.mul(rotation.Value, quaternion.Euler(note.TransformData.LocalRotation)) });
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
 
-        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection});
+        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
 
         if (note.Type == 0)
         {
