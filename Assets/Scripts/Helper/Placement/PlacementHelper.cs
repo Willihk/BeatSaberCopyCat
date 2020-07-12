@@ -94,17 +94,17 @@ public class PlacementHelper
         };
     }
 
-    public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawNoteData, float3 spawnpointOffset)
+    public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData, float3 spawnpointOffset)
     {
-        var note = ConvertObstacleDataWithVanillaMethod(rawNoteData, spawnpointOffset);
+        var obstacle = ConvertObstacleDataWithVanillaMethod(rawData, spawnpointOffset);
 
-        note.TransformData = GetTransformDataWithNoodle(note.TransformData, rawNoteData.CustomData);
+        obstacle.TransformData = GetTransformDataWithNoodle(obstacle.TransformData, rawData.CustomData);
 
-        var temp = note.TransformData;
-        temp.Position += new float3(note.TransformData.Scale.x / 2 + 1.3f, note.TransformData.Scale.y / 2, 0);
-        note.TransformData = temp;
+        var temp = obstacle.TransformData;
+        temp.Position += new float3(obstacle.TransformData.Scale.x / 2 + 1.3f, obstacle.TransformData.Scale.y / 2, 0);
+        obstacle.TransformData = temp;
 
-        return note;
+        return obstacle;
     }
 
 
@@ -115,26 +115,20 @@ public class PlacementHelper
 
     public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData)
     {
-        if (customData == null)
-            return transformData;
-
-        if (customData.Position != null)
+        if (math.any(customData.Position != new float3(-9999, -9999, -9999)))
         {
-            transformData.Position = GetVanillaPosition((float)customData.Position[0], (float)customData.Position[1], new float3(.8f, .8f, 0));
+            transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
         }
-        if (customData.Scale != null)
+        if (math.any(customData.Scale != new float3(-9999, -9999, -9999)))
         {
             transformData.Scale = new float3(
-              (float)customData.Scale[0],
-              (float)customData.Scale[1],
+              customData.Scale.x,
+              customData.Scale.y,
               transformData.Scale.z);
         }
-        if (customData.LocalRotation != null)
+        if (math.any(customData.LocalRotation != new float3(-9999, -9999, -9999)))
         {
-            transformData.LocalRotation = new float3(
-                 customData.LocalRotation[0],
-                 customData.LocalRotation[1],
-                 customData.LocalRotation[2]);
+            transformData.LocalRotation = customData.LocalRotation;
         }
 
         return transformData;
