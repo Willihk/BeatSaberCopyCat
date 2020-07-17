@@ -80,8 +80,8 @@ public class NoteSpawningSystem : SystemBase
         {
             case CutDirection.Any:
                 var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
-                EntityManager.SetComponentData(linkedGroup[1].Value, new NonUniformScale { Value = new float3(0.05f, 0.1f, 0.1f) });
-                EntityManager.SetComponentData(linkedGroup[1].Value, new Translation { Value = new float3(0, 0, -0.237f) });
+                EntityManager.SetComponentData(linkedGroup[1].Value, new NonUniformScale { Value = new float3(0.1f, 0.26f, 0.26f) });
+                EntityManager.SetComponentData(linkedGroup[1].Value, new Translation { Value = new float3(0, 0, -0.474f) });
                 break;
             default:
                 break;

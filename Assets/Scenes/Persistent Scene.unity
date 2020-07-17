@@ -771,6 +771,7 @@ MonoBehaviour:
     HalfJumpDuration: 0
     JumpDistance: 0
     DistanceToMove: 0
+  HasLoadedData: 0
 --- !u!4 &1644557486
 Transform:
   m_ObjectHideFlags: 0

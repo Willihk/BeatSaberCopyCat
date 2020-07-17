@@ -57,36 +57,6 @@ public class ObstacleSpawningSystem : SystemBase
         };
         job.Schedule().Complete();
 
-        //Stopwatch stopwatch = new Stopwatch();
-        //stopwatch.Start();
-        //for (int i = 0; i < obstaclesToSpawn.Length; i++)
-        //{
-        //    var obstacle = obstaclesToSpawn[i];
-
-        //    if (obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat && obstacle.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration >= GameManager.Instance.LastBeat)
-        //    {
-        //        //SpawnObstacle(obstacle);
-
-        //        var entity = EntityPrefabManager.Instance.SpawnEntityPrefab(commandBuffer, "Wall");
-
-        //        var scale = float4x4.Scale(obstacle.TransformData.Scale);
-
-        //        commandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
-
-        //        commandBuffer.SetComponent(entity, new CompositeScale
-        //        {
-        //            Value = scale
-        //        });
-
-        //        commandBuffer.SetComponent(entity, new Rotation { Value = quaternion.Euler(obstacle.TransformData.LocalRotation) });
-
-        //        //obstaclesToSpawn.RemoveAtSwapBack(i);
-        //        //i--;
-        //    }
-
-        //}
-        //stopwatch.Stop();
-        //Debug.Log(stopwatch.ElapsedMilliseconds);
         commandBuffer.Playback(EntityManager);
         commandBuffer.Dispose();
     }
