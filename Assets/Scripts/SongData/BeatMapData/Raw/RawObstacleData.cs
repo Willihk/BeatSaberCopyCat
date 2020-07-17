@@ -22,6 +22,6 @@ public struct RawObstacleData
     [JsonProperty("_width")]
     public int Width { get; set; }
 
-    [JsonProperty("_customData"), JsonConverter(typeof(CustomDataConverter))]
+    [JsonProperty("_customData")]
     public CustomData CustomData { get; set; }
 }

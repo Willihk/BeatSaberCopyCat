@@ -8,15 +8,17 @@ using Unity.Mathematics;
 
 public struct CustomData
 {
-    [JsonProperty("_position"), JsonConverter(typeof(Float3Converter))]
-    public float3 Position { get; set; }
+    // Using float4 last value to check if there is a value defined
 
-    [JsonProperty("_scale"), JsonConverter(typeof(Float3Converter))]
-    public float3 Scale { get; set; }
+    [JsonProperty("_position"), JsonConverter(typeof(Float4ConverterWithValidation))]
+    public float4 Position { get; set; }
 
-    [JsonProperty("_color"), JsonConverter(typeof(Float3Converter))]
-    public float3 Color { get; set; }
+    [JsonProperty("_scale"), JsonConverter(typeof(Float4ConverterWithValidation))]
+    public float4 Scale { get; set; }
 
-    [JsonProperty("_localRotation", NullValueHandling = NullValueHandling.Ignore), JsonConverter(typeof(Float3Converter))]
-    public float3 LocalRotation { get; set; }
+    [JsonProperty("_color"), JsonConverter(typeof(Float4ConverterWithValidation))]
+    public float4 Color { get; set; }
+
+    [JsonProperty("_localRotation", NullValueHandling = NullValueHandling.Ignore), JsonConverter(typeof(Float4ConverterWithValidation))]
+    public float4 LocalRotation { get; set; }
 }

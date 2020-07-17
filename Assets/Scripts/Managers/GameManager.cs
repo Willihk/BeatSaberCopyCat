@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(GetAudioClip());
 
-        CurrentSongDataManager.Instance.LoadLevelData();
+        CurrentSongDataManager.Instance.LoadLevelDataAsync();
 
         StartCoroutine(Loading());
     }
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
         while (!isLoaded)
         {
-            if (audioSource.clip != null && !CurrentSongDataManager.Instance.MapData.Equals(null))
+            if (audioSource.clip != null && CurrentSongDataManager.Instance.HasLoadedData)
                 isLoaded = true;
 
             if (!isLoaded)

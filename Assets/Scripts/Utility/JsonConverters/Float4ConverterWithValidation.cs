@@ -5,7 +5,7 @@ using System;
 using Newtonsoft.Json.Linq;
 using Unity.Mathematics;
 
-public class Float3Converter : JsonConverter
+public class Float4ConverterWithValidation : JsonConverter
 {
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
@@ -28,7 +28,7 @@ public class Float3Converter : JsonConverter
 
             var values = ((JArray)obj).ToObject<double[]>();
 
-            float3 result = new float3(-9999, -9999, -9999);
+            float4 result = new float4(0,0,0, 1);
 
             result.x = (float)values[0];
             result.y = (float)values[1];

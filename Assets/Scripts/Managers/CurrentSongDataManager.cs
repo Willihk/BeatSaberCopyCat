@@ -32,13 +32,15 @@ public class CurrentSongDataManager : MonoBehaviour
 
     public SongSpawningInfo SongSpawningInfo;
 
+    public bool HasLoadedData;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
     }
 
-    public void LoadLevelData()
+    public async void LoadLevelDataAsync()
     {
         if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
         {
@@ -60,7 +62,7 @@ public class CurrentSongDataManager : MonoBehaviour
 
             stopwatch.Start();
 
-            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(MapJsonObject["_notes"].ToObject<RawNoteData[]>(), Allocator.TempJob);
+            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); }), Allocator.TempJob);
             NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
             Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
             var convertNoteJob = new ConvertNoteDatas
@@ -72,7 +74,7 @@ public class CurrentSongDataManager : MonoBehaviour
             };
             var noteJobHandle = convertNoteJob.Schedule();
 
-            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(), Allocator.TempJob);
+            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(await Task.Run(() => { return MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(); }), Allocator.TempJob);
             NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
             Debug.Log("obstacle job assigned : " + stopwatch.ElapsedMilliseconds);
 
@@ -123,6 +125,8 @@ public class CurrentSongDataManager : MonoBehaviour
             Debug.Log("Notes: " + Instance.MapData.Notes.Length);
             Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
             Debug.Log("Events: " + Instance.MapData.Events.Length);
+
+            HasLoadedData = true;
         }
     }
 

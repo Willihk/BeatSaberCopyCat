@@ -19,6 +19,6 @@ public struct RawNoteData
     [JsonProperty("_cutDirection")]
     public int CutDirection { get; set; }
 
-    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore), JsonConverter(typeof(CustomDataConverter))]
+    [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
     public CustomData CustomData { get; set; }
 }

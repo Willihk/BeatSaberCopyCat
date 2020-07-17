@@ -115,20 +115,20 @@ public class PlacementHelper
 
     public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData)
     {
-        if (math.any(customData.Position != new float3(-9999, -9999, -9999)))
+        if (customData.Position.w != 0)
         {
             transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
         }
-        if (math.any(customData.Scale != new float3(-9999, -9999, -9999)))
+        if (customData.Scale.w != 0)
         {
             transformData.Scale = new float3(
               customData.Scale.x,
               customData.Scale.y,
               transformData.Scale.z);
         }
-        if (math.any(customData.LocalRotation != new float3(-9999, -9999, -9999)))
+        if (customData.LocalRotation.w != 0)
         {
-            transformData.LocalRotation = customData.LocalRotation;
+            transformData.LocalRotation = customData.LocalRotation.xyz;
         }
 
         return transformData;
