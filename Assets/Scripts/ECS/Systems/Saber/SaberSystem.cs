@@ -22,6 +22,7 @@ public class SaberSystem : SystemBase
                 var note = EntityManager.GetComponentData<Note>(hit.Entity);
                 if (note.Type == saberData.AffectsType)
                 {
+                        Debug.Log("Saber hit note");
                     quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 

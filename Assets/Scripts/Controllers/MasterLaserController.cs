@@ -9,7 +9,7 @@ public class MasterLaserController : MonoBehaviour
     [SerializeField]
     bool findLaserControllersInChildren = false;
     [SerializeField]
-    List<LaserControllerBase> laserControllers;
+    List<LaserControllerBase> controllers;
 
     [SerializeField]
     SongEventType[] supportedEventTypes;
@@ -28,11 +28,11 @@ public class MasterLaserController : MonoBehaviour
 
     private void Start()
     {
-        if (laserControllers == null)
-            laserControllers = new List<LaserControllerBase>();
+        if (controllers == null)
+            controllers = new List<LaserControllerBase>();
 
         if (findLaserControllersInChildren)
-            GetLasersInChildReqursive(transform);
+            GetControllersInChildReqursive(transform);
 
         blueMaterial = new Material(blueMaterial);
         redMaterial = new Material(redMaterial);
@@ -45,18 +45,20 @@ public class MasterLaserController : MonoBehaviour
 
         World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
 
+        controllers.ForEach(x => x.SetMaterial(currentMaterial));
+
         TurnOff();
     }
 
-    void GetLasersInChildReqursive(Transform child)
+    void GetControllersInChildReqursive(Transform child)
     {
         foreach (Transform item in child)
         {
-            if (item.TryGetComponent(out LaserControllerBase laserController))
+            if (item.TryGetComponent(out LaserControllerBase controller))
             {
-                laserControllers.Add(laserController);
+                controllers.Add(controller);
             }
-            GetLasersInChildReqursive(item);
+            GetControllersInChildReqursive(item);
         }
     }
 
@@ -81,7 +83,7 @@ public class MasterLaserController : MonoBehaviour
                         currentMaterial = redMaterial;
                     }
 
-                    laserControllers.ForEach(x => x.SetMaterial(currentMaterial));
+                    controllers.ForEach(x => x.SetMaterial(currentMaterial));
 
                     switch (value)
                     {
@@ -103,12 +105,12 @@ public class MasterLaserController : MonoBehaviour
                     break;
                 case 12:
                 case 13:
-                    for (int i = 0; i < laserControllers.Count; i++)
+                    for (int i = 0; i < controllers.Count; i++)
                     {
                         if (i % 2 == 0)
-                            laserControllers[i].SetRotation(value);
+                            controllers[i].SetRotation(value);
                         else
-                            laserControllers[i].SetRotation(-value);
+                            controllers[i].SetRotation(-value);
                     }
                     break;
                 default:
@@ -120,7 +122,7 @@ public class MasterLaserController : MonoBehaviour
     public virtual void TurnOff()
     {
         currentMaterial.SetFloat("_FadeAmount", 0);
-        laserControllers.ForEach(x => x.TurnOff());
+        controllers.ForEach(x => x.TurnOff());
     }
 
     public virtual void TurnOn()

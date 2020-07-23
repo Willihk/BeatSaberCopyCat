@@ -6,7 +6,7 @@ public class MeshLaserController : LaserControllerBase
     [SerializeField]
     MeshRenderer renderer;
 
-    private void Start()
+    private void Awake()
     {
         if (renderer == null)
             TryGetComponent(out renderer);

@@ -75,13 +75,13 @@ Material:
     - _ConeWidth: 6.67
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailStrength: 0.478
+    - _DetailStrength: 0.312
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LimitLength: 1
+    - _LimitLength: 0.95
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _OrthoSpport: 0

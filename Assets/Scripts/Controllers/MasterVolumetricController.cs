@@ -36,6 +36,8 @@ public class MasterVolumetricController : MonoBehaviour
 
         World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
 
+        controllers.ForEach(x => x.SetMaterial(material));
+
         TurnOff();
     }
 
@@ -46,7 +48,6 @@ public class MasterVolumetricController : MonoBehaviour
             if (item.TryGetComponent(out VolumetricControllerBase controller))
             {
                 controllers.Add(controller);
-                controller.SetMaterial(material);
             }
             GetControllersInChildReqursive(item);
         }

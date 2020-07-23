@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class VolumetricControllerBase : MonoBehaviour
+public class VolumetricControllerBase : MonoBehaviour
 {
     protected Material material;
 
