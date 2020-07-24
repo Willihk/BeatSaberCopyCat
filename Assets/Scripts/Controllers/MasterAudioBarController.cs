@@ -29,13 +29,19 @@ public class MasterAudioBarController : MonoBehaviour
         for (int i = 0; i < entities.Length; i++)
         {
             int frequencyBand = 0;
-            if (AudioSpectrumManager.Instance.frequencyBandCount >= barCount)
+            if (AudioSpectrumManager.Instance.FrequencyBands >= barCount)
                 frequencyBand = i;
             else
-                frequencyBand = (int)math.floor(i / (int)math.floor(barCount / AudioSpectrumManager.Instance.frequencyBandCount - 1));
+            {
+                double barsPerFrequency = Math.Ceiling((double)barCount / (AudioSpectrumManager.Instance.FrequencyBands - 1));
+                if (i == 0)
+                    frequencyBand = i;
+                else
+                    frequencyBand = (int)math.floor(i / barsPerFrequency);
+            }
 
-            if (frequencyBand >= AudioSpectrumManager.Instance.frequencyBandCount)
-                frequencyBand = AudioSpectrumManager.Instance.frequencyBandCount - 1;
+            if (frequencyBand >= AudioSpectrumManager.Instance.FrequencyBands)
+                frequencyBand = AudioSpectrumManager.Instance.FrequencyBands - 1;
 
             var position = bar.transform.position + gap * i;
             entityManager.SetComponentData(entities[i], new Translation { Value = position });
@@ -43,7 +49,7 @@ public class MasterAudioBarController : MonoBehaviour
             {
                 FrequencyBand = frequencyBand,
                 BaseScale = bar.transform.localScale,
-                ScaleMultiplier = scaleMultiplier * 10
+                ScaleMultiplier = scaleMultiplier
             });
         }
         entities.Dispose();

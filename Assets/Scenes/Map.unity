@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ringCount: 15
-  ringGap: {x: 0, y: 0, z: 20}
+  ringGap: {x: 0, y: 0, z: 12}
   ringObject: {fileID: 61142477}
   rings:
   - {fileID: 61142477}

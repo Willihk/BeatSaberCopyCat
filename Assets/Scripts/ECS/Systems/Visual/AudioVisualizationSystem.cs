@@ -18,13 +18,13 @@ public class AudioVisualizationSystem : SystemBase
         }
         });
 
-        frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.frequencyBandCount, Allocator.Persistent);
+        frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.FrequencyBands, Allocator.Persistent);
 
     }
 
     protected override void OnUpdate()
     {
-        frequencyBands.CopyFrom(AudioSpectrumManager.Instance.FrequencyBands);
+        frequencyBands.CopyFrom(AudioSpectrumManager.Instance.AudioBandBuffer);
         var job = new VisualizeJob
         {
             FrequencyBands = frequencyBands,
@@ -59,14 +59,10 @@ public class AudioVisualizationSystem : SystemBase
                 var scale = scaleDatas[i];
                 var visualizationData = audioVisualizationDatas[i];
 
-                float multiplier = 15;
-                if (FrequencyBands[visualizationData.FrequencyBand] * multiplier >= 3)
-                    multiplier = .7f;
-
                 float3 endScale = math.lerp(
                     scale.Value,
-                   math.clamp((visualizationData.ScaleMultiplier * multiplier * FrequencyBands[visualizationData.FrequencyBand]) + visualizationData.BaseScale, visualizationData.BaseScale, visualizationData.BaseScale + new float3(0, 60, 0)),
-                    .15f);
+                   (visualizationData.BaseScale + (new float3(0, 60, 0) * FrequencyBands[visualizationData.FrequencyBand])),
+                    .45f);
                 scale.Value = endScale;
                 scaleDatas[i] = scale;
             }
