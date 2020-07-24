@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioSource: {fileID: 454897304}
-  frequencyBandCount: 8
+  frequencyBandCount: 128
   audioSpectrum: []
   FrequencyBands: []
 --- !u!21 &599520620

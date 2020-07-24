@@ -15,7 +15,8 @@ public class AudioVisualizationSystem : SystemBase
         audioBarQuery = GetEntityQuery(new EntityQueryDesc
         {
             All = new ComponentType[] { typeof(AudioVisualizationData), typeof(NonUniformScale)
-        }});
+        }
+        });
 
         frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.frequencyBandCount, Allocator.Persistent);
 
@@ -46,7 +47,7 @@ public class AudioVisualizationSystem : SystemBase
         public ArchetypeChunkComponentType<NonUniformScale> NonUniformScaleType;
 
         [ReadOnly]
-       public  NativeArray<float> FrequencyBands;
+        public NativeArray<float> FrequencyBands;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -58,10 +59,14 @@ public class AudioVisualizationSystem : SystemBase
                 var scale = scaleDatas[i];
                 var visualizationData = audioVisualizationDatas[i];
 
+                float multiplier = 15;
+                if (FrequencyBands[visualizationData.FrequencyBand] * multiplier >= 3)
+                    multiplier = .7f;
+
                 float3 endScale = math.lerp(
                     scale.Value,
-                    (visualizationData.ScaleMultiplier * FrequencyBands[visualizationData.FrequencyBand]) + visualizationData.BaseScale,
-                    .3f);
+                   math.clamp((visualizationData.ScaleMultiplier * multiplier * FrequencyBands[visualizationData.FrequencyBand]) + visualizationData.BaseScale, visualizationData.BaseScale, visualizationData.BaseScale + new float3(0, 60, 0)),
+                    .15f);
                 scale.Value = endScale;
                 scaleDatas[i] = scale;
             }

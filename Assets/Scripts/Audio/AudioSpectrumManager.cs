@@ -26,9 +26,9 @@ public class AudioSpectrumManager : MonoBehaviour
 
     void Update()
     {
-        AudioSource.GetSpectrumData(audioSpectrum, 0, FFTWindow.Blackman);
+        AudioSource.GetSpectrumData(FrequencyBands, 0, FFTWindow.Blackman);
 
-        CalcFrequencyBands();
+        //CalcFrequencyBands();
     }
 
     void CalcFrequencyBands()
