@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (scene.name == "Map")
+        if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
         {
             IsPlaying = true;
         }
@@ -44,7 +44,19 @@ public class GameManager : MonoBehaviour
         {
             LastBeat = CurrentBeat;
             CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
+            if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration +5) && !audioSource.isPlaying)
+            {
+                IsPlaying = false;
+                CurrentBeat = 0;
+                Invoke("ReturnToMenu", 5);
+            }
         }
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
+        SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
     }
 
     public void PlayLevel()

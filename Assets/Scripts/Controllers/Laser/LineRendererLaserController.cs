@@ -13,7 +13,7 @@ public class LineRendererLaserController : LaserControllerBase
     [SerializeField]
     float laserLength = 100;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (lineRenderer == null)
             TryGetComponent(out lineRenderer);
@@ -22,7 +22,8 @@ public class LineRendererLaserController : LaserControllerBase
         startRotation = transform.rotation;
         lineRenderer.positionCount = 2;
 
-        material = lineRenderer.sharedMaterial;
+        if (lineRenderer != null)
+            material = lineRenderer.sharedMaterial;
 
         lineRenderer.enabled = true;
     }
@@ -52,6 +53,8 @@ public class LineRendererLaserController : LaserControllerBase
     public override void SetMaterial(Material material)
     {
         base.SetMaterial(material);
+        if (lineRenderer == null)
+            TryGetComponent(out lineRenderer);
         lineRenderer.material = material;
     }
 }

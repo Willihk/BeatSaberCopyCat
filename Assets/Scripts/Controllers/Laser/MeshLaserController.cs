@@ -6,7 +6,7 @@ public class MeshLaserController : LaserControllerBase
     [SerializeField]
     MeshRenderer renderer;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (renderer == null)
             TryGetComponent(out renderer);
@@ -14,7 +14,8 @@ public class MeshLaserController : LaserControllerBase
 
         startRotation = transform.rotation;
 
-        material = renderer.sharedMaterial;
+        if (renderer != null)
+            material = renderer.sharedMaterial;
     }
 
     void Update()
@@ -28,6 +29,9 @@ public class MeshLaserController : LaserControllerBase
     public override void SetMaterial(Material material)
     {
         base.SetMaterial(material);
+        if (renderer == null)
+            TryGetComponent(out renderer);
+
         renderer.material = material;
     }
 }

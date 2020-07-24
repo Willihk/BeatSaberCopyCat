@@ -26,7 +26,7 @@ public class MasterLaserController : MonoBehaviour
 
     Material currentMaterial;
 
-    private void Start()
+    private void OnEnable()
     {
         if (controllers == null)
             controllers = new List<LaserControllerBase>();
@@ -48,6 +48,12 @@ public class MasterLaserController : MonoBehaviour
         controllers.ForEach(x => x.SetMaterial(currentMaterial));
 
         TurnOff();
+    }
+
+    private void OnDisable()
+    {
+        World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+        controllers = null;
     }
 
     void GetControllersInChildReqursive(Transform child)

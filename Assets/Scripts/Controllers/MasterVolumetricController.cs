@@ -24,7 +24,7 @@ public class MasterVolumetricController : MonoBehaviour
 
     Color currentColor;
 
-    private void Start()
+    private void OnEnable()
     {
         material = new Material(material);
 
@@ -39,6 +39,12 @@ public class MasterVolumetricController : MonoBehaviour
         controllers.ForEach(x => x.SetMaterial(material));
 
         TurnOff();
+    }
+
+    private void OnDisable()
+    {
+        World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+        controllers = null;
     }
 
     void GetControllersInChildReqursive(Transform child)

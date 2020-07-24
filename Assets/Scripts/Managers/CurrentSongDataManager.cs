@@ -107,18 +107,21 @@ public class CurrentSongDataManager : MonoBehaviour
             // Load Notes
             NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
             NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
+            noteSpawningSystem.notesToSpawn.Clear();
             noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
             noteSpawnDatas.Dispose();
 
             // Load Obstacles
             ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
             NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
+            obstacleSpawningSystem.obstaclesToSpawn.Clear();
             obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
             obstacleSpawnDatas.Dispose();
 
             // Load Events
             EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
             NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
+            eventPlayingSystem.eventsToPlay.Clear();
             eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
             eventsToPlay.Dispose();
 
