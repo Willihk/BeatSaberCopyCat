@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -49,7 +50,8 @@ public class SongInfoController : MonoBehaviour
 
     void SetStats()
     {
-
+        if (songData.AudioClip != null)
+            timeValueText.text = $"{math.floor(songData.AudioClip.length / 60)}:{math.floor(songData.AudioClip.length % 60).ToString("00")}";
     }
 
     void SetupDifficulty(string[] availableDifficulties)
@@ -98,6 +100,8 @@ public class SongInfoController : MonoBehaviour
         songPreviewAudioSource.clip = songData.AudioClip;
         songPreviewAudioSource.time = (float)songData.SongInfoFileData.PreviewStartTime;
         songPreviewAudioSource.Play();
+
+        SetStats();
     }
 
     public void PlayLevel()

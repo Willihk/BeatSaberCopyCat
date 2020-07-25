@@ -13,13 +13,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public event Action OnLoadingFinished;
+
     public bool IsPlaying;
 
     public double CurrentBeat;
     public double LastBeat;
 
     [SerializeField]
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
         mapLoad.completed += (AsyncOperation operation) =>
         {
             SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
+            OnLoadingFinished?.Invoke();
             Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
         };
     }

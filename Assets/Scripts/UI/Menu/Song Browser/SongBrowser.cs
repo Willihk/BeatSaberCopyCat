@@ -31,12 +31,12 @@ public class SongBrowser : MonoBehaviour
 
     private void OnDestroy()
     {
+        AvailableSongs.Remove(CurrentSongDataManager.Instance.SelectedSongData);
+
         foreach (var item in AvailableSongs)
         {
-            if (item != AvailableSongs[tabGroup.TabButtons.IndexOf(tabGroup.SelectedTab)] && item.AudioClip != null)
-            {
+            if (item.AudioClip != null)
                 item.AudioClip.UnloadAudioData();
-            }
         }
     }
 
@@ -75,7 +75,7 @@ public class SongBrowser : MonoBehaviour
             songEntryObject.GetComponent<SongEntryController>().Initizalize(item);
             songEntryObject.GetComponent<TabButton>().SetTabGroup(tabGroup);
         }
-        
+
     }
 
     void LoadSongs()
