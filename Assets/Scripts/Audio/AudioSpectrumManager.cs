@@ -38,16 +38,6 @@ public class AudioSpectrumManager : MonoBehaviour
         Right
     }
 
-    public enum FFTW
-    {
-        Rectangular,
-        Triangle,
-        Hamming,
-        Hanning,
-        Blackman,
-        BlackmanHarris
-    }
-
     public Channel channel = new Channel();
     public FFTWindow FrequencyReadMethod;
 
