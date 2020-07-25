@@ -42,14 +42,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            IsPlaying = false;
+            CurrentBeat = 0;
+            audioSource.Stop();
+            ReturnToMenu();
+        }
+
         if (IsPlaying)
         {
             LastBeat = CurrentBeat;
             CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
-            if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration +5) && !audioSource.isPlaying)
+            if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + 5) && !audioSource.isPlaying)
             {
                 IsPlaying = false;
                 CurrentBeat = 0;
+                audioSource.Stop();
                 Invoke("ReturnToMenu", 5);
             }
         }
