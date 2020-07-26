@@ -8,6 +8,7 @@ using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using VRTK;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,13 +24,39 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public AudioSource audioSource;
 
+    GameObject leftSaber;
+    GameObject leftModel;
+    GameObject rightSaber;
+    GameObject rightModel;
+
+    VRTK_Pointer rightUIPointer;
+    bool VRTK_Loaded;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
 
+        VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
+
         SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
         SceneManager.sceneLoaded += SceneLoaded;
+    }
+
+    void VRSetupLoaded(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e)
+    {
+        var LeftController = e.currentSetup.actualLeftController;
+        var RightController = e.currentSetup.actualRightController;
+
+        leftSaber = LeftController.transform.Find("Saber").gameObject;
+        leftModel = LeftController.transform.Find("Model").gameObject;
+
+        rightSaber = RightController.transform.Find("Saber").gameObject;
+        rightModel = RightController.transform.Find("Model").gameObject;
+
+        rightUIPointer = RightController.transform.Find("RightController").GetComponent<VRTK_Pointer>();
+
+        VRTK_Loaded = true;
     }
 
     private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -37,6 +64,31 @@ public class GameManager : MonoBehaviour
         if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
         {
             IsPlaying = true;
+
+            if (!VRTK_Loaded)
+                return;
+
+            leftSaber.SetActive(true);
+            leftModel.SetActive(true);
+
+            rightSaber.SetActive(true);
+            rightModel.SetActive(true);
+
+            rightUIPointer.enabled = false;
+
+        }
+        else if (scene.name == "Menu")
+        {
+            if (!VRTK_Loaded)
+                return;
+
+            leftSaber.SetActive(false);
+            leftModel.SetActive(false);
+
+            rightSaber.SetActive(false);
+            rightModel.SetActive(false);
+
+            rightUIPointer.enabled = true;
         }
     }
 
@@ -79,6 +131,11 @@ public class GameManager : MonoBehaviour
         Instance.StartLoading();
     }
 
+    void PlaySong()
+    {
+        audioSource.Play();
+    }
+
     public void StartLoading()
     {
         StartCoroutine(GetAudioClip());
@@ -108,11 +165,6 @@ public class GameManager : MonoBehaviour
             OnLoadingFinished?.Invoke();
             Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
         };
-    }
-
-    void PlaySong()
-    {
-        audioSource.Play();
     }
 
     IEnumerator GetAudioClip()
