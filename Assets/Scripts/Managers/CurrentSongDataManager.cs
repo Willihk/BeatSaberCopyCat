@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using BeatGame.Data;
+using BeatGame.Utility;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -14,229 +16,230 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
-public class CurrentSongDataManager : MonoBehaviour
+namespace BeatGame.Logic.Managers
 {
-    public static CurrentSongDataManager Instance;
-
-    public AvailableSongData SelectedSongData;
-    public DifficultyBeatmap SelectedDifficultyMap;
-
-    public MapData MapData;
-    public JObject MapJsonObject;
-
-    public float3 SpawnPointOffset = new float3(.8f, .8f, 0);
-
-    public SongSpawningInfo SongSpawningInfo;
-
-    public bool HasLoadedData;
-
-    private void Awake()
+    public class CurrentSongDataManager : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
-    }
+        public static CurrentSongDataManager Instance;
 
-    public async void LoadLevelDataAsync()
-    {
-        if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
+        public AvailableSongData SelectedSongData;
+        public DifficultyBeatmap SelectedDifficultyMap;
+
+        public MapData MapData;
+        public JObject MapJsonObject;
+
+        public float3 SpawnPointOffset = new float3(.8f, .8f, 0);
+
+        public SongSpawningInfo SongSpawningInfo;
+
+        public bool HasLoadedData;
+
+        private void Awake()
         {
-            MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+            if (Instance == null)
+                Instance = this;
+        }
 
-            MapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
-            Stopwatch stopwatch = new Stopwatch();
-
-            if (SelectedDifficultyMap.CustomData.Requirements == null)
+        public async void LoadLevelDataAsync()
+        {
+            if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
             {
-                var data = SelectedDifficultyMap.CustomData;
-                data.Requirements = new string[1] { "" };
-                SelectedDifficultyMap.CustomData = data;
+                MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+
+                MapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+                Stopwatch stopwatch = new Stopwatch();
+
+                if (SelectedDifficultyMap.CustomData.Requirements == null)
+                {
+                    var data = SelectedDifficultyMap.CustomData;
+                    data.Requirements = new string[1] { "" };
+                    SelectedDifficultyMap.CustomData = data;
+                }
+
+                bool usesNoodleExtensions = false;
+                if (SelectedDifficultyMap.CustomData.Requirements != null)
+                    usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
+
+                stopwatch.Start();
+
+                RawNoteData[] rawNoteDataArray = new RawNoteData[MapJsonObject["_notes"].Count()];
+
+                await new WaitForBackgroundThread();
+                rawNoteDataArray = await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); });
+                await new WaitForUpdate();
+
+                NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(rawNoteDataArray, Allocator.TempJob);
+                NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
+                Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
+                var convertNoteJob = new ConvertNoteDatas
+                {
+                    RawData = rawNoteDatas,
+                    UsesNoodleExtensions = usesNoodleExtensions,
+                    SpawnPointOffset = SpawnPointOffset,
+                    ConvertedData = noteDatas,
+                };
+                var noteJobHandle = convertNoteJob.Schedule();
+
+
+                RawObstacleData[] rawObstacleDataArray = new RawObstacleData[MapJsonObject["_obstacles"].Count()];
+                await new WaitForBackgroundThread();
+                rawObstacleDataArray = MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>();
+                await new WaitForUpdate();
+
+                NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(rawObstacleDataArray, Allocator.TempJob);
+                NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
+                Debug.Log("obstacle job assigned : " + stopwatch.ElapsedMilliseconds);
+
+                var convertObstacleJob = new ConvertObstacleDatas
+                {
+                    RawData = rawObstacleDatas,
+                    UsesNoodleExtensions = usesNoodleExtensions,
+                    SpawnPointOffset = SpawnPointOffset,
+                    ConvertedData = obstacleDatas,
+                };
+                var obstacleJobHandle = convertObstacleJob.Schedule();
+
+                noteJobHandle.Complete();
+                obstacleJobHandle.Complete();
+                stopwatch.Stop();
+                Debug.Log("jobs completed : " + stopwatch.ElapsedMilliseconds);
+
+                MapData.Notes = noteDatas.ToArray();
+                MapData.Obstacles = obstacleDatas.ToArray();
+
+                rawNoteDatas.Dispose();
+                rawObstacleDatas.Dispose();
+
+                noteDatas.Dispose();
+                obstacleDatas.Dispose();
+
+                Debug.Log("Using Noodle Extensions: " + usesNoodleExtensions);
+
+
+                // Load Notes
+                NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
+                NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
+                noteSpawningSystem.notesToSpawn.Clear();
+                noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
+                noteSpawnDatas.Dispose();
+
+                // Load Obstacles
+                ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
+                NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
+                obstacleSpawningSystem.obstaclesToSpawn.Clear();
+                obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
+                obstacleSpawnDatas.Dispose();
+
+                // Load Events
+                EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
+                NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
+                eventPlayingSystem.eventsToPlay.Clear();
+                eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
+                eventsToPlay.Dispose();
+
+                Debug.Log("Notes: " + Instance.MapData.Notes.Length);
+                Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
+                Debug.Log("Events: " + Instance.MapData.Events.Length);
+
+                HasLoadedData = true;
+            }
+        }
+
+        public void SetData(AvailableSongData songData, string difficulty)
+        {
+            SelectedSongData = songData;
+
+            foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
+            {
+                if (item.Difficulty == difficulty)
+                {
+                    SelectedDifficultyMap = item;
+                    break;
+                }
             }
 
-            bool usesNoodleExtensions = false;
-            if (SelectedDifficultyMap.CustomData.Requirements != null)
-                usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
-
-            stopwatch.Start();
-
-
-            RawNoteData[] rawNoteDataArray = new RawNoteData[MapJsonObject["_notes"].Count()];
-
-            await new WaitForBackgroundThread();
-            rawNoteDataArray = await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); });
-            await new WaitForUpdate();
-
-            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(rawNoteDataArray, Allocator.TempJob);
-            NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
-            Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
-            var convertNoteJob = new ConvertNoteDatas
+            SongSpawningInfo = new SongSpawningInfo
             {
-                RawData = rawNoteDatas,
-                UsesNoodleExtensions = usesNoodleExtensions,
-                SpawnPointOffset = SpawnPointOffset,
-                ConvertedData = noteDatas,
+                BPM = SelectedSongData.SongInfoFileData.BeatsPerMinute,
+                NoteJumpSpeed = SelectedDifficultyMap.NoteJumpMovementSpeed,
+                NoteJumpStartBeatOffset = (float)SelectedDifficultyMap.NoteJumpStartBeatOffset,
+                SecondEquivalentOfBeat = (double)60 / SelectedSongData.SongInfoFileData.BeatsPerMinute,
             };
-            var noteJobHandle = convertNoteJob.Schedule();
+            // Taken from SpawnDistanceCalc by kyle1413
 
-
-            RawObstacleData[] rawObstacleDataArray = new RawObstacleData[MapJsonObject["_obstacles"].Count()];
-            await new WaitForBackgroundThread();
-            rawObstacleDataArray = MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>();
-            await new WaitForUpdate();
-
-            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(rawObstacleDataArray, Allocator.TempJob);
-            NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
-            Debug.Log("obstacle job assigned : " + stopwatch.ElapsedMilliseconds);
-
-            var convertObstacleJob = new ConvertObstacleDatas
+            float num4 = 1f;
+            float num5 = 18f;
+            float num6 = 4f;
+            float num8 = num6;
+            while (SongSpawningInfo.NoteJumpSpeed * SongSpawningInfo.SecondEquivalentOfBeat * num8 > num5)
             {
-                RawData = rawObstacleDatas,
-                UsesNoodleExtensions = usesNoodleExtensions,
-                SpawnPointOffset = SpawnPointOffset,
-                ConvertedData = obstacleDatas,
-            };
-            var obstacleJobHandle = convertObstacleJob.Schedule();
+                num8 /= 2f;
+            }
 
-            noteJobHandle.Complete();
-            obstacleJobHandle.Complete();
-            stopwatch.Stop();
-            Debug.Log("jobs completed : " + stopwatch.ElapsedMilliseconds);
+            float num9 = num8 + SongSpawningInfo.NoteJumpStartBeatOffset;
 
-            MapData.Notes = noteDatas.ToArray();
-            MapData.Obstacles = obstacleDatas.ToArray();
+            if ((double)num9 < num4)
+            {
+                num9 = num4;
+            }
 
-            rawNoteDatas.Dispose();
-            rawObstacleDatas.Dispose();
-
-            noteDatas.Dispose();
-            obstacleDatas.Dispose();
-
-            Debug.Log("Using Noodle Extensions: " + usesNoodleExtensions);
-
-
-            // Load Notes
-            NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
-            NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
-            noteSpawningSystem.notesToSpawn.Clear();
-            noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
-            noteSpawnDatas.Dispose();
-
-            // Load Obstacles
-            ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
-            NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
-            obstacleSpawningSystem.obstaclesToSpawn.Clear();
-            obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
-            obstacleSpawnDatas.Dispose();
-
-            // Load Events
-            EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
-            NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
-            eventPlayingSystem.eventsToPlay.Clear();
-            eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
-            eventsToPlay.Dispose();
-
-            Debug.Log("Notes: " + Instance.MapData.Notes.Length);
-            Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
-            Debug.Log("Events: " + Instance.MapData.Events.Length);
-
-            HasLoadedData = true;
+            SongSpawningInfo.HalfJumpDuration = num9;
+            SongSpawningInfo.DistanceToMove = (float)SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
+            SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (float)SongSpawningInfo.SecondEquivalentOfBeat * num9 * 2;
         }
-    }
 
-    public void SetData(AvailableSongData songData, string difficulty)
-    {
-        SelectedSongData = songData;
-
-        foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
+        [BurstCompile]
+        struct ConvertNoteDatas : IJob
         {
-            if (item.Difficulty == difficulty)
+            [ReadOnly]
+            public bool UsesNoodleExtensions;
+            [ReadOnly]
+            public NativeArray<RawNoteData> RawData;
+            [ReadOnly]
+            public float3 SpawnPointOffset;
+
+            public NativeArray<NoteData> ConvertedData;
+
+            public void Execute()
             {
-                SelectedDifficultyMap = item;
-                break;
+                for (int i = 0; i < ConvertedData.Length; i++)
+                {
+                    NoteData note;
+                    if (UsesNoodleExtensions)
+                        note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i], SpawnPointOffset);
+                    else
+                        note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], SpawnPointOffset);
+                    ConvertedData[i] = note;
+                }
             }
         }
 
-        SongSpawningInfo = new SongSpawningInfo
+        [BurstCompile]
+        struct ConvertObstacleDatas : IJob
         {
-            BPM = SelectedSongData.SongInfoFileData.BeatsPerMinute,
-            NoteJumpSpeed = SelectedDifficultyMap.NoteJumpMovementSpeed,
-            NoteJumpStartBeatOffset = (float)SelectedDifficultyMap.NoteJumpStartBeatOffset,
-            SecondEquivalentOfBeat = (double)60 / SelectedSongData.SongInfoFileData.BeatsPerMinute,
-        };
-        // Taken from SpawnDistanceCalc by kyle1413
+            [ReadOnly]
+            public bool UsesNoodleExtensions;
+            [ReadOnly]
+            public NativeArray<RawObstacleData> RawData;
+            [ReadOnly]
+            public float3 SpawnPointOffset;
 
-        float num4 = 1f;
-        float num5 = 18f;
-        float num6 = 4f;
-        float num8 = num6;
-        while (SongSpawningInfo.NoteJumpSpeed * SongSpawningInfo.SecondEquivalentOfBeat * num8 > num5)
-        {
-            num8 /= 2f;
-        }
+            public NativeArray<ObstacleData> ConvertedData;
 
-        float num9 = num8 + SongSpawningInfo.NoteJumpStartBeatOffset;
-
-        if ((double)num9 < num4)
-        {
-            num9 = num4;
-        }
-
-        SongSpawningInfo.HalfJumpDuration = num9;
-        SongSpawningInfo.DistanceToMove = (float)SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
-        SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (float)SongSpawningInfo.SecondEquivalentOfBeat * num9 * 2;
-    }
-
-    [BurstCompile]
-    struct ConvertNoteDatas : IJob
-    {
-        [ReadOnly]
-        public bool UsesNoodleExtensions;
-        [ReadOnly]
-        public NativeArray<RawNoteData> RawData;
-        [ReadOnly]
-        public float3 SpawnPointOffset;
-
-        public NativeArray<NoteData> ConvertedData;
-
-        public void Execute()
-        {
-            for (int i = 0; i < ConvertedData.Length; i++)
+            public void Execute()
             {
-                NoteData note;
-                if (UsesNoodleExtensions)
-                    note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i], SpawnPointOffset);
-                else
-                    note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], SpawnPointOffset);
-                ConvertedData[i] = note;
-            }
-        }
-    }
+                for (int i = 0; i < ConvertedData.Length; i++)
+                {
+                    ObstacleData obstacle;
+                    if (UsesNoodleExtensions)
+                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], SpawnPointOffset);
+                    else
+                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], SpawnPointOffset);
 
-    [BurstCompile]
-    struct ConvertObstacleDatas : IJob
-    {
-        [ReadOnly]
-        public bool UsesNoodleExtensions;
-        [ReadOnly]
-        public NativeArray<RawObstacleData> RawData;
-        [ReadOnly]
-        public float3 SpawnPointOffset;
-
-        public NativeArray<ObstacleData> ConvertedData;
-
-        public void Execute()
-        {
-            for (int i = 0; i < ConvertedData.Length; i++)
-            {
-                ObstacleData obstacle;
-                if (UsesNoodleExtensions)
-                    obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], SpawnPointOffset);
-                else
-                    obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], SpawnPointOffset);
-
-                ConvertedData[i] = obstacle;
+                    ConvertedData[i] = obstacle;
+                }
             }
         }
     }

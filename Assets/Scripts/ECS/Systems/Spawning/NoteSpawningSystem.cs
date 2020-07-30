@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Transforms;
 using Unity.Rendering;
+using BeatGame.Data;
+using BeatGame.Logic.Managers;
 
 public class NoteSpawningSystem : SystemBase
 {

@@ -7,36 +7,39 @@ using Unity.Physics.Systems;
 using UnityEngine;
 using RaycastHit = Unity.Physics.RaycastHit;
 
-public class ECSRaycast : MonoBehaviour
+namespace BeatGame.Utility.Physics
 {
-    public static RaycastHit Raycast(float3 fromPosition, float3 toPosition, uint layerMask)
+    public class ECSRaycast : MonoBehaviour
     {
-        var buildPhysicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>();
-
-        var collisionWorld = buildPhysicsWorld.PhysicsWorld.CollisionWorld;
-
-        RaycastInput raycastInput = new RaycastInput
+        public static RaycastHit Raycast(float3 fromPosition, float3 toPosition, uint layerMask)
         {
-            Start = fromPosition,
-            End = toPosition,
-            Filter = new CollisionFilter
+            var buildPhysicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>();
+
+            var collisionWorld = buildPhysicsWorld.PhysicsWorld.CollisionWorld;
+
+            RaycastInput raycastInput = new RaycastInput
             {
-                BelongsTo = ~0u,
-                CollidesWith = layerMask,
-                GroupIndex = 0
-            }
-        };
+                Start = fromPosition,
+                End = toPosition,
+                Filter = new CollisionFilter
+                {
+                    BelongsTo = ~0u,
+                    CollidesWith = layerMask,
+                    GroupIndex = 0
+                }
+            };
 
-        if (collisionWorld.CastRay(raycastInput, out RaycastHit hit))
-        {
+            if (collisionWorld.CastRay(raycastInput, out RaycastHit hit))
+            {
+                return hit;
+            }
+
             return hit;
         }
 
-        return hit;
-    }
-
-    public static RaycastHit Raycast(float3 fromPosition, float3 toPosition)
-    {
-        return Raycast(fromPosition, toPosition, ~0u);
+        public static RaycastHit Raycast(float3 fromPosition, float3 toPosition)
+        {
+            return Raycast(fromPosition, toPosition, ~0u);
+        }
     }
 }

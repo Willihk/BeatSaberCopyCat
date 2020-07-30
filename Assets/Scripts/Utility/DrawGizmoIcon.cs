@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawGizmoIcon : MonoBehaviour
+namespace BeatGame.Utility
 {
-    [SerializeField]
-    private string IconName;
-    [SerializeField]
-    private Vector3 offset;
-
-    private void OnDrawGizmos()
+    public class DrawGizmoIcon : MonoBehaviour
     {
-        Gizmos.DrawIcon(transform.position + offset, IconName, true);
+        [SerializeField]
+        private string IconName;
+        [SerializeField]
+        private Vector3 offset;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawIcon(transform.position + offset, IconName, true);
+        }
     }
 }

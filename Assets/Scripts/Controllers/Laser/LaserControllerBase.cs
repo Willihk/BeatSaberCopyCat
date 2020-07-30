@@ -1,35 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LaserControllerBase : MonoBehaviour
+namespace BeatGame.Logic.Lasers
 {
-    [SerializeField]
-    protected float laserIntensity = 15;
-    [SerializeField]
-    protected float laserFlashIntensity = 30;
-
-    protected Quaternion startRotation;
-    protected float rotationSpeed;
-
-    protected Material material;
-
-    public virtual void TurnOff() { }
-
-    public virtual void TurnOn() { }
-
-    public virtual void SetMaterial(Material material)
+    public class LaserControllerBase : MonoBehaviour
     {
-        this.material = material;
-    }
+        [SerializeField]
+        protected float laserIntensity = 15;
+        [SerializeField]
+        protected float laserFlashIntensity = 30;
 
-    public virtual void SetRotation(float value)
-    {
-        if (value == 0)
+        protected Quaternion startRotation;
+        protected float rotationSpeed;
+
+        protected Material material;
+
+        public virtual void TurnOff() { }
+
+        public virtual void TurnOn() { }
+
+        public virtual void SetMaterial(Material material)
         {
-            transform.rotation = startRotation;
-            // Reset to default
+            this.material = material;
         }
 
-        rotationSpeed = value;
+        public virtual void SetRotation(float value)
+        {
+            if (value == 0)
+            {
+                transform.rotation = startRotation;
+                // Reset to default
+            }
+
+            rotationSpeed = value;
+        }
     }
 }

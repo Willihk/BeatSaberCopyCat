@@ -5,6 +5,8 @@ using Unity.Collections;
 using System;
 using Unity.Jobs;
 using Unity.Burst;
+using BeatGame.Data;
+using BeatGame.Logic.Managers;
 
 public class EventPlayingSystem : SystemBase
 {

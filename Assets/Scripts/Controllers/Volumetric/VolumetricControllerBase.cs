@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VolumetricControllerBase : MonoBehaviour
+namespace BeatGame.Logic.Volumetrics
 {
-    protected Material material;
-
-    public virtual void TurnOff() { }
-
-    public virtual void TurnOn() { }
-
-    public virtual void SetMaterial(Material material)
+    public class VolumetricControllerBase : MonoBehaviour
     {
-        this.material = material;
+        protected Material material;
+
+        public virtual void TurnOff() { }
+
+        public virtual void TurnOn() { }
+
+        public virtual void SetMaterial(Material material)
+        {
+            this.material = material;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BeatGame.Data;
+using BeatGame.Logic.Managers;
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Threading;

@@ -1,37 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class MeshLaserController : LaserControllerBase
+namespace BeatGame.Logic.Lasers
 {
-    [SerializeField]
-    MeshRenderer renderer;
-
-    private void OnEnable()
+    public class MeshLaserController : LaserControllerBase
     {
-        if (renderer == null)
-            TryGetComponent(out renderer);
+        [SerializeField]
+        MeshRenderer renderer;
 
-
-        startRotation = transform.rotation;
-
-        if (renderer != null)
-            material = renderer.sharedMaterial;
-    }
-
-    void Update()
-    {
-        if (rotationSpeed != 0)
+        private void OnEnable()
         {
-            transform.Rotate(new Vector3(rotationSpeed * 2 * Time.deltaTime, 0, 0), Space.Self);
+            if (renderer == null)
+                TryGetComponent(out renderer);
+
+
+            startRotation = transform.rotation;
+
+            if (renderer != null)
+                material = renderer.sharedMaterial;
         }
-    }
 
-    public override void SetMaterial(Material material)
-    {
-        base.SetMaterial(material);
-        if (renderer == null)
-            TryGetComponent(out renderer);
+        void Update()
+        {
+            if (rotationSpeed != 0)
+            {
+                transform.Rotate(new Vector3(rotationSpeed * 2 * Time.deltaTime, 0, 0), Space.Self);
+            }
+        }
 
-        renderer.material = material;
+        public override void SetMaterial(Material material)
+        {
+            base.SetMaterial(material);
+            if (renderer == null)
+                TryGetComponent(out renderer);
+
+            renderer.material = material;
+        }
     }
 }

@@ -5,53 +5,57 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Transforms;
 using Unity.Mathematics;
+using BeatGame.Logic.Managers;
 
-public class MasterAudioBarController : MonoBehaviour
+namespace BeatGame.Logic.Audio
 {
-    public int barCount;
-    public Vector3 gap = new Vector3(0, 0, 10);
-    public GameObject bar;
-    public float3 scaleMultiplier;
-
-    private void Awake()
+    public class MasterAudioBarController : MonoBehaviour
     {
-        SpawnBars();
-    }
+        public int barCount;
+        public Vector3 gap = new Vector3(0, 0, 10);
+        public GameObject bar;
+        public float3 scaleMultiplier;
 
-    private void SpawnBars()
-    {
-        var entity = EntityPrefabManager.Instance.ConvertGameObjectToEntity(bar, false);
-        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-        var entities = new NativeArray<Entity>(barCount, Allocator.TempJob);
-        entityManager.Instantiate(entity, entities);
-
-        for (int i = 0; i < entities.Length; i++)
+        private void Awake()
         {
-            int frequencyBand = 0;
-            if (AudioSpectrumManager.Instance.FrequencyBands >= barCount)
-                frequencyBand = i;
-            else
+            SpawnBars();
+        }
+
+        private void SpawnBars()
+        {
+            var entity = EntityPrefabManager.Instance.ConvertGameObjectToEntity(bar, false);
+            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+            var entities = new NativeArray<Entity>(barCount, Allocator.TempJob);
+            entityManager.Instantiate(entity, entities);
+
+            for (int i = 0; i < entities.Length; i++)
             {
-                double barsPerFrequency = Math.Ceiling((double)barCount / (AudioSpectrumManager.Instance.FrequencyBands - 1));
-                if (i == 0)
+                int frequencyBand = 0;
+                if (AudioSpectrumManager.Instance.FrequencyBands >= barCount)
                     frequencyBand = i;
                 else
-                    frequencyBand = (int)math.floor(i / barsPerFrequency);
+                {
+                    double barsPerFrequency = Math.Ceiling((double)barCount / (AudioSpectrumManager.Instance.FrequencyBands - 1));
+                    if (i == 0)
+                        frequencyBand = i;
+                    else
+                        frequencyBand = (int)math.floor(i / barsPerFrequency);
+                }
+
+                if (frequencyBand >= AudioSpectrumManager.Instance.FrequencyBands)
+                    frequencyBand = AudioSpectrumManager.Instance.FrequencyBands - 1;
+
+                var position = bar.transform.position + gap * i;
+                entityManager.SetComponentData(entities[i], new Translation { Value = position });
+                entityManager.SetComponentData(entities[i], new AudioVisualizationData
+                {
+                    FrequencyBand = frequencyBand,
+                    BaseScale = bar.transform.localScale,
+                    ScaleMultiplier = scaleMultiplier
+                });
             }
-
-            if (frequencyBand >= AudioSpectrumManager.Instance.FrequencyBands)
-                frequencyBand = AudioSpectrumManager.Instance.FrequencyBands - 1;
-
-            var position = bar.transform.position + gap * i;
-            entityManager.SetComponentData(entities[i], new Translation { Value = position });
-            entityManager.SetComponentData(entities[i], new AudioVisualizationData
-            {
-                FrequencyBand = frequencyBand,
-                BaseScale = bar.transform.localScale,
-                ScaleMultiplier = scaleMultiplier
-            });
+            entities.Dispose();
         }
-        entities.Dispose();
     }
 }

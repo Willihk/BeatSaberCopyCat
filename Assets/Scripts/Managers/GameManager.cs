@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeatGame.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,187 +11,190 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using VRTK;
 
-public class GameManager : MonoBehaviour
+namespace BeatGame.Logic.Managers
 {
-    public static GameManager Instance;
-
-    public event Action OnLoadingFinished;
-
-    public bool IsPlaying;
-
-    public double CurrentBeat;
-    public double LastBeat;
-
-    [SerializeField]
-    public AudioSource audioSource;
-
-    GameObject leftSaber;
-    GameObject leftModel;
-    GameObject rightSaber;
-    GameObject rightModel;
-
-    VRTK_Pointer rightUIPointer;
-    bool VRTK_Loaded;
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
+        public static GameManager Instance;
 
-        VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
+        public event Action OnLoadingFinished;
 
-        SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
-        SceneManager.sceneLoaded += SceneLoaded;
-    }
+        public bool IsPlaying;
 
-    void VRSetupLoaded(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e)
-    {
-        var LeftController = e.currentSetup.actualLeftController;
-        var RightController = e.currentSetup.actualRightController;
+        public double CurrentBeat;
+        public double LastBeat;
 
-        leftSaber = LeftController.transform.Find("Saber").gameObject;
-        leftModel = LeftController.transform.Find("Model").gameObject;
+        [SerializeField]
+        public AudioSource audioSource;
 
-        rightSaber = RightController.transform.Find("Saber").gameObject;
-        rightModel = RightController.transform.Find("Model").gameObject;
+        GameObject leftSaber;
+        GameObject leftModel;
+        GameObject rightSaber;
+        GameObject rightModel;
 
-        rightUIPointer = RightController.transform.Find("RightController").GetComponent<VRTK_Pointer>();
+        VRTK_Pointer rightUIPointer;
+        bool VRTK_Loaded;
 
-        VRTK_Loaded = true;
-    }
-
-    private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-    {
-        if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
+        private void Awake()
         {
-            IsPlaying = true;
+            if (Instance == null)
+                Instance = this;
 
-            if (!VRTK_Loaded)
-                return;
+            VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
 
-            leftSaber.SetActive(true);
-            leftModel.SetActive(true);
-
-            rightSaber.SetActive(true);
-            rightModel.SetActive(true);
-
-            rightUIPointer.enabled = false;
-
-        }
-        else if (scene.name == "Menu")
-        {
-            if (!VRTK_Loaded)
-                return;
-
-            leftSaber.SetActive(false);
-            leftModel.SetActive(false);
-
-            rightSaber.SetActive(false);
-            rightModel.SetActive(false);
-
-            rightUIPointer.enabled = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            IsPlaying = false;
-            CurrentBeat = 0;
-            audioSource.Stop();
-            ReturnToMenu();
+            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+            SceneManager.sceneLoaded += SceneLoaded;
         }
 
-        if (IsPlaying)
+        void VRSetupLoaded(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e)
         {
-            LastBeat = CurrentBeat;
-            CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
-            if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + 5) && !audioSource.isPlaying)
+            var LeftController = e.currentSetup.actualLeftController;
+            var RightController = e.currentSetup.actualRightController;
+
+            leftSaber = LeftController.transform.Find("Saber").gameObject;
+            leftModel = LeftController.transform.Find("Model").gameObject;
+
+            rightSaber = RightController.transform.Find("Saber").gameObject;
+            rightModel = RightController.transform.Find("Model").gameObject;
+
+            rightUIPointer = RightController.transform.Find("RightController").GetComponent<VRTK_Pointer>();
+
+            VRTK_Loaded = true;
+        }
+
+        private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
+            {
+                IsPlaying = true;
+
+                if (!VRTK_Loaded)
+                    return;
+
+                leftSaber.SetActive(true);
+                leftModel.SetActive(true);
+
+                rightSaber.SetActive(true);
+                rightModel.SetActive(true);
+
+                rightUIPointer.enabled = false;
+
+            }
+            else if (scene.name == "Menu")
+            {
+                if (!VRTK_Loaded)
+                    return;
+
+                leftSaber.SetActive(false);
+                leftModel.SetActive(false);
+
+                rightSaber.SetActive(false);
+                rightModel.SetActive(false);
+
+                rightUIPointer.enabled = true;
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.X))
             {
                 IsPlaying = false;
                 CurrentBeat = 0;
                 audioSource.Stop();
-                Invoke("ReturnToMenu", 5);
+                ReturnToMenu();
+            }
+
+            if (IsPlaying)
+            {
+                LastBeat = CurrentBeat;
+                CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
+                if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + 5) && !audioSource.isPlaying)
+                {
+                    IsPlaying = false;
+                    CurrentBeat = 0;
+                    audioSource.Stop();
+                    Invoke("ReturnToMenu", 5);
+                }
             }
         }
-    }
 
-    public void ReturnToMenu()
-    {
-        SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
-        SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
-    }
-
-    public void PlayLevel()
-    {
-        SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
-
-        SceneManager.LoadScene((int)SceneIndexes.Loading, LoadSceneMode.Additive);
-
-        Instance.StartLoading();
-    }
-
-    void PlaySong()
-    {
-        audioSource.Play();
-    }
-
-    public void StartLoading()
-    {
-        StartCoroutine(GetAudioClip());
-
-        CurrentSongDataManager.Instance.LoadLevelDataAsync();
-
-        StartCoroutine(Loading());
-    }
-
-    IEnumerator Loading()
-    {
-        bool isLoaded = false;
-
-        while (!isLoaded)
+        public void ReturnToMenu()
         {
-            if (audioSource.clip != null && CurrentSongDataManager.Instance.HasLoadedData)
-                isLoaded = true;
-
-            if (!isLoaded)
-                yield return null;
+            SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
+            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
         }
 
-        var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
-        mapLoad.completed += (AsyncOperation operation) =>
+        public void PlayLevel()
         {
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
-            OnLoadingFinished?.Invoke();
-            Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
-        };
-    }
+            SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
 
-    IEnumerator GetAudioClip()
-    {
-        if (CurrentSongDataManager.Instance.SelectedSongData.AudioClip != null)
-        {
-            audioSource.clip = CurrentSongDataManager.Instance.SelectedSongData.AudioClip;
+            SceneManager.LoadScene((int)SceneIndexes.Loading, LoadSceneMode.Additive);
+
+            Instance.StartLoading();
         }
-        else
+
+        void PlaySong()
         {
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
-                $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
-                AudioType.OGGVORBIS))
+            audioSource.Play();
+        }
+
+        public void StartLoading()
+        {
+            StartCoroutine(GetAudioClip());
+
+            CurrentSongDataManager.Instance.LoadLevelDataAsync();
+
+            StartCoroutine(Loading());
+        }
+
+        IEnumerator Loading()
+        {
+            bool isLoaded = false;
+
+            while (!isLoaded)
             {
-                audioSource.clip = null;
+                if (audioSource.clip != null && CurrentSongDataManager.Instance.HasLoadedData)
+                    isLoaded = true;
 
-                yield return www.SendWebRequest();
+                if (!isLoaded)
+                    yield return null;
+            }
 
-                if (www.isNetworkError)
+            var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
+            mapLoad.completed += (AsyncOperation operation) =>
+            {
+                SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
+                OnLoadingFinished?.Invoke();
+                Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
+            };
+        }
+
+        IEnumerator GetAudioClip()
+        {
+            if (CurrentSongDataManager.Instance.SelectedSongData.AudioClip != null)
+            {
+                audioSource.clip = CurrentSongDataManager.Instance.SelectedSongData.AudioClip;
+            }
+            else
+            {
+                using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
+                    $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
+                    AudioType.OGGVORBIS))
                 {
-                    Debug.Log(www.error);
-                }
-                else
-                {
-                    AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
-                    audioSource.clip = songClip;
+                    audioSource.clip = null;
+
+                    yield return www.SendWebRequest();
+
+                    if (www.isNetworkError)
+                    {
+                        Debug.Log(www.error);
+                    }
+                    else
+                    {
+                        AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
+                        audioSource.clip = songClip;
+                    }
                 }
             }
         }

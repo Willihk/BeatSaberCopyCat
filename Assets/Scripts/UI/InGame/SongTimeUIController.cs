@@ -3,45 +3,49 @@ using System.Collections;
 using UnityEngine.UI;
 using TMPro;
 using Unity.Mathematics;
+using BeatGame.Logic.Managers;
 
-public class SongTimeUIController : MonoBehaviour
+namespace BeatGame.UI.Controllers
 {
-    [SerializeField]
-    Slider slider;
-    [SerializeField]
-    TextMeshProUGUI currentTimeText;
-    [SerializeField]
-    TextMeshProUGUI totalTimeText;
-
-    float currentTime;
-    int totalTime;
-
-    private void OnEnable()
+    public class SongTimeUIController : MonoBehaviour
     {
-        GameManager.Instance.OnLoadingFinished += Setup;
-    }
+        [SerializeField]
+        Slider slider;
+        [SerializeField]
+        TextMeshProUGUI currentTimeText;
+        [SerializeField]
+        TextMeshProUGUI totalTimeText;
 
-    private void Setup()
-    {
-        float seconds = GameManager.Instance.audioSource.clip.length;
-        totalTime = (int)seconds;
-        totalTimeText.text = $"{math.floor(seconds / 60)}:{math.floor(seconds % 60).ToString("00")}";
-    }
+        float currentTime;
+        int totalTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (totalTime == 0)
-            return;
+        private void OnEnable()
+        {
+            GameManager.Instance.OnLoadingFinished += Setup;
+        }
 
-        float seconds = (float)((GameManager.Instance.CurrentBeat - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration) * CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat);
+        private void Setup()
+        {
+            float seconds = GameManager.Instance.audioSource.clip.length;
+            totalTime = (int)seconds;
+            totalTimeText.text = $"{math.floor(seconds / 60)}:{math.floor(seconds % 60).ToString("00")}";
+        }
 
-        if (seconds < 0)
-            return;
+        // Update is called once per frame
+        void Update()
+        {
+            if (totalTime == 0)
+                return;
 
-        currentTime = seconds;
-        currentTimeText.text = $"{math.floor(seconds / 60)}:{math.floor(seconds % 60).ToString("00")}";
+            float seconds = (float)((GameManager.Instance.CurrentBeat - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration) * CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat);
 
-        slider.value = currentTime / totalTime;
+            if (seconds < 0)
+                return;
+
+            currentTime = seconds;
+            currentTimeText.text = $"{math.floor(seconds / 60)}:{math.floor(seconds % 60).ToString("00")}";
+
+            slider.value = currentTime / totalTime;
+        }
     }
 }
