@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7705230070049592201
+--- !u!114 &-1459680065992299930
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LightBeam
+  m_Name: MainMenuFog
   m_Shader: {fileID: 4800000, guid: 4571e5fb008664916836abe841f15f2d, type: 3}
   m_ShaderKeywords: _MASKMAP
   m_LightmapFlags: 4
@@ -72,16 +72,16 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _ConeWidth: 6.67
+    - _ConeWidth: 5.68
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailStrength: 0.312
+    - _DetailStrength: 0.506
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LimitLength: 0.95
+    - _LimitLength: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _OrthoSpport: 0
@@ -91,7 +91,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecGlossEnabled: 1
     - _SpecularHighlights: 1
-    - _SpotFade: 0.912
+    - _SpotFade: 0.933
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
@@ -103,6 +103,6 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeDistances: {r: 0.3, g: 1, b: 0.3, a: 1}
     - _Color: {r: 0, g: 0.6117647, b: 1, a: 1}
-    - _DetailScrollSpeed: {r: 0, g: 0, b: 1, a: 1}
+    - _DetailScrollSpeed: {r: 0, g: 0, b: 0.5, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

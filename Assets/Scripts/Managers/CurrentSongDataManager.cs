@@ -14,7 +14,6 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
@@ -62,7 +61,14 @@ public class CurrentSongDataManager : MonoBehaviour
 
             stopwatch.Start();
 
-            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); }), Allocator.TempJob);
+
+            RawNoteData[] rawNoteDataArray = new RawNoteData[MapJsonObject["_notes"].Count()];
+
+            await new WaitForBackgroundThread();
+            rawNoteDataArray = await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); });
+            await new WaitForUpdate();
+
+            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(rawNoteDataArray, Allocator.TempJob);
             NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
             Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
             var convertNoteJob = new ConvertNoteDatas
@@ -74,7 +80,13 @@ public class CurrentSongDataManager : MonoBehaviour
             };
             var noteJobHandle = convertNoteJob.Schedule();
 
-            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(await Task.Run(() => { return MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(); }), Allocator.TempJob);
+
+            RawObstacleData[] rawObstacleDataArray = new RawObstacleData[MapJsonObject["_obstacles"].Count()];
+            await new WaitForBackgroundThread();
+            rawObstacleDataArray = MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>();
+            await new WaitForUpdate();
+
+            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(rawObstacleDataArray, Allocator.TempJob);
             NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
             Debug.Log("obstacle job assigned : " + stopwatch.ElapsedMilliseconds);
 
@@ -197,7 +209,6 @@ public class CurrentSongDataManager : MonoBehaviour
                     note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i], SpawnPointOffset);
                 else
                     note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], SpawnPointOffset);
-
                 ConvertedData[i] = note;
             }
         }

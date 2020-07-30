@@ -137,7 +137,7 @@ public class MasterVolumetricController : MonoBehaviour
         currentColor.a = 1;
         while (currentColor.a > 0)
         {
-            currentColor.a -= 1f / .6f * Time.deltaTime;
+            currentColor.a -= 1f / .55f * Time.deltaTime;
             material.SetColor("_Color", currentColor);
             yield return null;
         }
