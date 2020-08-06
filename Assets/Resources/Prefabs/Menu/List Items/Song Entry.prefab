@@ -58,6 +58,7 @@ MonoBehaviour:
   ArtistNameText: {fileID: 1793666630018852181}
   SongData:
     DirectoryPath: 
+    AudioClip: {fileID: 0}
 --- !u!114 &464084512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +151,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -225,7 +225,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -274,7 +273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -163.29, y: -21.5}
+  m_AnchoredPosition: {x: -191, y: -21.5}
   m_SizeDelta: {x: 195.37463, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1793666630018852178
@@ -300,7 +299,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -427,7 +425,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.81, y: 21.6}
+  m_AnchoredPosition: {x: -64.52001, y: 21.6}
   m_SizeDelta: {x: 448.33948, y: 43.20044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1793666630032366962
@@ -453,7 +451,6 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

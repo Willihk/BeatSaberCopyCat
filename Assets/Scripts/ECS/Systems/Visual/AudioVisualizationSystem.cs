@@ -19,12 +19,15 @@ public class AudioVisualizationSystem : SystemBase
         }
         });
 
-        frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.FrequencyBands, Allocator.Persistent);
-
+        if (AudioSpectrumManager.Instance != null)
+            frequencyBands = new NativeArray<float>(AudioSpectrumManager.Instance.FrequencyBands, Allocator.Persistent);
     }
 
     protected override void OnUpdate()
     {
+        if (AudioSpectrumManager.Instance == null)
+            return;
+
         frequencyBands.CopyFrom(AudioSpectrumManager.Instance.AudioBandBuffer);
         var job = new VisualizeJob
         {

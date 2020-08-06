@@ -37,7 +37,7 @@ public class EventPlayingSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if (GameManager.Instance.IsPlaying)
+        if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
             SpawnNeededEvents();
         }

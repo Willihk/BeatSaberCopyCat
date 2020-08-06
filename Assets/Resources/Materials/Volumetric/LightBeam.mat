@@ -72,7 +72,7 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _ConeWidth: 6.67
+    - _ConeWidth: 6
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailStrength: 0.312

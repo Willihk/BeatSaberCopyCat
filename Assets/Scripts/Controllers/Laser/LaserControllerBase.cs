@@ -5,11 +5,6 @@ namespace BeatGame.Logic.Lasers
 {
     public class LaserControllerBase : MonoBehaviour
     {
-        [SerializeField]
-        protected float laserIntensity = 15;
-        [SerializeField]
-        protected float laserFlashIntensity = 30;
-
         protected Quaternion startRotation;
         protected float rotationSpeed;
 
