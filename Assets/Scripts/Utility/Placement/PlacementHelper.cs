@@ -2,13 +2,12 @@
 using System.Collections;
 using Unity.Mathematics;
 using BeatGame.Data;
-using BeatGame.Logic.Managers;
 
 namespace BeatGame.Utility
 {
     public class PlacementHelper
     {
-        public static NoteData ConvertNoteDataWithVanillaMethod(RawNoteData rawNoteData)
+        public static NoteData ConvertNoteDataWithVanillaMethod(RawNoteData rawNoteData, float3 lineOffset)
         {
             float3 euler = new float3();
             switch ((CutDirection)rawNoteData.CutDirection)
@@ -49,7 +48,7 @@ namespace BeatGame.Utility
                 Type = rawNoteData.Type,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer),
+                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset),
                     LocalRotation = euler,
                 },
             };
@@ -57,21 +56,21 @@ namespace BeatGame.Utility
             return note;
         }
 
-        public static NoteData ConvertNoteDataWithNoodleExtensionsMethod(RawNoteData rawNoteData)
+        public static NoteData ConvertNoteDataWithNoodleExtensionsMethod(RawNoteData rawNoteData, float3 lineOffset)
         {
-            var note = ConvertNoteDataWithVanillaMethod(rawNoteData);
+            var note = ConvertNoteDataWithVanillaMethod(rawNoteData, lineOffset);
 
             note.TransformData = GetTransformDataWithNoodle(note.TransformData, rawNoteData.CustomData);
 
             return note;
         }
 
-        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData)
+        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData, float3 lineOffset)
         {
             float4x4 scale = new float4x4
             {
                 c0 = new float4(rawObstacleData.Width, 0, 0, 0),
-                c1 = new float4(0, rawObstacleData.Type == 0 ? SettingsManager.LineOffset.y * 3 : SettingsManager.LineOffset.y * 2, 0, 0),
+                c1 = new float4(0, rawObstacleData.Type == 0 ? lineOffset.y * 3 : lineOffset.y * 2, 0, 0),
                 c2 = new float4(0, 0, (float)rawObstacleData.Duration, 0),
                 c3 = new float4(0, 0, 0, 1)
             };
@@ -92,15 +91,15 @@ namespace BeatGame.Utility
                 Time = rawObstacleData.Time,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(lineIndex, lineLayer),
+                    Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset),
                     Scale = new float3(scale.c0.x, scale.c1.y, scale.c2.z),
                 },
             };
         }
 
-        public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData)
+        public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData, float3 lineOffset)
         {
-            var obstacle = ConvertObstacleDataWithVanillaMethod(rawData);
+            var obstacle = ConvertObstacleDataWithVanillaMethod(rawData, lineOffset);
 
             obstacle.TransformData = GetTransformDataWithNoodle(obstacle.TransformData, rawData.CustomData);
 
@@ -112,16 +111,16 @@ namespace BeatGame.Utility
         }
 
 
-        public static float3 GetVanillaPosition(float lineIndex, float lineLayer)
+        public static float3 GetVanillaPosition(float lineIndex, float lineLayer, float3 lineOffset)
         {
-            return new float3(lineIndex * SettingsManager.LineOffset.x - 1.3f, lineLayer * SettingsManager.LineOffset.y, 0);
+            return new float3(lineIndex * lineOffset.x - 1.3f, lineLayer * lineOffset.y, 0);
         }
 
         public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData)
         {
             if (customData.Position.w != 0)
             {
-                transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y);
+                transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
             }
             if (customData.Scale.w != 0)
             {

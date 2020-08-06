@@ -30,8 +30,6 @@ namespace BeatGame.Logic.Managers
         public MapData MapData;
         public JObject MapJsonObject;
 
-        public float3 SpawnPointOffset = new float3(.8f, .8f, 0);
-
         public SongSpawningInfo SongSpawningInfo;
 
         public bool HasLoadedData;
@@ -77,6 +75,7 @@ namespace BeatGame.Logic.Managers
                 {
                     RawData = rawNoteDatas,
                     UsesNoodleExtensions = usesNoodleExtensions,
+                    LineOffset = SettingsManager.LineOffset,
                     ConvertedData = noteDatas,
                 };
                 var noteJobHandle = convertNoteJob.Schedule();
@@ -95,6 +94,7 @@ namespace BeatGame.Logic.Managers
                 {
                     RawData = rawObstacleDatas,
                     UsesNoodleExtensions = usesNoodleExtensions,
+                    LineOffset = SettingsManager.LineOffset,
                     ConvertedData = obstacleDatas,
                 };
                 var obstacleJobHandle = convertObstacleJob.Schedule();
@@ -195,6 +195,8 @@ namespace BeatGame.Logic.Managers
             public bool UsesNoodleExtensions;
             [ReadOnly]
             public NativeArray<RawNoteData> RawData;
+            [ReadOnly]
+            public float3 LineOffset;
 
             public NativeArray<NoteData> ConvertedData;
 
@@ -204,9 +206,9 @@ namespace BeatGame.Logic.Managers
                 {
                     NoteData note;
                     if (UsesNoodleExtensions)
-                        note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i]);
+                        note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i], LineOffset);
                     else
-                        note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i]);
+                        note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
                     ConvertedData[i] = note;
                 }
             }
@@ -219,6 +221,8 @@ namespace BeatGame.Logic.Managers
             public bool UsesNoodleExtensions;
             [ReadOnly]
             public NativeArray<RawObstacleData> RawData;
+            [ReadOnly]
+            public float3 LineOffset;
 
             public NativeArray<ObstacleData> ConvertedData;
 
@@ -228,9 +232,9 @@ namespace BeatGame.Logic.Managers
                 {
                     ObstacleData obstacle;
                     if (UsesNoodleExtensions)
-                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i]);
+                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], LineOffset);
                     else
-                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i]);
+                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], LineOffset);
 
                     ConvertedData[i] = obstacle;
                 }
