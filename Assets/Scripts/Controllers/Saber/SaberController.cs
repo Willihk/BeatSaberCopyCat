@@ -66,8 +66,6 @@ namespace BeatGame.Logic.Saber
                     quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
-                    //float angle = Vector3.Angle(translation.Value - saberData.PreviousPosition, matrix.MultiplyPoint(Vector3.up));
-
                     float angle = Vector3.Angle((float3)transform.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
 
                     if (angle > 130 || note.CutDirection == 8)
