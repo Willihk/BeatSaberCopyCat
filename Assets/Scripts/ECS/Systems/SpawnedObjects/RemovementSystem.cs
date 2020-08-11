@@ -1,4 +1,5 @@
-﻿using Unity.Collections;
+﻿using BeatGame.Logic.Managers;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 
@@ -8,9 +9,11 @@ public class NoteRemovementSystem : SystemBase
     {
         EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
-        Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref Translation translation) =>
+        double currentBeat = GameManager.Instance.CurrentBeat;
+        double jumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration;
+        Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref Translation translation, ref DestroyOnBeat destroyOnBeat) =>
         {
-            if (translation.Value.z < -10)
+            if (destroyOnBeat.Beat + jumpDuration * 4 <= currentBeat)
             {
                 commandBuffer.DestroyEntity(entity);
             }
