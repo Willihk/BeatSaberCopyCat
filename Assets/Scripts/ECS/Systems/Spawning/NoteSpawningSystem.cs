@@ -50,7 +50,7 @@ public class NoteSpawningSystem : SystemBase
         {
             var note = notesToSpawn[i];
 
-            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat)
+            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat && note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration >= GameManager.Instance.LastBeat)
             {
                 if (note.Type == 3)
                 {
@@ -60,8 +60,6 @@ public class NoteSpawningSystem : SystemBase
                 {
                     SpawnNote(note);
                 }
-                notesToSpawn.RemoveAtSwapBack(i);
-                i--;
             }
         }
     }
@@ -70,6 +68,8 @@ public class NoteSpawningSystem : SystemBase
     {
         var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
+
+        EntityManager.SetComponentData(noteEntity, new DestroyOnBeat { Beat = (float)GameManager.Instance.CurrentBeat});
 
         EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
     }
@@ -91,6 +91,8 @@ public class NoteSpawningSystem : SystemBase
 
 
         var rotation = EntityManager.GetComponentData<Rotation>(noteEntity);
+
+        EntityManager.SetComponentData(noteEntity, new DestroyOnBeat { Beat = (float)GameManager.Instance.CurrentBeat});
 
         EntityManager.SetComponentData(noteEntity, new Rotation { Value = math.mul(rotation.Value, quaternion.Euler(note.TransformData.LocalRotation)) });
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });

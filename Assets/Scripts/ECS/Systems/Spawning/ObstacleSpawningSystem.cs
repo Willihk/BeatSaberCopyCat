@@ -63,11 +63,6 @@ public class ObstacleSpawningSystem : SystemBase
         commandBuffer.Dispose();
     }
 
-    float GetNeededOffset()
-    {
-        return CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance;
-    }
-
     [BurstCompile]
     struct SpawnJob : IJob
     {
@@ -85,7 +80,7 @@ public class ObstacleSpawningSystem : SystemBase
             {
                 var obstacle = obstaclesToSpawn[i];
 
-                if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >=LastBeat)
+                if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >= LastBeat)
                 {
                     var entity = CommandBuffer.Instantiate(Entity);
                     CommandBuffer.RemoveComponent<Prefab>(entity);
@@ -96,6 +91,8 @@ public class ObstacleSpawningSystem : SystemBase
                         c2 = new float4(0, 0, obstacle.TransformData.Scale.z, 0),
                         c3 = new float4(0, 0, 0, 1)
                     };
+
+                    CommandBuffer.SetComponent(entity, new DestroyOnBeat { Beat = (float)CurrentBeat });
 
                     CommandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
 
