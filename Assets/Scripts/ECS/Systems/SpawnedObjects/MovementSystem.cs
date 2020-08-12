@@ -9,9 +9,9 @@ public class NoteMovementSystem : SystemBase
     {
         float deltaTime = Time.DeltaTime;
         float speed = CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed;
-        Entities.WithAny<Note, Obstacle>().ForEach((ref Translation translation, ref Rotation rotation) =>
+        Entities.WithAny<Note, Obstacle>().ForEach((ref Translation translation) =>
         {
-            translation.Value -= math.forward(rotation.Value) * (speed * deltaTime);
+            translation.Value.z -=  speed * deltaTime;
         }).Schedule(Dependency).Complete();
     }
 }
