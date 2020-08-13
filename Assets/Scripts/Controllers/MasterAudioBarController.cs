@@ -31,7 +31,7 @@ namespace BeatGame.Logic.Audio
 
             for (int i = 0; i < entities.Length; i++)
             {
-                int frequencyBand = 0;
+                int frequencyBand;
                 if (AudioSpectrumManager.Instance.FrequencyBands >= barCount)
                     frequencyBand = i;
                 else
