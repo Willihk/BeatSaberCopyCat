@@ -126,8 +126,8 @@ namespace BeatGame.Logic.Managers
                 // Load Obstacles
                 ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
                 NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
-                obstacleSpawningSystem.obstaclesToSpawn.Clear();
-                obstacleSpawningSystem.obstaclesToSpawn.AddRange(obstacleSpawnDatas);
+                obstacleSpawningSystem.obstacles.Clear();
+                obstacleSpawningSystem.obstacles.AddRange(obstacleSpawnDatas);
                 obstacleSpawnDatas.Dispose();
 
                 // Load Events

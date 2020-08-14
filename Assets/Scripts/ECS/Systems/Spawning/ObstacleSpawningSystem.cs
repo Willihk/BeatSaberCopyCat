@@ -1,9 +1,6 @@
 ﻿using BeatGame.Data;
 using BeatGame.Logic.Managers;
 using System;
-using System.Diagnostics;
-using System.Numerics;
-using System.Threading;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -11,25 +8,24 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class ObstacleSpawningSystem : SystemBase
 {
-    public NativeList<ObstacleData> obstaclesToSpawn;
+    public NativeList<ObstacleData> obstacles;
 
     // Needs to be here to run the system
     EntityQuery defaultQuery;
 
     protected override void OnCreate()
     {
-        obstaclesToSpawn = new NativeList<ObstacleData>(Allocator.Persistent);
+        obstacles = new NativeList<ObstacleData>(Allocator.Persistent);
 
         defaultQuery = GetEntityQuery(new EntityQueryDesc { All = new ComponentType[] { typeof(Entity) } });
     }
 
     protected override void OnDestroy()
     {
-        obstaclesToSpawn.Dispose();
+        obstacles.Dispose();
     }
 
     protected override void OnUpdate()
@@ -42,7 +38,7 @@ public class ObstacleSpawningSystem : SystemBase
 
     void SpawnNeededNotes()
     {
-        if (obstaclesToSpawn.IsCreated == false)
+        if (obstacles.IsCreated == false)
             return;
 
         EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
@@ -50,7 +46,7 @@ public class ObstacleSpawningSystem : SystemBase
         var job = new SpawnJob
         {
             CommandBuffer = commandBuffer,
-            obstaclesToSpawn = obstaclesToSpawn,
+            Obstacles = obstacles,
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
             HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
@@ -67,7 +63,7 @@ public class ObstacleSpawningSystem : SystemBase
     struct SpawnJob : IJob
     {
         public EntityCommandBuffer CommandBuffer;
-        public NativeList<ObstacleData> obstaclesToSpawn;
+        public NativeList<ObstacleData> Obstacles;
         public double HalfJumpDuration;
         public double CurrentBeat;
         public double LastBeat;
@@ -76,9 +72,9 @@ public class ObstacleSpawningSystem : SystemBase
 
         public void Execute()
         {
-            for (int i = 0; i < obstaclesToSpawn.Length; i++)
+            for (int i = 0; i < Obstacles.Length; i++)
             {
-                var obstacle = obstaclesToSpawn[i];
+                var obstacle = Obstacles[i];
 
                 if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >= LastBeat)
                 {
