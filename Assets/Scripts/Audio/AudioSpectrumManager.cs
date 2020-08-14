@@ -15,12 +15,11 @@ namespace BeatGame.Logic.Audio
         float[] frequencyDistribution = new float[512];
 
         [HideInInspector]
-        public float[] AudioBand, AudioBandBuffer, stereoBandSpread, stereoBandBufferSpread;
+        public float[] AudioBand, AudioBandBuffer, stereoBandSpread;
         [HideInInspector]
         public float Amplitude, AmplitudeBuffer;
 
         private float[] samplesLeft = new float[512];
-        private float[] samplesRight = new float[512];
 
         private float[] frequencyBand;
         private float[] bandBuffer;
@@ -33,14 +32,6 @@ namespace BeatGame.Logic.Audio
         public int FrequencyBands = 64;
         public float AudioProfile;
 
-        public enum Channel
-        {
-            Stereo,
-            Left,
-            Right
-        }
-
-        public Channel channel = new Channel();
         public FFTWindow FrequencyReadMethod;
 
         private void Awake()
@@ -56,7 +47,6 @@ namespace BeatGame.Logic.Audio
             freqBandHighest = new float[FrequencyBands];
             AudioBand = new float[FrequencyBands];
             AudioBandBuffer = new float[FrequencyBands];
-            stereoBandSpread = new float[FrequencyBands];
 
             GetFrequencyDistribution();
             MakeAudioProfile(AudioProfile);
@@ -68,13 +58,11 @@ namespace BeatGame.Logic.Audio
             MakeFrequencyBands();
             BandBuffer();
             CreateAudioBands();
-            GetAmplitude();
         }
 
         void GetSpectrumAudioSource()
         {
             audioSource.GetSpectrumData(samplesLeft, 0, FrequencyReadMethod);
-            audioSource.GetSpectrumData(samplesRight, 1, FrequencyReadMethod);
         }
 
         void GetFrequencyDistribution()
@@ -91,7 +79,6 @@ namespace BeatGame.Logic.Audio
             int band = 0;
             float average = 0;
             float stereoLeft = 0;
-            float stereoRight = 0;
 
             for (int i = 0; i < 512; i++)
             {
@@ -99,14 +86,8 @@ namespace BeatGame.Logic.Audio
                 var current = FrequencyDistributionCurve.Evaluate(Mathf.RoundToInt(sample / 512));
 
                 stereoLeft += (samplesLeft[i]) * (i + 1);
-                stereoRight += (samplesRight[i]) * (i + 1);
 
-                if (channel == Channel.Stereo)
-                    average += stereoLeft + stereoRight;
-                else if (channel == Channel.Left)
-                    average += stereoLeft;
-                else if (channel == Channel.Right)
-                    average += stereoRight;
+                average += stereoLeft;
 
                 if (current == frequencyDistribution[band])
                 {
@@ -114,11 +95,9 @@ namespace BeatGame.Logic.Audio
                     {
                         average /= i;
                         stereoLeft /= i;
-                        stereoRight /= i;
                     }
 
                     frequencyBand[band] = average * 10;
-                    stereoBandSpread[band] = stereoLeft - stereoRight;
                     band++;
                 }
             }
