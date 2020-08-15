@@ -80,24 +80,14 @@ public class ObstacleSpawningSystem : SystemBase
                 {
                     var entity = CommandBuffer.Instantiate(Entity);
                     CommandBuffer.RemoveComponent<Prefab>(entity);
-                    float4x4 scale = new float4x4
-                    {
-                        c0 = new float4(obstacle.TransformData.Scale.x, 0, 0, 0),
-                        c1 = new float4(0, obstacle.TransformData.Scale.y, 0, 0),
-                        c2 = new float4(0, 0, obstacle.TransformData.Scale.z, 0),
-                        c3 = new float4(0, 0, 0, 1)
-                    };
 
                     CommandBuffer.SetComponent(entity, new DestroyOnBeat { Beat = (float)CurrentBeat });
 
                     CommandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
 
-                    CommandBuffer.SetComponent(entity, new CompositeScale
-                    {
-                        Value = scale
-                    });
+                    CommandBuffer.SetComponent(entity, new CompositeScale { Value = obstacle.TransformData.Scale });
 
-                    CommandBuffer.SetComponent(entity, new Rotation { Value = quaternion.Euler(obstacle.TransformData.LocalRotation) });
+                    CommandBuffer.SetComponent(entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
                 }
 
             }

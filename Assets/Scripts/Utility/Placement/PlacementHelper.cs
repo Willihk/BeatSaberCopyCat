@@ -49,7 +49,7 @@ namespace BeatGame.Utility
                 TransformData = new TransformData
                 {
                     Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset),
-                    LocalRotation = euler,
+                    LocalRotation = quaternion.Euler(euler),
                 },
             };
 
@@ -60,18 +60,18 @@ namespace BeatGame.Utility
         {
             var note = ConvertNoteDataWithVanillaMethod(rawNoteData, lineOffset);
 
-            note.TransformData = GetTransformDataWithNoodle(note.TransformData, rawNoteData.CustomData);
+            note.TransformData = GetTransformDataWithNoodle(note.TransformData, rawNoteData.CustomData, 0, 0);
 
             return note;
         }
 
-        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData, float3 lineOffset)
+        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData, float3 lineOffset, float jumpSpeed, float secondEquivalentOfBeat)
         {
             float4x4 scale = new float4x4
             {
                 c0 = new float4(rawObstacleData.Width, 0, 0, 0),
                 c1 = new float4(0, rawObstacleData.Type == 0 ? lineOffset.y * 3 : lineOffset.y * 2, 0, 0),
-                c2 = new float4(0, 0, (float)rawObstacleData.Duration, 0),
+                c2 = new float4(0, 0, ConvertDurationToZScale((float)rawObstacleData.Duration, jumpSpeed, secondEquivalentOfBeat), 0),
                 c3 = new float4(0, 0, 0, 1)
             };
             float lineIndex = rawObstacleData.LineIndex + (rawObstacleData.Width / 2);
@@ -92,19 +92,19 @@ namespace BeatGame.Utility
                 TransformData = new TransformData
                 {
                     Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset),
-                    Scale = new float3(scale.c0.x, scale.c1.y, scale.c2.z),
+                    Scale = scale,
                 },
             };
         }
 
-        public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData, float3 lineOffset)
+        public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData, float3 lineOffset, float jumpSpeed, float secondEquivalentOfBeat)
         {
-            var obstacle = ConvertObstacleDataWithVanillaMethod(rawData, lineOffset);
+            var obstacle = ConvertObstacleDataWithVanillaMethod(rawData, lineOffset, jumpSpeed, secondEquivalentOfBeat);
 
-            obstacle.TransformData = GetTransformDataWithNoodle(obstacle.TransformData, rawData.CustomData);
+            obstacle.TransformData = GetTransformDataWithNoodle(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat);
 
             var temp = obstacle.TransformData;
-            temp.Position += new float3(obstacle.TransformData.Scale.x / 2 + 1.3f, obstacle.TransformData.Scale.y / 2, 0);
+            temp.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.3f, obstacle.TransformData.Scale.c1.y / 2, 0);
             obstacle.TransformData = temp;
 
             return obstacle;
@@ -116,7 +116,7 @@ namespace BeatGame.Utility
             return new float3(lineIndex * lineOffset.x - 1.3f, lineLayer * lineOffset.y, 0);
         }
 
-        public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData)
+        public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData, float jumpSpeed, float secondEquivalentOfBeat)
         {
             if (customData.Position.w != 0)
             {
@@ -124,17 +124,25 @@ namespace BeatGame.Utility
             }
             if (customData.Scale.w != 0)
             {
-                transformData.Scale = new float3(
-                  customData.Scale.x,
-                  customData.Scale.y,
-                  transformData.Scale.z);
+                transformData.Scale = new float4x4
+                {
+                    c0 = new float4(customData.Scale.x, 0, 0, 0),
+                    c1 = new float4(0, customData.Scale.y, 0, 0),
+                    c2 = new float4(0, 0, ConvertDurationToZScale(customData.Scale.z, jumpSpeed, secondEquivalentOfBeat), 0),
+                    c3 = new float4(0, 0, 0, 1)
+                };
             }
             if (customData.LocalRotation.w != 0)
             {
-                transformData.LocalRotation = customData.LocalRotation.xyz;
+                transformData.LocalRotation = quaternion.Euler(customData.LocalRotation.xyz);
             }
 
             return transformData;
+        }
+
+        public static float ConvertDurationToZScale(float duration, float jumpSpeed, float secondEquivalentOfBeat)
+        {
+            return duration * secondEquivalentOfBeat * jumpSpeed;
         }
     }
 }

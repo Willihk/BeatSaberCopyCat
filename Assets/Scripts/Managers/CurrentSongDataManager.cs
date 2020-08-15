@@ -95,6 +95,8 @@ namespace BeatGame.Logic.Managers
                     RawData = rawObstacleDatas,
                     UsesNoodleExtensions = usesNoodleExtensions,
                     LineOffset = SettingsManager.LineOffset,
+                    NoteJumpSpeed = SongSpawningInfo.NoteJumpSpeed,
+                    SecondEquivalentOfBeat = (float)SongSpawningInfo.SecondEquivalentOfBeat,
                     ConvertedData = obstacleDatas,
                 };
                 var obstacleJobHandle = convertObstacleJob.Schedule();
@@ -114,7 +116,6 @@ namespace BeatGame.Logic.Managers
                 obstacleDatas.Dispose();
 
                 Debug.Log("Using Noodle Extensions: " + usesNoodleExtensions);
-
 
                 // Load Notes
                 NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
@@ -223,7 +224,11 @@ namespace BeatGame.Logic.Managers
             public NativeArray<RawObstacleData> RawData;
             [ReadOnly]
             public float3 LineOffset;
-
+            [ReadOnly]
+            public float NoteJumpSpeed;
+            [ReadOnly]
+            public float SecondEquivalentOfBeat;
+            [WriteOnly]
             public NativeArray<ObstacleData> ConvertedData;
 
             public void Execute()
@@ -232,9 +237,9 @@ namespace BeatGame.Logic.Managers
                 {
                     ObstacleData obstacle;
                     if (UsesNoodleExtensions)
-                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], LineOffset);
+                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], LineOffset, NoteJumpSpeed, SecondEquivalentOfBeat);
                     else
-                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], LineOffset);
+                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], LineOffset, NoteJumpSpeed, SecondEquivalentOfBeat);
 
                     ConvertedData[i] = obstacle;
                 }

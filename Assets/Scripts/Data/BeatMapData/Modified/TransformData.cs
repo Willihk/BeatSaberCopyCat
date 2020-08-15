@@ -6,8 +6,8 @@ namespace BeatGame.Data
     {
         public float3 Position { get; set; }
 
-        public float3 Scale { get; set; }
+        public float4x4 Scale { get; set; }
 
-        public float3 LocalRotation { get; set; }
+        public quaternion LocalRotation { get; set; }
     }
 }

@@ -94,7 +94,7 @@ public class NoteSpawningSystem : SystemBase
 
         EntityManager.SetComponentData(noteEntity, new DestroyOnBeat { Beat = (float)GameManager.Instance.CurrentBeat});
 
-        EntityManager.SetComponentData(noteEntity, new Rotation { Value = math.mul(rotation.Value, quaternion.Euler(note.TransformData.LocalRotation)) });
+        EntityManager.SetComponentData(noteEntity, new Rotation { Value = math.mul(rotation.Value, note.TransformData.LocalRotation) });
         EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
 
         EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
