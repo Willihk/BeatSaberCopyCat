@@ -56,7 +56,7 @@ public class ObstacleSpawningSystem : SystemBase
         //};
         //job.Schedule().Complete();
 
-        var job = new SpawnJobParralel
+        var job = new SpawnJobParallel
         {
             CommandBuffer = commandBuffer.ToConcurrent(),
             Obstacles = obstacles,
@@ -108,7 +108,7 @@ public class ObstacleSpawningSystem : SystemBase
     }
 
     [BurstCompile]
-    struct SpawnJobParralel : IJobParallelFor
+    struct SpawnJobParallel : IJobParallelFor
     {
         public EntityCommandBuffer.Concurrent CommandBuffer;
         [ReadOnly]
