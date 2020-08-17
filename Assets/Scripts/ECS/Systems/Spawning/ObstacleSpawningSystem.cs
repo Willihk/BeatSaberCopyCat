@@ -1,6 +1,7 @@
 ﻿using BeatGame.Data;
 using BeatGame.Logic.Managers;
 using System;
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -43,9 +44,21 @@ public class ObstacleSpawningSystem : SystemBase
 
         EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
-        var job = new SpawnJob
+        //var job = new SpawnJob
+        //{
+        //    CommandBuffer = commandBuffer,
+        //    Obstacles = obstacles,
+        //    CurrentBeat = GameManager.Instance.CurrentBeat,
+        //    LastBeat = GameManager.Instance.LastBeat,
+        //    HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
+        //    JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
+        //    Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
+        //};
+        //job.Schedule().Complete();
+
+        var job = new SpawnJobParralel
         {
-            CommandBuffer = commandBuffer,
+            CommandBuffer = commandBuffer.ToConcurrent(),
             Obstacles = obstacles,
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
@@ -53,7 +66,7 @@ public class ObstacleSpawningSystem : SystemBase
             JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
             Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
         };
-        job.Schedule().Complete();
+        job.Schedule(obstacles.Length, 32).Complete();
 
         commandBuffer.Playback(EntityManager);
         commandBuffer.Dispose();
@@ -90,6 +103,43 @@ public class ObstacleSpawningSystem : SystemBase
                     CommandBuffer.SetComponent(entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
                 }
 
+            }
+        }
+    }
+
+    [BurstCompile]
+    struct SpawnJobParralel : IJobParallelFor
+    {
+        public EntityCommandBuffer.Concurrent CommandBuffer;
+        [ReadOnly]
+        public NativeList<ObstacleData> Obstacles;
+        [ReadOnly]
+        public double HalfJumpDuration;
+        [ReadOnly]
+        public double CurrentBeat;
+        [ReadOnly]
+        public double LastBeat;
+        [ReadOnly]
+        public float JumpDistance;
+        [ReadOnly]
+        public Entity Entity;
+
+        public void Execute(int index)
+        {
+            var obstacle = Obstacles[index];
+
+            if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >= LastBeat)
+            {
+                var entity = CommandBuffer.Instantiate(index, Entity);
+                CommandBuffer.RemoveComponent<Prefab>(index, entity);
+
+                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat });
+
+                CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
+
+                CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
+
+                CommandBuffer.SetComponent(index, entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
             }
         }
     }
