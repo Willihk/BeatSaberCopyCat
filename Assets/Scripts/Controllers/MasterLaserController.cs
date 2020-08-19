@@ -55,7 +55,11 @@ namespace BeatGame.Logic.Lasers
 
         private void OnDisable()
         {
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+            var system = World.DefaultGameObjectInjectionWorld.GetExistingSystem<EventPlayingSystem>();
+            if (system != null)
+            {
+                World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+            }
             controllers = null;
         }
 
