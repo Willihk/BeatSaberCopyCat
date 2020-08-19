@@ -131,8 +131,12 @@ namespace BeatGame.Logic.Managers
 
         public void ReturnToMenu()
         {
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
-            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+            SceneFader.Instance.FadeIn(1, () =>
+            {
+                SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
+                SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+                SceneFader.Instance.FadeOut(.5f);
+            });
         }
 
         public void PlayLevel()
