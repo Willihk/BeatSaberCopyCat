@@ -111,7 +111,9 @@ namespace BeatGame.UI.Controllers
 
         public void PlayLevel()
         {
-            CurrentSongDataManager.Instance.SetData(songData, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+            CurrentSongDataManager.Instance.SelectedSongData = songData;
+            CurrentSongDataManager.Instance.Difficulity = difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus");
+
             GameManager.Instance.PlayLevel();
         }
 
