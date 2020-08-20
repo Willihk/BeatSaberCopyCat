@@ -44,7 +44,7 @@ namespace BeatGame.UI.Controllers
             }
         }
 
-        public void SongSelected(TabButton tabButton)
+        public void SongSelected(Tabs.TabButton tabButton)
         {
             infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
         }
@@ -77,7 +77,7 @@ namespace BeatGame.UI.Controllers
             {
                 var songEntryObject = Instantiate(songEntryPrefab, songEntryHolder);
                 songEntryObject.GetComponent<SongEntryController>().Initizalize(item);
-                songEntryObject.GetComponent<TabButton>().SetTabGroup(tabGroup);
+                songEntryObject.GetComponent<Tabs.TabButton>().SetTabGroup(tabGroup);
             }
 
         }

@@ -64,7 +64,7 @@ namespace BeatGame.UI.Controllers
             for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length; i++)
             {
                 var tabButtonObject = Instantiate(difficultyTabPrefab, difficultyTabGroup.transform);
-                tabButtonObject.GetComponent<TabButton>().SetTabGroup(difficultyTabGroup);
+                tabButtonObject.GetComponent<Tabs.TabButton>().SetTabGroup(difficultyTabGroup);
             }
 
             for (int i = 0; i < availableDifficulties.Length; i++)
