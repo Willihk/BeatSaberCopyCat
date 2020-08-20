@@ -26,6 +26,7 @@ namespace BeatGame.Logic.Managers
 
         public AvailableSongData SelectedSongData;
         public DifficultyBeatmap SelectedDifficultyMap;
+        public string Difficulity;
 
         public MapData MapData;
         public JObject MapJsonObject;
@@ -42,6 +43,7 @@ namespace BeatGame.Logic.Managers
 
         public async void LoadLevelDataAsync()
         {
+            SetData();
             if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
             {
                 MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
@@ -146,13 +148,12 @@ namespace BeatGame.Logic.Managers
             }
         }
 
-        public void SetData(AvailableSongData songData, string difficulty)
+        public void SetData()
         {
-            SelectedSongData = songData;
 
             foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
             {
-                if (item.Difficulty == difficulty)
+                if (item.Difficulty == Difficulity)
                 {
                     SelectedDifficultyMap = item;
                     break;

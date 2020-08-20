@@ -46,6 +46,15 @@ namespace BeatGame.Logic.Rings
             World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
         }
 
+        private void OnDestroy()
+        {
+            var system = World.DefaultGameObjectInjectionWorld.GetExistingSystem<EventPlayingSystem>();
+            if (system != null)
+            {
+                World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+            }
+        }
+
         void CreateRings()
         {
             for (int i = rings.Count; i < ringCount; i++)

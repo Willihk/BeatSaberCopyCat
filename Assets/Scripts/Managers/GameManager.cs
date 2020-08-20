@@ -1,4 +1,5 @@
-﻿using BeatGame.Data;
+﻿using Assets.Scripts.Managers;
+using BeatGame.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,9 +39,19 @@ namespace BeatGame.Logic.Managers
                 Instance = this;
 
             //VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
-
-            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+            // VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
             SceneManager.sceneLoaded += SceneLoaded;
+        }
+
+        private void Start()
+        {
+            LoadMenu();
+            SceneFader.Instance.FadeOut(1);
+        }
+
+        void LoadMenu()
+        {
+            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
         }
 
         //void VRSetupLoaded(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e)
@@ -118,17 +129,17 @@ namespace BeatGame.Logic.Managers
 
         public void ReturnToMenu()
         {
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
-            SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+            SceneFader.Instance.FadeIn(1, () =>
+            {
+                SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
+                SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
+                SceneFader.Instance.FadeOut(.5f);
+            });
         }
 
         public void PlayLevel()
         {
-            SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
-
-            SceneManager.LoadScene((int)SceneIndexes.Loading, LoadSceneMode.Additive);
-
-            Instance.StartLoading();
+            SceneFader.Instance.FadeIn(1, StartLoading);
         }
 
         void PlaySong()
@@ -138,6 +149,9 @@ namespace BeatGame.Logic.Managers
 
         public void StartLoading()
         {
+            SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu);
+
+
             StartCoroutine(GetAudioClip());
 
             CurrentSongDataManager.Instance.LoadLevelDataAsync();
@@ -161,8 +175,8 @@ namespace BeatGame.Logic.Managers
             var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
             mapLoad.completed += (AsyncOperation operation) =>
             {
-                SceneManager.UnloadSceneAsync((int)SceneIndexes.Loading);
                 OnLoadingFinished?.Invoke();
+                SceneFader.Instance.FadeOut(.5f);
                 Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
             };
         }
