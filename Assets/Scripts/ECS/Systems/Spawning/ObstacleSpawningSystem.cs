@@ -58,7 +58,7 @@ public class ObstacleSpawningSystem : SystemBase
 
         var job = new SpawnJobParallel
         {
-            CommandBuffer = commandBuffer.ToConcurrent(),
+            CommandBuffer = commandBuffer.AsParallelWriter(),
             Obstacles = obstacles,
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
@@ -110,7 +110,7 @@ public class ObstacleSpawningSystem : SystemBase
     [BurstCompile]
     struct SpawnJobParallel : IJobParallelFor
     {
-        public EntityCommandBuffer.Concurrent CommandBuffer;
+        public EntityCommandBuffer.ParallelWriter CommandBuffer;
         [ReadOnly]
         public NativeList<ObstacleData> Obstacles;
         [ReadOnly]

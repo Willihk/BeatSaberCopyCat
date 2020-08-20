@@ -32,8 +32,8 @@ public class AudioVisualizationSystem : SystemBase
         var job = new VisualizeJob
         {
             FrequencyBands = frequencyBands,
-            AudioVisualizationDataType = GetArchetypeChunkComponentType<AudioVisualizationData>(true),
-            NonUniformScaleType = GetArchetypeChunkComponentType<NonUniformScale>(),
+            AudioVisualizationDataType = GetComponentTypeHandle<AudioVisualizationData>(true),
+            NonUniformScaleType = GetComponentTypeHandle<NonUniformScale>(),
         };
         job.Schedule(audioBarQuery).Complete();
     }
@@ -47,8 +47,8 @@ public class AudioVisualizationSystem : SystemBase
     struct VisualizeJob : IJobChunk
     {
         [ReadOnly]
-        public ArchetypeChunkComponentType<AudioVisualizationData> AudioVisualizationDataType;
-        public ArchetypeChunkComponentType<NonUniformScale> NonUniformScaleType;
+        public ComponentTypeHandle<AudioVisualizationData> AudioVisualizationDataType;
+        public ComponentTypeHandle<NonUniformScale> NonUniformScaleType;
 
         [ReadOnly]
         public NativeArray<float> FrequencyBands;
