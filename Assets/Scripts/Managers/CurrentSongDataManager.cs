@@ -245,5 +245,22 @@ namespace BeatGame.Logic.Managers
                 }
             }
         }
+
+
+        //struct ConvertJob : IJob
+        //{
+
+        //    public string DirectoryPath;
+        //    public string BeatmapFilename;
+
+        //    public void Execute()
+        //    {
+        //        var MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(DirectoryPath + "\\" + BeatmapFilename));
+
+        //       var  MapJsonObject = JObject.Parse(File.ReadAllText(DirectoryPath + "\\" + BeatmapFilename));
+
+
+        //    }
+        //}
     }
 }
