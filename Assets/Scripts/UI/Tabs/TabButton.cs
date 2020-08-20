@@ -51,7 +51,7 @@ namespace BeatGame.UI.Tabs
                     case UIPointerEvent.Hover:
                         item.TargetGraphic.color = item.HoverColor;
                         break;
-                    case UIPointerEvent.Presed:
+                    case UIPointerEvent.Pressed:
                         break;
                     case UIPointerEvent.Selected:
                         item.TargetGraphic.color = item.SelectedColor;

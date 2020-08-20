@@ -7,7 +7,7 @@ namespace BeatGame.Data
     {
         Idle,
         Hover,
-        Presed,
+        Pressed,
         Selected,
     }
 }
