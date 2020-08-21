@@ -43,15 +43,14 @@ namespace BeatGame.Logic.Rings
 
         private void Start()
         {
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
+            EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
         }
 
         private void OnDestroy()
         {
-            var system = World.DefaultGameObjectInjectionWorld.GetExistingSystem<EventPlayingSystem>();
-            if (system != null)
+            if (EventPlayingSystem.Instance != null)
             {
-                World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+                EventPlayingSystem.Instance.OnPlayEvent -= PlayEvent;
             }
         }
 

@@ -10,28 +10,29 @@ using BeatGame.Logic.Managers;
 
 public class EventPlayingSystem : SystemBase
 {
+    public static EventPlayingSystem Instance;
+
     /// <summary>
     /// Value 1 is Event Type.
     /// Value 2 is Event Value.
     /// </summary>
     public event Action<int, int> OnPlayEvent;
 
-    public NativeList<EventData> eventsToPlay;
+    public NativeList<EventData> Events;
     NativeQueue<int> eventsToSpawnIndexQueue;
-
-    // Used to always run the system
-    EntityQuery defaultQuery;
 
     protected override void OnCreate()
     {
-        eventsToPlay = new NativeList<EventData>(Allocator.Persistent);
+        if (Instance == null)
+            Instance = this;
+
+        Events = new NativeList<EventData>(Allocator.Persistent);
         eventsToSpawnIndexQueue = new NativeQueue<int>(Allocator.Persistent);
-        defaultQuery = GetEntityQuery(new EntityQueryDesc { All = new ComponentType[] { typeof(Entity) } });
     }
 
     protected override void OnDestroy()
     {
-        eventsToPlay.Dispose();
+        Events.Dispose();
         eventsToSpawnIndexQueue.Dispose();
     }
 
@@ -50,15 +51,15 @@ public class EventPlayingSystem : SystemBase
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
             HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
-            EventDatas = eventsToPlay,
+            EventDatas = Events,
             EventsToSpawnIndexQueue = eventsToSpawnIndexQueue.AsParallelWriter()
         };
 
-        job.Schedule().Complete();
+        job.Schedule(Events.Length, 64, Dependency).Complete();
 
         while (eventsToSpawnIndexQueue.TryDequeue(out int index))
         {
-            PlayEvent(eventsToPlay[index]);
+            PlayEvent(Events[index]);
         }
     }
 
@@ -68,7 +69,7 @@ public class EventPlayingSystem : SystemBase
     }
 
     [BurstCompile]
-    struct GetEventsToSpawn : IJob
+    struct GetEventsToSpawn : IJobParallelFor
     {
         [ReadOnly]
         public NativeArray<EventData> EventDatas;
@@ -81,14 +82,11 @@ public class EventPlayingSystem : SystemBase
 
         public NativeQueue<int>.ParallelWriter EventsToSpawnIndexQueue;
 
-        public void Execute()
+        public void Execute(int index)
         {
-            for (int i = 0; i < EventDatas.Length; i++)
+            if (EventDatas[index].Time + HalfJumpDuration >= LastBeat && EventDatas[index].Time + HalfJumpDuration <= CurrentBeat)
             {
-                if (EventDatas[i].Time + HalfJumpDuration >= LastBeat && EventDatas[i].Time + HalfJumpDuration <= CurrentBeat)
-                {
-                    EventsToSpawnIndexQueue.Enqueue(i);
-                }
+                EventsToSpawnIndexQueue.Enqueue(index);
             }
         }
     }

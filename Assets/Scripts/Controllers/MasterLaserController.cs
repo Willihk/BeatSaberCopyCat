@@ -46,7 +46,7 @@ namespace BeatGame.Logic.Lasers
 
             currentMaterial = blueMaterial;
 
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
+            EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
 
             controllers.ForEach(x => x.SetMaterial(currentMaterial));
 
@@ -55,10 +55,9 @@ namespace BeatGame.Logic.Lasers
 
         private void OnDisable()
         {
-            var system = World.DefaultGameObjectInjectionWorld.GetExistingSystem<EventPlayingSystem>();
-            if (system != null)
+            if (EventPlayingSystem.Instance != null)
             {
-                World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+                EventPlayingSystem.Instance.OnPlayEvent -= PlayEvent;
             }
             controllers = null;
         }

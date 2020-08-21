@@ -1,4 +1,5 @@
-﻿using BeatGame.Data;
+﻿using Assets.Scripts.Managers;
+using BeatGame.Data;
 using BeatGame.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -134,10 +135,9 @@ namespace BeatGame.Logic.Managers
                 obstacleSpawnDatas.Dispose();
 
                 // Load Events
-                EventPlayingSystem eventPlayingSystem = (EventPlayingSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(EventPlayingSystem));
                 NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
-                eventPlayingSystem.eventsToPlay.Clear();
-                eventPlayingSystem.eventsToPlay.AddRange(eventsToPlay);
+                EventPlayingSystem.Instance.Events.Clear();
+                EventPlayingSystem.Instance.Events.AddRange(eventsToPlay);
                 eventsToPlay.Dispose();
 
                 Debug.Log("Notes: " + Instance.MapData.Notes.Length);

@@ -37,7 +37,7 @@ namespace BeatGame.Logic.Volumetrics
             if (findLaserControllersInChildren)
                 GetControllersInChildReqursive(transform);
 
-            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent += PlayEvent;
+            EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
 
             controllers.ForEach(x => x.SetMaterial(material));
 
@@ -46,10 +46,9 @@ namespace BeatGame.Logic.Volumetrics
 
         private void OnDisable()
         {
-            var system = World.DefaultGameObjectInjectionWorld.GetExistingSystem<EventPlayingSystem>();
-            if (system != null)
+            if (EventPlayingSystem.Instance != null)
             {
-                World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EventPlayingSystem>().OnPlayEvent -= PlayEvent;
+                EventPlayingSystem.Instance.OnPlayEvent -= PlayEvent;
             }
             controllers = null;
         }
