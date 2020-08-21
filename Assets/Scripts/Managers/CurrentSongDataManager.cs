@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.Managers;
-using Assets.Scripts.Utility.ModSupport;
-using BeatGame.Data;
+﻿using BeatGame.Data;
 using BeatGame.Utility;
+using BeatGame.Utility.ModSupport;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

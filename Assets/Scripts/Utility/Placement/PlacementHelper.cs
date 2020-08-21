@@ -1,9 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using BeatGame.Data;
-using Assets.Scripts.Utility.ModSupport;
-using BeatGame.Logic.Managers;
 
 namespace BeatGame.Utility
 {

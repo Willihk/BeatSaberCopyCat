@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.Mathematics;
 using BeatGame.Data;
 
-namespace Assets.Scripts.Utility.ModSupport
+namespace BeatGame.Utility.ModSupport
 {
     public class ChromaSupport
     {

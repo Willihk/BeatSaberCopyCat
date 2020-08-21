@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using BeatGame.Utility;
 using BeatGame.Logic.Managers;
 
-namespace Assets.Scripts.Utility.ModSupport
+namespace BeatGame.Utility.ModSupport
 {
     public static class NoodleExtensions
     {
