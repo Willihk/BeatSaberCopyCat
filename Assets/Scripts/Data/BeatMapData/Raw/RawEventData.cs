@@ -2,7 +2,7 @@
 
 namespace BeatGame.Data
 {
-    public struct EventData
+    public struct RawEventData
     {
         [JsonProperty("_time")]
         public double Time { get; set; }
@@ -25,5 +25,8 @@ namespace BeatGame.Data
 
         [JsonProperty("_value")]
         public int Value { get; set; }
+
+        [JsonProperty("_customData")]
+        public CustomEventData CustomData {get; set;}
     }
 }

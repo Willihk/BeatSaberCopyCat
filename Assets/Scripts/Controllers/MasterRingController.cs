@@ -108,7 +108,7 @@ namespace BeatGame.Logic.Rings
             ringSpeed = Random.Range(-10, 10);
         }
 
-        private void PlayEvent(int type, int value)
+        private void PlayEvent(int type, EventData eventData)
         {
             if (supportedEventTypes.Any(x => (int)x == type))
             {

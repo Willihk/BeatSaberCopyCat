@@ -16,7 +16,7 @@ public class EventPlayingSystem : SystemBase
     /// Value 1 is Event Type.
     /// Value 2 is Event Value.
     /// </summary>
-    public event Action<int, int> OnPlayEvent;
+    public event Action<int, EventData> OnPlayEvent;
 
     public NativeList<EventData> Events;
     NativeQueue<int> eventsToSpawnIndexQueue;
@@ -65,7 +65,7 @@ public class EventPlayingSystem : SystemBase
 
     private void PlayEvent(EventData eventInfo)
     {
-        OnPlayEvent?.Invoke(eventInfo.Type, eventInfo.Value);
+        OnPlayEvent?.Invoke(eventInfo.Type, eventInfo);
     }
 
     [BurstCompile]

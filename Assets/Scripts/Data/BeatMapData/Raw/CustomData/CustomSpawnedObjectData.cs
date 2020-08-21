@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace BeatGame.Data
 {
-    public struct CustomData
+    public struct CustomSpawnedObjectData
     {
         // Using float4 last value to check if there is a value defined
 

@@ -24,9 +24,6 @@ namespace BeatGame.Logic.Lasers
             startRotation = transform.rotation;
             lineRenderer.positionCount = 2;
 
-            if (lineRenderer != null)
-                material = lineRenderer.sharedMaterial;
-
             lineRenderer.enabled = true;
         }
 
@@ -54,10 +51,9 @@ namespace BeatGame.Logic.Lasers
 
         public override void SetMaterial(Material material)
         {
-            base.SetMaterial(material);
             if (lineRenderer == null)
                 TryGetComponent(out lineRenderer);
-            lineRenderer.material = material;
+            lineRenderer.sharedMaterial = material;
         }
     }
 }

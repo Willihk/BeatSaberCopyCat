@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18319127, g: 0.22884634, b: 0.30649167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2158,7 +2158,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh72308
+  m_Name: pb_Mesh28484
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2366,8 +2366,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 00000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &368686178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2383,10 +2381,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 6
+  laserIntensity: 11
+  laserFlashIntensity: 15
 --- !u!1 &374234362
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,10 +2435,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 5
+  laserIntensity: 11
+  laserFlashIntensity: 14
 --- !u!114 &374234365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,8 +2453,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 04000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &377385284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,10 +2583,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 6
+  laserIntensity: 11
+  laserFlashIntensity: 15
 --- !u!1 &444065855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,7 +2967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!215 &518721627
 ReflectionProbe:
   m_ObjectHideFlags: 0
@@ -2991,24 +2981,24 @@ ReflectionProbe:
   m_Mode: 1
   m_RefreshMode: 1
   m_TimeSlicingMode: 2
-  m_Resolution: 1024
+  m_Resolution: 32
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 395.2514, y: 358.77145, z: 380.1453}
-  m_BoxOffset: {x: 0, y: 0, z: 183.5966}
+  m_BoxSize: {x: 395.2514, y: 358.77145, z: 767.64984}
+  m_BoxOffset: {x: 0, y: 0, z: 377.3489}
   m_NearClip: 0.3
-  m_FarClip: 1000
+  m_FarClip: 300
   m_ShadowDistance: 0
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 1024
-  m_IntensityMultiplier: 0.93
+  m_IntensityMultiplier: 0.85
   m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 1
   m_RenderDynamicObjects: 0
-  m_UseOcclusionCulling: 1
+  m_UseOcclusionCulling: 0
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
 --- !u!4 &518721628
@@ -3713,8 +3703,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 04000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &666464747
 GameObject:
   m_ObjectHideFlags: 0
@@ -3863,8 +3851,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 01000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &696854064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3880,10 +3866,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 6
+  laserIntensity: 11
+  laserFlashIntensity: 15
 --- !u!1 &727768130
 GameObject:
   m_ObjectHideFlags: 0
@@ -4174,10 +4158,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 0300000003000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 5
+  laserIntensity: 11
+  laserFlashIntensity: 14
 --- !u!114 &763970824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4194,8 +4176,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 03000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &775807686
 GameObject:
   m_ObjectHideFlags: 0
@@ -4488,10 +4468,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 020000000c000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 5
+  laserIntensity: 11
+  laserFlashIntensity: 14
 --- !u!114 &805946939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4508,8 +4486,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 02000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &841015016
 GameObject:
   m_ObjectHideFlags: 0
@@ -6244,10 +6220,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 2
-  laserFlashIntensity: 4
+  laserIntensity: 11
+  laserFlashIntensity: 13
 --- !u!114 &1170679209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6264,8 +6238,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 01000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.5638194, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1172305894
 GameObject:
   m_ObjectHideFlags: 0
@@ -8508,10 +8480,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
-  blueMaterial: {fileID: 2100000, guid: 26acbb9cdd3982b42a1673cc90e27a50, type: 2}
-  redMaterial: {fileID: 2100000, guid: 0baa03a8f1f04d54097659fe77627a03, type: 2}
-  laserIntensity: 3
-  laserFlashIntensity: 5
+  laserIntensity: 11
+  laserFlashIntensity: 14
 --- !u!114 &1742850298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8528,8 +8498,6 @@ MonoBehaviour:
   controllers: []
   supportedEventTypes: 00000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
-  blueColor: {r: 0, g: 0.7035143, b: 1, a: 1}
-  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1750210526
 GameObject:
   m_ObjectHideFlags: 0
@@ -8833,7 +8801,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh72166
+  m_Name: pb_Mesh28342
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

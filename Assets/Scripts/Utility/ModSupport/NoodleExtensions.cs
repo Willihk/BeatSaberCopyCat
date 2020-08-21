@@ -9,7 +9,7 @@ namespace BeatGame.Utility.ModSupport
 {
     public static class NoodleExtensions
     {
-        public static TransformData ApplyNoodleExtensionsToTransform(TransformData transformData, CustomData customData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
+        public static TransformData ApplyNoodleExtensionsToTransform(TransformData transformData, CustomSpawnedObjectData customData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
         {
             if (customData.Scale.w != 0)
             {

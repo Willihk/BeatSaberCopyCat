@@ -22,6 +22,6 @@ namespace BeatGame.Data
         public int CutDirection { get; set; }
 
         [JsonProperty("_customData", NullValueHandling = NullValueHandling.Ignore)]
-        public CustomData CustomData { get; set; }
+        public CustomSpawnedObjectData CustomData { get; set; }
     }
 }

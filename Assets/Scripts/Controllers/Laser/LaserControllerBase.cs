@@ -8,15 +8,12 @@ namespace BeatGame.Logic.Lasers
         protected Quaternion startRotation;
         protected float rotationSpeed;
 
-        protected Material material;
-
         public virtual void TurnOff() { }
 
         public virtual void TurnOn() { }
 
         public virtual void SetMaterial(Material material)
         {
-            this.material = material;
         }
 
         public virtual void SetRotation(float value)

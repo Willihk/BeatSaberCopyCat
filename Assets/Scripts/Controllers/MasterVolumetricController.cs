@@ -20,12 +20,8 @@ namespace BeatGame.Logic.Volumetrics
         [SerializeField]
         Material material;
 
-        [SerializeField, ColorUsage(true, true)]
-        Color blueColor = new Color(0, 0.7035143f, 1);
-        [SerializeField, ColorUsage(true, true)]
-        Color redColor = new Color(1, 0, 0);
-
         Color currentColor;
+        float maxAlpha = 0.77f;
 
         private void OnEnable()
         {
@@ -65,7 +61,7 @@ namespace BeatGame.Logic.Volumetrics
             }
         }
 
-        private void PlayEvent(int type, int value)
+        private void PlayEvent(int type, EventData eventData)
         {
             if (supportedEventTypes.Any(x => (int)x == type))
             {
@@ -76,19 +72,17 @@ namespace BeatGame.Logic.Volumetrics
                     case 2:
                     case 3:
                     case 4:
-                        if (value > 4)
-                        {
-                            value -= 4;
-                            material.SetColor("_Color", blueColor);
-                            currentColor = blueColor;
-                        }
-                        else
-                        {
-                            material.SetColor("_Color", redColor);
-                            currentColor = redColor;
-                        }
+                        currentColor.r = eventData.Color.x;
+                        currentColor.g = eventData.Color.y;
+                        currentColor.b = eventData.Color.z;
+                        currentColor.a = maxAlpha;
+                        material.SetColor("_Color", currentColor);
 
-                        switch (value)
+                        // Easier value switch
+                        if (eventData.Value > 4)
+                            eventData.Value -= 4;
+
+                        switch (eventData.Value)
                         {
                             case 0:
                                 TurnOff();
@@ -116,12 +110,11 @@ namespace BeatGame.Logic.Volumetrics
         {
             currentColor.a = 0;
             material.SetColor("_Color", currentColor);
-            controllers.ForEach(x => x.TurnOff());
         }
 
         public virtual void TurnOn()
         {
-            currentColor.a = 1;
+            currentColor.a = maxAlpha;
             material.SetColor("_Color", currentColor);
         }
 
@@ -140,10 +133,10 @@ namespace BeatGame.Logic.Volumetrics
 
         protected IEnumerator FadeVolume()
         {
-            currentColor.a = 1;
+            currentColor.a = maxAlpha;
             while (currentColor.a > 0)
             {
-                currentColor.a -= 1f / .55f * Time.deltaTime;
+                currentColor.a -= maxAlpha / .55f * Time.deltaTime;
                 material.SetColor("_Color", currentColor);
                 yield return null;
             }

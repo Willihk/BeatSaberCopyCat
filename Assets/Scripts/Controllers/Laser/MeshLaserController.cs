@@ -12,11 +12,7 @@ namespace BeatGame.Logic.Lasers
             if (renderer == null)
                 TryGetComponent(out renderer);
 
-
             startRotation = transform.rotation;
-
-            if (renderer != null)
-                material = renderer.sharedMaterial;
         }
 
         void Update()
@@ -29,11 +25,8 @@ namespace BeatGame.Logic.Lasers
 
         public override void SetMaterial(Material material)
         {
-            base.SetMaterial(material);
-            if (renderer == null)
-                TryGetComponent(out renderer);
-
-            renderer.material = material;
+            if (renderer != null || TryGetComponent(out renderer))
+                renderer.sharedMaterial = material;
         }
     }
 }

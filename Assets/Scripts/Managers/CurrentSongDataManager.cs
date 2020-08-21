@@ -44,7 +44,9 @@ namespace BeatGame.Logic.Managers
 
         public async void LoadLevelDataAsync()
         {
-            SetData();
+            HasLoadedData = false;
+
+            SetSpawningData();
             if (File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename))
             {
                 MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
@@ -64,6 +66,19 @@ namespace BeatGame.Logic.Managers
                     usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
 
                 stopwatch.Start();
+
+
+                NativeArray<RawEventData> rawEventDatas = new NativeArray<RawEventData>(MapJsonObject["_events"].ToObject<RawEventData[]>(), Allocator.TempJob);
+                NativeArray<EventData> eventDatas = new NativeArray<EventData>(rawEventDatas.Length, Allocator.TempJob);
+                Debug.Log("event job assigned : " + stopwatch.ElapsedMilliseconds);
+                var convertEventJob = new ConvertEventDatas
+                {
+                    RawData = rawEventDatas,
+                    LineOffset = SettingsManager.LineOffset,
+                    ConvertedData = eventDatas,
+                };
+                var eventJobHandle = convertEventJob.Schedule();
+
 
                 RawNoteData[] rawNoteDataArray = new RawNoteData[MapJsonObject["_notes"].Count()];
 
@@ -104,52 +119,62 @@ namespace BeatGame.Logic.Managers
                 };
                 var obstacleJobHandle = convertObstacleJob.Schedule();
 
+                eventJobHandle.Complete();
                 noteJobHandle.Complete();
                 obstacleJobHandle.Complete();
                 stopwatch.Stop();
                 Debug.Log("jobs completed : " + stopwatch.ElapsedMilliseconds);
 
+                MapData.Events = eventDatas.ToArray();
                 MapData.Notes = noteDatas.ToArray();
                 MapData.Obstacles = obstacleDatas.ToArray();
 
+                rawEventDatas.Dispose();
                 rawNoteDatas.Dispose();
                 rawObstacleDatas.Dispose();
 
+                eventDatas.Dispose();
                 noteDatas.Dispose();
                 obstacleDatas.Dispose();
 
                 Debug.Log("Using Noodle Extensions: " + usesNoodleExtensions);
 
-                // Load Notes
-                NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
-                NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
-                noteSpawningSystem.notesToSpawn.Clear();
-                noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
-                noteSpawnDatas.Dispose();
+                AssignDataToSystems();
 
-                // Load Obstacles
-                ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
-                NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
-                obstacleSpawningSystem.obstacles.Clear();
-                obstacleSpawningSystem.obstacles.AddRange(obstacleSpawnDatas);
-                obstacleSpawnDatas.Dispose();
-
-                // Load Events
-                NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
-                EventPlayingSystem.Instance.Events.Clear();
-                EventPlayingSystem.Instance.Events.AddRange(eventsToPlay);
-                eventsToPlay.Dispose();
-
-                Debug.Log("Notes: " + Instance.MapData.Notes.Length);
-                Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
-                Debug.Log("Events: " + Instance.MapData.Events.Length);
-
-                await new WaitForSeconds(1);
+                await new WaitForSeconds(.1f);
                 HasLoadedData = true;
             }
         }
 
-        public void SetData()
+        void AssignDataToSystems()
+        {
+
+            // Load Notes
+            NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
+            NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
+            noteSpawningSystem.notesToSpawn.Clear();
+            noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
+            noteSpawnDatas.Dispose();
+
+            // Load Obstacles
+            ObstacleSpawningSystem obstacleSpawningSystem = (ObstacleSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(ObstacleSpawningSystem));
+            NativeArray<ObstacleData> obstacleSpawnDatas = new NativeArray<ObstacleData>(Instance.MapData.Obstacles, Allocator.TempJob);
+            obstacleSpawningSystem.obstacles.Clear();
+            obstacleSpawningSystem.obstacles.AddRange(obstacleSpawnDatas);
+            obstacleSpawnDatas.Dispose();
+
+            // Load Events
+            NativeArray<EventData> eventsToPlay = new NativeArray<EventData>(Instance.MapData.Events, Allocator.TempJob);
+            EventPlayingSystem.Instance.Events.Clear();
+            EventPlayingSystem.Instance.Events.AddRange(eventsToPlay);
+            eventsToPlay.Dispose();
+
+            Debug.Log("Notes: " + Instance.MapData.Notes.Length);
+            Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
+            Debug.Log("Events: " + Instance.MapData.Events.Length);
+        }
+
+        public void SetSpawningData()
         {
 
             foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
@@ -209,7 +234,7 @@ namespace BeatGame.Logic.Managers
                 {
                     NoteData note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
 
-                    note.Color = ChromaSupport.GetColor(RawData[i].CustomData);
+                    note.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 
                     if (UsesNoodleExtensions)
                         note = NoodleExtensions.ConvertNoteDataToNoodleExtensions(note, RawData[i], LineOffset);
@@ -241,12 +266,44 @@ namespace BeatGame.Logic.Managers
                 {
                     ObstacleData obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
-                    obstacle.Color = ChromaSupport.GetColor(RawData[i].CustomData);
+                    obstacle.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 
                     if (UsesNoodleExtensions)
                         obstacle = NoodleExtensions.ConvertObstacleDataToNoodleExtensions(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
                     ConvertedData[i] = obstacle;
+                }
+            }
+        }
+
+        [BurstCompile]
+        struct ConvertEventDatas : IJob
+        {
+            [ReadOnly]
+            public NativeArray<RawEventData> RawData;
+            [ReadOnly]
+            public float3 LineOffset;
+            [WriteOnly]
+            public NativeArray<EventData> ConvertedData;
+
+            public void Execute()
+            {
+                for (int i = 0; i < ConvertedData.Length; i++)
+                {
+                    EventData eventData = new EventData
+                    {
+                        Time = RawData[i].Time,
+                        Type = RawData[i].Type,
+                        Value = RawData[i].Value,
+                        PropID = RawData[i].CustomData.PropID,
+                        Color = new float4
+                        {
+                            xyz = ChromaSupport.GetColorForEvent(RawData[i]),
+                            w = 1
+                        }
+                    };
+
+                    ConvertedData[i] = eventData;
                 }
             }
         }

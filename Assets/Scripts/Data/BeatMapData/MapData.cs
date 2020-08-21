@@ -29,7 +29,6 @@ namespace BeatGame.Data
         public string _version { get; set; }
         public CustomData _customData { get; set; }
 
-        [JsonProperty("_events")]
         public EventData[] Events { get; set; }
 
         public NoteData[] Notes { get; set; }

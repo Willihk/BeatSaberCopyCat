@@ -20,6 +20,6 @@ namespace BeatGame.Data
         public int Width { get; set; }
 
         [JsonProperty("_customData")]
-        public CustomData CustomData { get; set; }
+        public CustomSpawnedObjectData CustomData { get; set; }
     }
 }
