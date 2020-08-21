@@ -8,116 +8,127 @@ using Unity.Transforms;
 using Unity.Rendering;
 using BeatGame.Data;
 using BeatGame.Logic.Managers;
+using Unity.Jobs;
+using Unity.Burst;
 
 public class NoteSpawningSystem : SystemBase
 {
     public NativeList<NoteData> notesToSpawn;
+    NativeArray<Entity> notePrefabs;
 
-    // Needs to be here to run the system
-    EntityQuery defaultQuery;
-
-    Material redEmissiveMaterial;
-    Material redMaterial;
 
     protected override void OnCreate()
     {
-        redEmissiveMaterial = Resources.Load<Material>("Materials/Note/Emissive/Red Emissive");
-        redMaterial = Resources.Load<Material>("Materials/Note/Note Red");
         notesToSpawn = new NativeList<NoteData>(Allocator.Persistent);
+    }
 
-        defaultQuery = GetEntityQuery(new EntityQueryDesc { All = new ComponentType[] { typeof(Entity) } });
+    protected override void OnStartRunning()
+    {
+        notePrefabs = new NativeArray<Entity>(5, Allocator.Persistent);
+        notePrefabs[0] = EntityPrefabManager.Instance.GetEntityPrefab("Note Blue AnyDirection");
+        notePrefabs[1] = EntityPrefabManager.Instance.GetEntityPrefab("Note Red AnyDirection");
+        notePrefabs[2] = EntityPrefabManager.Instance.GetEntityPrefab("Note Blue");
+        notePrefabs[3] = EntityPrefabManager.Instance.GetEntityPrefab("Note Red");
+        notePrefabs[4] = EntityPrefabManager.Instance.GetEntityPrefab("Bomb");
     }
 
     protected override void OnDestroy()
     {
         notesToSpawn.Dispose();
+        notePrefabs.Dispose();
     }
 
     protected override void OnUpdate()
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            SpawnNeededNotes();
+            EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
+            SpawnNotesJob job = new SpawnNotesJob
+            {
+                CommandBuffer = commandBuffer.AsParallelWriter(),
+                Notes = notesToSpawn,
+                NotePrefabs = notePrefabs,
+                LastBeat = GameManager.Instance.LastBeat,
+                CurrentBeat = (float)GameManager.Instance.CurrentBeat,
+                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
+                HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration
+            };
+            job.Schedule(notesToSpawn.Length, 64).Complete();
+
+            commandBuffer.Playback(EntityManager);
+            commandBuffer.Dispose();
         }
     }
 
-    void SpawnNeededNotes()
+    [BurstCompile]
+    struct SpawnNotesJob : IJobParallelFor
     {
-        if (notesToSpawn.IsCreated == false)
-            return;
+        public EntityCommandBuffer.ParallelWriter CommandBuffer;
+        [ReadOnly]
+        public NativeList<NoteData> Notes;
+        [ReadOnly]
+        public float JumpDistance;
+        [ReadOnly]
+        public float CurrentBeat;
+        [ReadOnly]
+        public double HalfJumpDuration;
+        [ReadOnly]
+        public double LastBeat;
+        [ReadOnly]
+        public NativeArray<Entity> NotePrefabs;
 
-        for (int i = 0; i < notesToSpawn.Length; i++)
+        public void Execute(int index)
         {
-            var note = notesToSpawn[i];
-
-            if (note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration <= GameManager.Instance.CurrentBeat && note.Time - CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration >= GameManager.Instance.LastBeat)
+            if (Notes[index].Time - HalfJumpDuration <= CurrentBeat && Notes[index].Time - HalfJumpDuration >= LastBeat)
             {
-                if (note.Type == 3)
+                if (Notes[index].Type == 3)
                 {
-                    SpawnBomb(note);
+                    SpawnBomb(index);
                 }
                 else
                 {
-                    SpawnNote(note);
+                    SpawnNote(index);
                 }
             }
         }
-    }
 
-    void SpawnBomb(NoteData note)
-    {
-        var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Bomb");
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
-
-        EntityManager.SetComponentData(noteEntity, new DestroyOnBeat { Beat = (float)GameManager.Instance.CurrentBeat});
-
-        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
-    }
-
-    void SpawnNote(NoteData note)
-    {
-        var noteEntity = EntityPrefabManager.Instance.SpawnEntityPrefab("Note");
-
-        switch ((CutDirection)note.CutDirection)
+        void SpawnBomb(int index)
         {
-            case CutDirection.Any:
-                var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
-                EntityManager.SetComponentData(linkedGroup[1].Value, new NonUniformScale { Value = new float3(0.1f, 0.26f, 0.26f) });
-                EntityManager.SetComponentData(linkedGroup[1].Value, new Translation { Value = new float3(0, 0, -0.474f) });
-                break;
-            default:
-                break;
+            var noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[4]);
+
+            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, 0, JumpDistance) });
+
+            CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
+
+            CommandBuffer.SetComponent(index, noteEntity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
         }
 
-
-        var rotation = EntityManager.GetComponentData<Rotation>(noteEntity);
-
-        EntityManager.SetComponentData(noteEntity, new DestroyOnBeat { Beat = (float)GameManager.Instance.CurrentBeat});
-
-        EntityManager.SetComponentData(noteEntity, new Rotation { Value = math.mul(rotation.Value, note.TransformData.LocalRotation) });
-        EntityManager.SetComponentData(noteEntity, new Translation { Value = note.TransformData.Position + new float3(0, 0, GetNeededOffset()) });
-
-        EntityManager.SetComponentData(noteEntity, new Note { Type = note.Type, CutDirection = note.CutDirection });
-
-        if (note.Type == 0)
+        public void SpawnNote(int index)
         {
-            var linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
+            Entity noteEntity;
+            if (Notes[index].CutDirection == (int)CutDirection.Any)
+            {
+                if (Notes[index].Type == 1)
+                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[0]);
+                else
+                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[1]);
+            }
+            else
+            {
+                if (Notes[index].Type == 1)
+                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[2]);
+                else
+                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[3]);
+            }
 
-            var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[0].Value);
-            renderMesh.material = redMaterial;
-            EntityManager.SetSharedComponentData(linkedGroup[0].Value, renderMesh);
+            CommandBuffer.RemoveComponent<Prefab>(index, noteEntity);
 
-            // needs to be reassigned because of structural change
-            linkedGroup = EntityManager.GetBuffer<LinkedEntityGroup>(noteEntity);
+            CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
 
-            renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(linkedGroup[1].Value);
-            renderMesh.material = redEmissiveMaterial;
-            EntityManager.SetSharedComponentData(linkedGroup[1].Value, renderMesh);
+            CommandBuffer.SetComponent(index, noteEntity, new Rotation { Value = Notes[index].TransformData.LocalRotation });
+            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, 0, JumpDistance) });
+
+            CommandBuffer.SetComponent(index, noteEntity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
         }
-    }
-
-    float GetNeededOffset()
-    {
-        return CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance;
     }
 }
