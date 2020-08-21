@@ -42,14 +42,16 @@ public class ObstacleSpawningSystem : SystemBase
         var job = new SpawnJobParallel
         {
             CommandBuffer = commandBuffer.AsParallelWriter(),
+            Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
             Obstacles = obstacles,
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
             HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
             JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
-            Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
+            Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
+            SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
         };
-        job.Schedule(obstacles.Length, 32).Complete();
+        job.Schedule(obstacles.Length, 64).Complete();
 
         commandBuffer.Playback(EntityManager);
         commandBuffer.Dispose();
@@ -104,6 +106,12 @@ public class ObstacleSpawningSystem : SystemBase
         public double LastBeat;
         [ReadOnly]
         public float JumpDistance;
+
+        [ReadOnly]
+        public float Speed;
+        [ReadOnly]
+        public float SecondEquivalentOfBeat;
+
         [ReadOnly]
         public Entity Entity;
 
@@ -116,7 +124,7 @@ public class ObstacleSpawningSystem : SystemBase
                 var entity = CommandBuffer.Instantiate(index, Entity);
                 CommandBuffer.RemoveComponent<Prefab>(index, entity);
 
-                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat });
+                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
 
                 CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
 

@@ -91,7 +91,7 @@ namespace BeatGame.Utility
                 Time = rawObstacleData.Time,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset),
+                    Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset) + new float3(0,0, scale.c2.z),
                     Scale = scale,
                 },
             };
@@ -118,10 +118,6 @@ namespace BeatGame.Utility
 
         public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData, float jumpSpeed, float secondEquivalentOfBeat)
         {
-            if (customData.Position.w != 0)
-            {
-                transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
-            }
             if (customData.Scale.w != 0)
             {
                 transformData.Scale = new float4x4
@@ -135,6 +131,11 @@ namespace BeatGame.Utility
             if (customData.LocalRotation.w != 0)
             {
                 transformData.LocalRotation = quaternion.Euler(customData.LocalRotation.xyz);
+            }
+            if (customData.Position.w != 0)
+            {
+                transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
+                transformData.Position += new float3(0, 0, transformData.Scale.c2.z);
             }
 
             return transformData;
