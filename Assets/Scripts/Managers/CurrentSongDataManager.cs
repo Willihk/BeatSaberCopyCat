@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Managers;
+using Assets.Scripts.Utility.ModSupport;
 using BeatGame.Data;
 using BeatGame.Utility;
 using Newtonsoft.Json;
@@ -144,6 +145,7 @@ namespace BeatGame.Logic.Managers
                 Debug.Log("Obstacles: " + Instance.MapData.Obstacles.Length);
                 Debug.Log("Events: " + Instance.MapData.Events.Length);
 
+                await new WaitForSeconds(1);
                 HasLoadedData = true;
             }
         }
@@ -206,11 +208,13 @@ namespace BeatGame.Logic.Managers
             {
                 for (int i = 0; i < ConvertedData.Length; i++)
                 {
-                    NoteData note;
+                    NoteData note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
+
+                    note.Color = ChromaSupport.GetColor(RawData[i].CustomData);
+
                     if (UsesNoodleExtensions)
-                        note = PlacementHelper.ConvertNoteDataWithNoodleExtensionsMethod(RawData[i], LineOffset);
-                    else
-                        note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
+                        note = NoodleExtensions.ConvertNoteDataToNoodleExtensions(note, RawData[i], LineOffset);
+
                     ConvertedData[i] = note;
                 }
             }
@@ -236,32 +240,16 @@ namespace BeatGame.Logic.Managers
             {
                 for (int i = 0; i < ConvertedData.Length; i++)
                 {
-                    ObstacleData obstacle;
+                    ObstacleData obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
+
+                    obstacle.Color = ChromaSupport.GetColor(RawData[i].CustomData);
+
                     if (UsesNoodleExtensions)
-                        obstacle = PlacementHelper.ConvertObstacleDataWithNoodleExtensionsMethod(RawData[i], LineOffset, NoteJumpSpeed, SecondEquivalentOfBeat);
-                    else
-                        obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], LineOffset, NoteJumpSpeed, SecondEquivalentOfBeat);
+                        obstacle = NoodleExtensions.ConvertObstacleDataToNoodleExtensions(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
                     ConvertedData[i] = obstacle;
                 }
             }
         }
-
-
-        //struct ConvertJob : IJob
-        //{
-
-        //    public string DirectoryPath;
-        //    public string BeatmapFilename;
-
-        //    public void Execute()
-        //    {
-        //        var MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(DirectoryPath + "\\" + BeatmapFilename));
-
-        //       var  MapJsonObject = JObject.Parse(File.ReadAllText(DirectoryPath + "\\" + BeatmapFilename));
-
-
-        //    }
-        //}
     }
 }

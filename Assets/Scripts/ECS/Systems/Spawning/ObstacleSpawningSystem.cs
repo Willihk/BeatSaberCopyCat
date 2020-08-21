@@ -124,6 +124,15 @@ public class ObstacleSpawningSystem : SystemBase
                 var entity = CommandBuffer.Instantiate(index, Entity);
                 CommandBuffer.RemoveComponent<Prefab>(index, entity);
 
+                CommandBuffer.AddComponent<ColorData>(index, entity);
+
+                float4 color = new float4
+                {
+                    xyz = obstacle.Color,
+                    w = .7f
+                };
+                CommandBuffer.SetComponent(index, entity, new ColorData { Value =  color});
+
                 CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
 
                 CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });

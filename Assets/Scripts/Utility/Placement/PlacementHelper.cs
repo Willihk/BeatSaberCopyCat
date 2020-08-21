@@ -2,6 +2,8 @@
 using System.Collections;
 using Unity.Mathematics;
 using BeatGame.Data;
+using Assets.Scripts.Utility.ModSupport;
+using BeatGame.Logic.Managers;
 
 namespace BeatGame.Utility
 {
@@ -56,16 +58,7 @@ namespace BeatGame.Utility
             return note;
         }
 
-        public static NoteData ConvertNoteDataWithNoodleExtensionsMethod(RawNoteData rawNoteData, float3 lineOffset)
-        {
-            var note = ConvertNoteDataWithVanillaMethod(rawNoteData, lineOffset);
-
-            note.TransformData = GetTransformDataWithNoodle(note.TransformData, rawNoteData.CustomData, 0, 0);
-
-            return note;
-        }
-
-        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData, float3 lineOffset, float jumpSpeed, float secondEquivalentOfBeat)
+        public static ObstacleData ConvertObstacleDataWithVanillaMethod(RawObstacleData rawObstacleData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
         {
             float4x4 scale = new float4x4
             {
@@ -91,54 +84,15 @@ namespace BeatGame.Utility
                 Time = rawObstacleData.Time,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset) + new float3(0,0, scale.c2.z),
+                    Position = GetVanillaPosition(lineIndex, lineLayer, lineOffset) + new float3(0, 0, scale.c2.z),
                     Scale = scale,
                 },
             };
         }
 
-        public static ObstacleData ConvertObstacleDataWithNoodleExtensionsMethod(RawObstacleData rawData, float3 lineOffset, float jumpSpeed, float secondEquivalentOfBeat)
-        {
-            var obstacle = ConvertObstacleDataWithVanillaMethod(rawData, lineOffset, jumpSpeed, secondEquivalentOfBeat);
-
-            obstacle.TransformData = GetTransformDataWithNoodle(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat);
-
-            var temp = obstacle.TransformData;
-            temp.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.3f, obstacle.TransformData.Scale.c1.y / 2, 0);
-            obstacle.TransformData = temp;
-
-            return obstacle;
-        }
-
-
         public static float3 GetVanillaPosition(float lineIndex, float lineLayer, float3 lineOffset)
         {
             return new float3(lineIndex * lineOffset.x - 1.3f, lineLayer * lineOffset.y, 0);
-        }
-
-        public static TransformData GetTransformDataWithNoodle(TransformData transformData, CustomData customData, float jumpSpeed, float secondEquivalentOfBeat)
-        {
-            if (customData.Scale.w != 0)
-            {
-                transformData.Scale = new float4x4
-                {
-                    c0 = new float4(customData.Scale.x, 0, 0, 0),
-                    c1 = new float4(0, customData.Scale.y, 0, 0),
-                    c2 = new float4(0, 0, ConvertDurationToZScale(customData.Scale.z, jumpSpeed, secondEquivalentOfBeat), 0),
-                    c3 = new float4(0, 0, 0, 1)
-                };
-            }
-            if (customData.LocalRotation.w != 0)
-            {
-                transformData.LocalRotation = quaternion.Euler(customData.LocalRotation.xyz);
-            }
-            if (customData.Position.w != 0)
-            {
-                transformData.Position = GetVanillaPosition(customData.Position.x, customData.Position.y, new float3(.8f, .8f, 0));
-                transformData.Position += new float3(0, 0, transformData.Scale.c2.z);
-            }
-
-            return transformData;
         }
 
         public static float ConvertDurationToZScale(float duration, float jumpSpeed, float secondEquivalentOfBeat)

@@ -5195,7 +5195,6 @@ GameObject:
   - component: {fileID: 454897301}
   - component: {fileID: 454897303}
   - component: {fileID: 454897305}
-  - component: {fileID: 454897306}
   - component: {fileID: 454897307}
   - component: {fileID: 454897304}
   m_Layer: 0
@@ -5389,18 +5388,6 @@ MonoBehaviour:
   FrequencyBands: 64
   AudioProfile: 0
   FrequencyReadMethod: 5
---- !u!114 &454897306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454897300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7b675f4d1bb5c4c9990a41cce9f4c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &454897307
 MonoBehaviour:
   m_ObjectHideFlags: 0
