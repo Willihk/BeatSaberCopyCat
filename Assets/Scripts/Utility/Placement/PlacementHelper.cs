@@ -88,7 +88,7 @@ namespace BeatGame.Utility
 
         public static float3 GetVanillaPosition(float lineIndex, float lineLayer, float3 lineOffset)
         {
-            return new float3(lineIndex * lineOffset.x - 1.3f, lineLayer * lineOffset.y, 0);
+            return new float3(lineIndex * lineOffset.x - (lineOffset.x * 1.5f), lineLayer * lineOffset.y, 0);
         }
 
         public static float ConvertDurationToZScale(float duration, float jumpSpeed, float secondEquivalentOfBeat)
