@@ -50,7 +50,7 @@ public class NoteSpawningSystem : SystemBase
                 NotePrefabs = notePrefabs,
                 LastBeat = GameManager.Instance.LastBeat,
                 CurrentBeat = (float)GameManager.Instance.CurrentBeat,
-                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
+                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration
             };
             job.Schedule(notesToSpawn.Length, 64).Complete();

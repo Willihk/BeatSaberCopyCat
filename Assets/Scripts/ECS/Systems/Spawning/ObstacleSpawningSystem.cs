@@ -47,7 +47,7 @@ public class ObstacleSpawningSystem : SystemBase
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
             HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
-            JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
+            JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
             Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
             SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
         };
