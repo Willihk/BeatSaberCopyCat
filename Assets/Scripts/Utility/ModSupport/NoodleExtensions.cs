@@ -28,13 +28,12 @@ namespace BeatGame.Utility.ModSupport
             if (customData.Position.w != 0)
             {
                 transformData.Position = PlacementHelper.GetVanillaPosition(customData.Position.x, customData.Position.y, lineOffset);
-                transformData.Position += new float3(0, 0, transformData.Scale.c2.z);
             }
 
             return transformData;
         }
 
-        public static NoteData ConvertNoteDataToNoodleExtensions(NoteData note,RawNoteData rawNoteData, float3 lineOffset)
+        public static NoteData ConvertNoteDataToNoodleExtensions(NoteData note, RawNoteData rawNoteData, float3 lineOffset)
         {
             note.TransformData = ApplyNoodleExtensionsToTransform(note.TransformData, rawNoteData.CustomData, 0, 0, lineOffset);
 
@@ -47,7 +46,7 @@ namespace BeatGame.Utility.ModSupport
             obstacle.TransformData = ApplyNoodleExtensionsToTransform(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat, lineOffset);
 
             var temp = obstacle.TransformData;
-            temp.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.3f, obstacle.TransformData.Scale.c1.y / 2, 0);
+            temp.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.5f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
             obstacle.TransformData = temp;
 
             return obstacle;
