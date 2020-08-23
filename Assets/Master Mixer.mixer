@@ -6,7 +6,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InGameEffects
+  m_Name: Effects
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 50c359940407d1544851306b0ac7f394
   m_Children: []
@@ -34,7 +34,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: e6032fac6750b7742a4de1ae03ca0309
+    name: EffectsVolume
+  - guid: a9828a52dac2fd342ba134f55d337551
+    name: MasterVolume
+  - guid: e4c141c9c91b2a8488b0ac8fd7382c95
+    name: MusicVolume
   m_AudioMixerGroupViews:
   - guids:
     - 4208f0ce06ffc0e49a29e8bd2ba99656
