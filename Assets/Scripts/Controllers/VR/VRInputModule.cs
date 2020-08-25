@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using Assets.Scripts.Controllers.Saber;
 
 namespace BeatGame.Logic.VR
 {
@@ -23,6 +21,8 @@ namespace BeatGame.Logic.VR
             Data.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
 
             HandlePointerExitAndEnter(Data, Data.pointerCurrentRaycast.gameObject);
+
+            ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.dragHandler);
         }
 
         public void Press()
@@ -30,8 +30,10 @@ namespace BeatGame.Logic.VR
             Data.pointerPressRaycast = Data.pointerCurrentRaycast;
 
             Data.pointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(Data.pointerPressRaycast.gameObject);
+            Data.pointerPress = ExecuteEvents.GetEventHandler<IDragHandler>(Data.pointerPressRaycast.gameObject);
 
             ExecuteEvents.Execute(Data.pointerPress, Data, ExecuteEvents.pointerDownHandler);
+            ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.beginDragHandler);
         }
 
         public void Release()
@@ -42,8 +44,10 @@ namespace BeatGame.Logic.VR
                 ExecuteEvents.Execute(Data.pointerPress, Data, ExecuteEvents.pointerClickHandler);
 
             ExecuteEvents.Execute(Data.pointerPress, Data, ExecuteEvents.pointerUpHandler);
+            ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.endDragHandler);
 
             Data.pointerPress = null;
+            Data.pointerDrag = null;
 
             Data.pointerCurrentRaycast.Clear();
         }
