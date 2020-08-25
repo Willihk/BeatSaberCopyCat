@@ -27,10 +27,10 @@ namespace BeatGame.Logic.Managers
         [SerializeField]
         public AudioSource audioSource;
 
+        [SerializeField]
         GameObject leftSaber;
-        GameObject leftModel;
+        [SerializeField]
         GameObject rightSaber;
-        GameObject rightModel;
 
 
         private void Awake()
@@ -74,33 +74,21 @@ namespace BeatGame.Logic.Managers
         {
             if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
                 IsPlaying = true;
-            //{
 
-            //    if (!VRTK_Loaded)
-            //        return;
+            leftSaber.SetActive(true);
 
-            //    leftSaber.SetActive(true);
-            //    leftModel.SetActive(true);
-
-            //    rightSaber.SetActive(true);
-            //    rightModel.SetActive(true);
+            rightSaber.SetActive(true);
 
             //    rightUIPointer.enabled = false;
 
-            //}
-            //else if (scene.name == "Menu")
-            //{
-            //    if (!VRTK_Loaded)
-            //        return;
+            if (scene.name == "Menu")
+            {
+                leftSaber.SetActive(false);
 
-            //    leftSaber.SetActive(false);
-            //    leftModel.SetActive(false);
+                rightSaber.SetActive(false);
 
-            //    rightSaber.SetActive(false);
-            //    rightModel.SetActive(false);
-
-            //    rightUIPointer.enabled = true;
-            //}
+                //    rightUIPointer.enabled = true;
+            }
         }
 
         private void Update()
