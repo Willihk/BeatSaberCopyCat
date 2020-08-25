@@ -32,14 +32,16 @@ namespace BeatGame.Logic.Managers
         [SerializeField]
         GameObject rightSaber;
 
+        [SerializeField]
+        GameObject UIPointer;
+        [SerializeField]
+        Camera pointerCamera;
 
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
 
-            //VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
-            // VRTK_SDKManager.SubscribeLoadedSetupChanged(VRSetupLoaded);
             SceneManager.sceneLoaded += SceneLoaded;
         }
 
@@ -54,22 +56,6 @@ namespace BeatGame.Logic.Managers
             SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
         }
 
-        //void VRSetupLoaded(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e)
-        //{
-        //    var LeftController = e.currentSetup.actualLeftController;
-        //    var RightController = e.currentSetup.actualRightController;
-
-        //    leftSaber = LeftController.transform.Find("Saber").gameObject;
-        //    leftModel = LeftController.transform.Find("Model").gameObject;
-
-        //    rightSaber = RightController.transform.Find("Saber").gameObject;
-        //    rightModel = RightController.transform.Find("Model").gameObject;
-
-        //    rightUIPointer = RightController.transform.Find("RightController").GetComponent<VRTK_Pointer>();
-
-        //    VRTK_Loaded = true;
-        //}
-
         private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
@@ -79,15 +65,21 @@ namespace BeatGame.Logic.Managers
 
             rightSaber.SetActive(true);
 
-            //    rightUIPointer.enabled = false;
+            UIPointer.SetActive(false);
 
             if (scene.name == "Menu")
             {
+                Canvas[] canvas = FindObjectsOfType<Canvas>();
+                foreach (var item in canvas)
+                {
+                    item.worldCamera = pointerCamera;
+                }
+
                 leftSaber.SetActive(false);
 
                 rightSaber.SetActive(false);
 
-                //    rightUIPointer.enabled = true;
+                UIPointer.SetActive(true);
             }
         }
 

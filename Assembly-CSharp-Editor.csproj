@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{20D0BE48-F88F-E16C-17C7-FF4C9583700C}</ProjectGuid>
+    <ProjectGuid>{43D2BC63-4D35-CA3F-A748-2522B4C9D98C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -821,32 +821,32 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{5AF5935B-A414-6BDC-EADC-23B14357D765}</Project>
+      <Project>{178AB5DE-D35E-B046-7F12-44FAC6F4A05C}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{96BDB507-5CF4-B4FD-81CC-81173A5CEFA9}</Project>
+      <Project>{52DCB7BE-4ECF-02F3-305F-78401B0CE25C}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="SteamVR_Actions.csproj">
+      <Project>{37082B73-F62E-9F00-ACFF-E9BA5C2CF36D}</Project>
+      <Name>SteamVR_Actions</Name>
+    </ProjectReference>
     <ProjectReference Include="SteamVR_Input_Editor.csproj">
-      <Project>{ACAE63A3-5C85-7CF7-557D-3D4A5CFF4F7D}</Project>
+      <Project>{15AFF47F-740A-20F2-C27E-1DF7759815A5}</Project>
       <Name>SteamVR_Input_Editor</Name>
     </ProjectReference>
     <ProjectReference Include="SteamVR_Editor.csproj">
-      <Project>{4C8A673C-E57A-3D5F-5203-57E1E94B665C}</Project>
+      <Project>{10327888-6345-76FE-656A-BB079C00F211}</Project>
       <Name>SteamVR_Editor</Name>
     </ProjectReference>
     <ProjectReference Include="SteamVR.csproj">
-      <Project>{89189426-4194-F89E-513F-DC5C886C1DCE}</Project>
+      <Project>{161467A2-9754-687A-4FF3-A2A7CE817F10}</Project>
       <Name>SteamVR</Name>
     </ProjectReference>
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
-      <Project>{477D9D1C-2BCE-5481-A86E-204D4C4123C7}</Project>
+      <Project>{F5D40044-EE12-DFBB-1ACD-F8A8EAE5F1D1}</Project>
       <Name>SteamVR_Windows_EditorHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="SteamVR_Actions.csproj">
-      <Project>{16824B33-282A-8118-8364-032A23797AD3}</Project>
-      <Name>SteamVR_Actions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
