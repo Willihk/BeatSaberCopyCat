@@ -30,7 +30,7 @@ namespace BeatGame.Logic.VR
             Data.pointerPressRaycast = Data.pointerCurrentRaycast;
 
             Data.pointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(Data.pointerPressRaycast.gameObject);
-            Data.pointerPress = ExecuteEvents.GetEventHandler<IDragHandler>(Data.pointerPressRaycast.gameObject);
+            Data.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(Data.pointerPressRaycast.gameObject);
 
             ExecuteEvents.Execute(Data.pointerPress, Data, ExecuteEvents.pointerDownHandler);
             ExecuteEvents.Execute(Data.pointerDrag, Data, ExecuteEvents.beginDragHandler);
