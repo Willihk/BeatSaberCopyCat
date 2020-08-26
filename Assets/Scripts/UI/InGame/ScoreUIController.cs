@@ -18,6 +18,8 @@ namespace Assets.Scripts.UI.InGame
         NumberFormatInfo formatInfo = new NumberFormatInfo { NumberGroupSeparator = " " };
 
         int currentScore;
+        int currentCombo;
+        int currentMultiplier;
 
         // Update is called once per frame
         void Update()
@@ -26,6 +28,16 @@ namespace Assets.Scripts.UI.InGame
             {
                 scoreText.text = ScoreManager.Instance.CurrentScore.ToString("n0", formatInfo);
                 currentScore = ScoreManager.Instance.CurrentScore;
+            }
+            if (ScoreManager.Instance.CurrentCombo != currentCombo)
+            {
+                comboText.text = ScoreManager.Instance.CurrentCombo.ToString("n0", formatInfo);
+                currentCombo = ScoreManager.Instance.CurrentCombo;
+            }
+            if (ScoreManager.Instance.CurrentMultiplier != currentMultiplier)
+            {
+                multiplierText.text = ScoreManager.Instance.CurrentMultiplier.ToString() + "x";
+                currentMultiplier = ScoreManager.Instance.CurrentMultiplier;
             }
         }
     }

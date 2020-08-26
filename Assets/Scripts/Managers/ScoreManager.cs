@@ -11,6 +11,7 @@ namespace BeatGame.Logic.Managers
         public int CurrentScore;
         public int CurrentCombo;
         public int CurrentMultiplier;
+        public int CurrentMultiplierCount;
 
         private void Awake()
         {
@@ -25,22 +26,44 @@ namespace BeatGame.Logic.Managers
             if (scene.name.Contains("Map"))
             {
                 CurrentScore = 0;
+                CurrentCombo = 0;
+                CurrentMultiplier = 1;
             }
         }
 
         public void AddScore(int amount)
         {
-            CurrentScore += amount;
+            CurrentScore += amount * CurrentMultiplier;
+            AddCombo();
         }
 
         public void AddCombo()
         {
             CurrentCombo++;
+            if (CurrentMultiplierCount < 14)
+            {
+                CurrentMultiplierCount++;
+                UpdateMultiplier();
+            }
         }
 
         public void MissedNote()
         {
             CurrentCombo = 0;
+
+            UpdateMultiplier();
+        }
+
+        void UpdateMultiplier()
+        {
+            if (CurrentMultiplierCount < 2)
+                CurrentMultiplier = 1;
+            else if (CurrentMultiplierCount <= 6)
+                CurrentMultiplier = 2;
+            else if (CurrentMultiplierCount <= 14)
+                CurrentMultiplier = 4;
+            else if (CurrentMultiplierCount == 14)
+                CurrentMultiplier = 8;
         }
     }
 }
