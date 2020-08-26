@@ -80,6 +80,8 @@ namespace BeatGame.Logic.Managers
                 rightSaber.SetActive(false);
 
                 UIPointer.SetActive(true);
+                UIPointer.transform.position = Vector3.zero;
+                UIPointer.transform.rotation = Quaternion.identity;
             }
         }
 

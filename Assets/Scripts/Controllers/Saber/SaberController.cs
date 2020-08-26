@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEditor;
 using BeatGame.Utility.Physics;
+using Valve.VR;
 
 namespace BeatGame.Logic.Saber
 {
@@ -14,6 +15,8 @@ namespace BeatGame.Logic.Saber
         int affectsNoteType;
         [SerializeField]
         float saberLength = 1;
+        [SerializeField]
+        SteamVR_Action_Vibration hapticAction;
 
         float impactMagnifier = 120f;
         float collisionForce = 0f;
@@ -34,23 +37,10 @@ namespace BeatGame.Logic.Saber
             //}
         }
 
-        //private void Pulse()
-        //{
-        //    if (VRTK_ControllerReference.IsValid(controllerReference))
-        //    {
-        //        collisionForce = VRTK_DeviceFinder.GetControllerVelocity(controllerReference).magnitude * impactMagnifier;
-        //        var hapticStrength = collisionForce / maxCollisionForce;
-        //        VRTK_ControllerHaptics.TriggerHapticPulse(controllerReference, hapticStrength, 0.5f, 0.01f);
-        //    }
-        //    else
-        //    {
-        //        var controllerEvent = GetComponentInChildren<VRTK_ControllerEvents>();
-        //        if (controllerEvent != null && controllerEvent.gameObject != null)
-        //        {
-        //            controllerReference = VRTK_ControllerReference.GetControllerReference(controllerEvent.gameObject);
-        //        }
-        //    }
-        //}
+        private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
+        {
+            hapticAction.Execute(0, duration, frequency, amplitude, source);
+        }
 
         void Update()
         {
@@ -71,6 +61,15 @@ namespace BeatGame.Logic.Saber
                     {
                         // Reward player with points
                         DestroyNote(hit.Entity);
+
+                        if (affectsNoteType == 1)
+                        {
+                            Pulse(.5f, 150, 75, SteamVR_Input_Sources.RightHand);
+                        }
+                        else
+                        {
+                            Pulse(.5f, 150, 75, SteamVR_Input_Sources.LeftHand);
+                        }
                     }
                 }
                 else if (note.Type == 3)

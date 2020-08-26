@@ -46,7 +46,7 @@ namespace BeatGame.Utility
                 Type = rawNoteData.Type,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset * .75f),
+                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset * .65f),
                     LocalRotation = quaternion.Euler(euler),
                 },
             };

@@ -35,7 +35,7 @@ namespace  BeatGame.Logic.VR
             // Use default or distance
             PointerEventData data = inputModule.Data;
 
-            Physics.Raycast(new Ray((Vector3)transform.position, (Vector3)transform.forward), out RaycastHit hit, length);
+            Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hit, length);
 
             // If nothing is hit, set do default length
             float colliderDistance = hit.distance == 0 ? length : hit.distance;
