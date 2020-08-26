@@ -41,7 +41,6 @@ namespace BeatGame.Logic.Saber
                 var note = EntityManager.GetComponentData<Note>(hit.Entity);
                 if (note.Type == affectsNoteType)
                 {
-                    Debug.Log("Saber hit note");
                     quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
@@ -49,15 +48,15 @@ namespace BeatGame.Logic.Saber
 
                     if (angle > 130 || note.CutDirection == 8)
                     {
-                        // Reward player with points
+                        ScoreManager.Instance.AddScore(100);
 
                         if (affectsNoteType == 1)
                         {
-                            Pulse(.1f, 120, 1, SteamVR_Input_Sources.RightHand);
+                            Pulse(.1f, 160, 1, SteamVR_Input_Sources.RightHand);
                         }
                         else
                         {
-                            Pulse(.1f, 120, 1, SteamVR_Input_Sources.LeftHand);
+                            Pulse(.1f, 160, 1, SteamVR_Input_Sources.LeftHand);
                         }
 
                         SaberHitAudioManager.Instance.PlaySound();
