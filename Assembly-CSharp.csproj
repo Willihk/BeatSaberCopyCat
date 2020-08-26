@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\ECS\Components\Obstacle\ColorData.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\UI\IMovable.cs" />
     <Compile Include="Assets\Scripts\Controllers\Volumetric\LightBeamController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VR\SteamInputModule.cs" />
     <Compile Include="Assets\Scripts\Managers\SceneFader.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Graph\G_Graph.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Song Browser\SongEntryController.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Scripts\Utility\Placement\PlacementHelper.cs" />
     <Compile Include="Assets\Scripts\Controllers\Laser\MeshLaserController.cs" />
     <Compile Include="Assets\Scripts\Data\AvailableSongData.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollBarExtensions\ScrollButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongTimeUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\ECSRaycast.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioVolumeManager.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Fps\G_FpsGraph.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Ram\G_RamText.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\VR\VRInputModule.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Audio\G_AudioManager.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Util\G_FloatString.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Audio\G_AudioGraph.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Assets\Scripts\Utility\ModSupport\NoodleExtensions.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Audio\AudioVisualizationSystem.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawObstacleData.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollBarExtensions\ScrollElementsContainer.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Util\G_Singleton.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\SceneIndexes.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Ram\G_RamGraph.cs" />
@@ -146,8 +150,6 @@
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scene\Color Picker\G_CUIColorPicker.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Audio\G_AudioMonitor.cs" />
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VR\VRInputModule.cs" />
-    <Compile Include="Assets\Scripts\Controllers\VR\SteamInputModule.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
