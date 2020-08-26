@@ -9,6 +9,8 @@ namespace BeatGame.Logic.Managers
         public static ScoreManager Instance;
 
         public int CurrentScore;
+        public int CurrentCombo;
+        public int CurrentMultiplier;
 
         private void Awake()
         {
@@ -29,6 +31,16 @@ namespace BeatGame.Logic.Managers
         public void AddScore(int amount)
         {
             CurrentScore += amount;
+        }
+
+        public void AddCombo()
+        {
+            CurrentCombo++;
+        }
+
+        public void MissedNote()
+        {
+            CurrentCombo = 0;
         }
     }
 }

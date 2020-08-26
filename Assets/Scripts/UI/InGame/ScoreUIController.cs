@@ -10,6 +10,10 @@ namespace Assets.Scripts.UI.InGame
     {
         [SerializeField]
         TextMeshProUGUI scoreText;
+        [SerializeField]
+        TextMeshProUGUI comboText;
+        [SerializeField]
+        TextMeshProUGUI multiplierText;
 
         NumberFormatInfo formatInfo = new NumberFormatInfo { NumberGroupSeparator = " " };
 
