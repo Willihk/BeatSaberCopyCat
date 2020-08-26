@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using BeatGame.Logic.Managers;
+using System.Globalization;
 
 namespace Assets.Scripts.UI.InGame
 {
@@ -10,6 +11,8 @@ namespace Assets.Scripts.UI.InGame
         [SerializeField]
         TextMeshProUGUI scoreText;
 
+        NumberFormatInfo formatInfo = new NumberFormatInfo { NumberGroupSeparator = " " };
+
         int currentScore;
 
         // Update is called once per frame
@@ -17,7 +20,7 @@ namespace Assets.Scripts.UI.InGame
         {
             if (ScoreManager.Instance.CurrentScore != currentScore)
             {
-                scoreText.text = ScoreManager.Instance.CurrentScore.ToString("{0:n0}").Replace(',', ' ');
+                scoreText.text = ScoreManager.Instance.CurrentScore.ToString("n0", formatInfo);
                 currentScore = ScoreManager.Instance.CurrentScore;
             }
         }
