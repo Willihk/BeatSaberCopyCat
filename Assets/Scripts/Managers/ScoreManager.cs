@@ -51,6 +51,13 @@ namespace BeatGame.Logic.Managers
         {
             CurrentCombo = 0;
 
+            if (CurrentMultiplier == 8)
+                CurrentMultiplierCount -= 8;
+            else if (CurrentMultiplier == 4)
+                CurrentMultiplierCount -= 4;
+            else if (CurrentMultiplier == 2)
+                CurrentMultiplierCount -= 2;
+
             UpdateMultiplier();
         }
 

@@ -5976,7 +5976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 2069846539}
-  comboText: {fileID: 960421332}
+  comboText: {fileID: 987752048}
   multiplierText: {fileID: 352663967}
 --- !u!1 &1058982828
 GameObject:
