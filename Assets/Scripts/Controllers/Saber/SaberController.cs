@@ -6,6 +6,7 @@ using Unity.Transforms;
 using UnityEditor;
 using BeatGame.Utility.Physics;
 using Valve.VR;
+using BeatGame.Logic.Managers;
 
 namespace BeatGame.Logic.Saber
 {
@@ -49,7 +50,6 @@ namespace BeatGame.Logic.Saber
                     if (angle > 130 || note.CutDirection == 8)
                     {
                         // Reward player with points
-                        DestroyNote(hit.Entity);
 
                         if (affectsNoteType == 1)
                         {
@@ -59,6 +59,10 @@ namespace BeatGame.Logic.Saber
                         {
                             Pulse(.1f, 120, 1, SteamVR_Input_Sources.LeftHand);
                         }
+
+                        SaberHitAudioManager.Instance.PlaySound();
+
+                        DestroyNote(hit.Entity);
                     }
                 }
                 else if (note.Type == 3)
