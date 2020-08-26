@@ -18,23 +18,12 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         SteamVR_Action_Vibration hapticAction;
 
-        float impactMagnifier = 120f;
-        float collisionForce = 0f;
-        float maxCollisionForce = 4000f;
-        //VRTK_ControllerReference controllerReference;
-
         float3 previousPosition;
         EntityManager EntityManager;
 
         private void Start()
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-            //var controllerEvent = GetComponentInChildren<VRTK_ControllerEvents>(true);
-            //if (controllerEvent != null && controllerEvent.gameObject != null)
-            //{
-            //    controllerReference = VRTK_ControllerReference.GetControllerReference(controllerEvent.gameObject);
-            //}
         }
 
         private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
@@ -64,11 +53,11 @@ namespace BeatGame.Logic.Saber
 
                         if (affectsNoteType == 1)
                         {
-                            Pulse(.5f, 150, 75, SteamVR_Input_Sources.RightHand);
+                            Pulse(.1f, 120, 1, SteamVR_Input_Sources.RightHand);
                         }
                         else
                         {
-                            Pulse(.5f, 150, 75, SteamVR_Input_Sources.LeftHand);
+                            Pulse(.1f, 120, 1, SteamVR_Input_Sources.LeftHand);
                         }
                     }
                 }
@@ -83,7 +72,6 @@ namespace BeatGame.Logic.Saber
 
         private void DestroyNote(Entity entity)
         {
-            //Pulse();
 
             EntityManager.DestroyEntity(entity);
         }
