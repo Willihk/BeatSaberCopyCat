@@ -36,7 +36,7 @@ namespace Assets.Scripts.UI.InGame
             }
             if (ScoreManager.Instance.CurrentMultiplier != currentMultiplier)
             {
-                multiplierText.text = ScoreManager.Instance.CurrentMultiplier.ToString() + "x";
+                multiplierText.text = ScoreManager.Instance.CurrentMultiplier.ToString();
                 currentMultiplier = ScoreManager.Instance.CurrentMultiplier;
             }
         }

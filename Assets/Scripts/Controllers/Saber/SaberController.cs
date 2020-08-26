@@ -7,6 +7,7 @@ using UnityEditor;
 using BeatGame.Utility.Physics;
 using Valve.VR;
 using BeatGame.Logic.Managers;
+using UnityEngine.VFX;
 
 namespace BeatGame.Logic.Saber
 {
@@ -18,6 +19,9 @@ namespace BeatGame.Logic.Saber
         float saberLength = 1;
         [SerializeField]
         SteamVR_Action_Vibration hapticAction;
+
+        [SerializeField]
+        VisualEffect hitVFX;
 
         float3 previousPosition;
         EntityManager EntityManager;
@@ -59,6 +63,9 @@ namespace BeatGame.Logic.Saber
                             Pulse(.1f, 160, 1, SteamVR_Input_Sources.LeftHand);
                         }
 
+                        hitVFX.gameObject.transform.position = hit.Position;
+                        hitVFX.SendEvent("Burst");
+
                         SaberHitAudioManager.Instance.PlaySound();
 
                         DestroyNote(hit.Entity);
@@ -75,7 +82,6 @@ namespace BeatGame.Logic.Saber
 
         private void DestroyNote(Entity entity)
         {
-
             EntityManager.DestroyEntity(entity);
         }
     }
