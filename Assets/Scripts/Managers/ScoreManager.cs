@@ -58,9 +58,9 @@ namespace BeatGame.Logic.Managers
         {
             if (CurrentMultiplierCount < 2)
                 CurrentMultiplier = 1;
-            else if (CurrentMultiplierCount <= 6)
+            else if (CurrentMultiplierCount < 6)
                 CurrentMultiplier = 2;
-            else if (CurrentMultiplierCount <= 14)
+            else if (CurrentMultiplierCount < 14)
                 CurrentMultiplier = 4;
             else if (CurrentMultiplierCount == 14)
                 CurrentMultiplier = 8;
