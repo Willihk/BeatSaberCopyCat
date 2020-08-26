@@ -8,30 +8,38 @@ namespace BeatGame.Utility
         public static NoteData ConvertNoteDataWithVanillaMethod(RawNoteData rawNoteData, float3 lineOffset)
         {
             float3 euler = new float3();
+            quaternion rotation = new quaternion();
             switch ((CutDirection)rawNoteData.CutDirection)
             {
                 case CutDirection.Upwards:
                     euler = new float3(0, 0, 180);
+                    rotation = new quaternion(0,0,1,0);
                     break;
                 case CutDirection.Downwards:
                     break;
                 case CutDirection.TowardsLeft:
                     euler = new float3(0, 0, -90);
+                    rotation = new quaternion(0, 0, -0.7071068f, 0.7071068f);
                     break;
                 case CutDirection.TowardsRight:
                     euler = new float3(0, 0, 90);
+                    rotation = new quaternion(0, 0, 0.7071068f, 0.7071068f);
                     break;
                 case CutDirection.TowardsTopLeft:
                     euler = new float3(0, 0, -135);
+                    rotation = new quaternion(0, 0, -0.9238796f, 0.3826833f);
                     break;
                 case CutDirection.TowardsTopRight:
                     euler = new float3(0, 0, 135);
+                    rotation = new quaternion(0, 0, 0.9238796f, 0.3826834f);
                     break;
                 case CutDirection.TowardsBottomLeft:
                     euler = new float3(0, 0, -45);
+                    rotation = new quaternion(0, 0, -0.3826834f, 0.9238796f);
                     break;
                 case CutDirection.TowardsBottomRight:
                     euler = new float3(0, 0, 45);
+                    rotation = new quaternion(0, 0, 0.3826834f, 0.9238796f);
                     break;
                 case CutDirection.Any:
                     break;
@@ -47,7 +55,7 @@ namespace BeatGame.Utility
                 TransformData = new TransformData
                 {
                     Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset * .65f),
-                    LocalRotation = quaternion.Euler(euler),
+                    LocalRotation = rotation,
                 },
             };
 
