@@ -48,6 +48,7 @@ public class NoteSpawningSystem : SystemBase
                 CommandBuffer = commandBuffer.AsParallelWriter(),
                 Notes = notesToSpawn,
                 NotePrefabs = notePrefabs,
+                HeightOffset = SettingsManager.GlobalOffset.y,
                 LastBeat = GameManager.Instance.LastBeat,
                 CurrentBeat = (float)GameManager.Instance.CurrentBeat,
                 JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
@@ -66,6 +67,8 @@ public class NoteSpawningSystem : SystemBase
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
         [ReadOnly]
         public NativeList<NoteData> Notes;
+        [ReadOnly]
+        public float HeightOffset;
         [ReadOnly]
         public float JumpDistance;
         [ReadOnly]
@@ -96,7 +99,7 @@ public class NoteSpawningSystem : SystemBase
         {
             var noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[4]);
 
-            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, 0, JumpDistance) });
+            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
 
             CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
 
@@ -126,7 +129,7 @@ public class NoteSpawningSystem : SystemBase
             CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
 
             CommandBuffer.SetComponent(index, noteEntity, new Rotation { Value = Notes[index].TransformData.LocalRotation });
-            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, 0, JumpDistance) });
+            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
 
             CommandBuffer.SetComponent(index, noteEntity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
         }

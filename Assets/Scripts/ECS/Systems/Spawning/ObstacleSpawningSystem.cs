@@ -44,6 +44,7 @@ public class ObstacleSpawningSystem : SystemBase
             CommandBuffer = commandBuffer.AsParallelWriter(),
             Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
             Obstacles = obstacles,
+            HeightOffset = SettingsManager.GlobalOffset.y,
             CurrentBeat = GameManager.Instance.CurrentBeat,
             LastBeat = GameManager.Instance.LastBeat,
             HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
@@ -58,46 +59,13 @@ public class ObstacleSpawningSystem : SystemBase
     }
 
     [BurstCompile]
-    struct SpawnJob : IJob
-    {
-        public EntityCommandBuffer CommandBuffer;
-        public NativeList<ObstacleData> Obstacles;
-        public double HalfJumpDuration;
-        public double CurrentBeat;
-        public double LastBeat;
-        public float JumpDistance;
-        public Entity Entity;
-
-        public void Execute()
-        {
-            for (int i = 0; i < Obstacles.Length; i++)
-            {
-                var obstacle = Obstacles[i];
-
-                if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >= LastBeat)
-                {
-                    var entity = CommandBuffer.Instantiate(Entity);
-                    CommandBuffer.RemoveComponent<Prefab>(entity);
-
-                    CommandBuffer.SetComponent(entity, new DestroyOnBeat { Beat = (float)CurrentBeat });
-
-                    CommandBuffer.SetComponent(entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
-
-                    CommandBuffer.SetComponent(entity, new CompositeScale { Value = obstacle.TransformData.Scale });
-
-                    CommandBuffer.SetComponent(entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
-                }
-
-            }
-        }
-    }
-
-    [BurstCompile]
     struct SpawnJobParallel : IJobParallelFor
     {
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
         [ReadOnly]
         public NativeList<ObstacleData> Obstacles;
+        [ReadOnly]
+        public float HeightOffset;
         [ReadOnly]
         public double HalfJumpDuration;
         [ReadOnly]
@@ -135,7 +103,7 @@ public class ObstacleSpawningSystem : SystemBase
 
                 CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
 
-                CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, 0, JumpDistance) });
+                CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
 
                 CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
 
