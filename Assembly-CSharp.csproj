@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Controllers\Laser\LaserControllerBase.cs" />
+    <Compile Include="Assets\Scripts\Managers\Audio\SaberHitAudioManager.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Fps\G_FpsText.cs" />
     <Compile Include="Assets\Scripts\Controllers\MasterAudioBarController.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveSpeed.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Assets\Scripts\UI\ScrollBarExtensions\ScrollButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongTimeUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\ECSRaycast.cs" />
+    <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Audio\AudioVolumeManager.cs" />
     <Compile Include="Assets\Scripts\UI\Tabs\TabButton.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\NoteData.cs" />
@@ -144,15 +146,13 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\Managers\SettingsManager.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Ram\G_RamMonitor.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\ScoreUIController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Audio\G_AudioText.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scene\Color Picker\G_CUIColorPicker.cs" />
     <Compile Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Scripts\Audio\G_AudioMonitor.cs" />
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
-    <Compile Include="Assets\Scripts\Managers\Audio\SaberHitAudioManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\ScoreUIController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
@@ -805,6 +805,9 @@
     <Reference Include="Unity.Scenes">
       <HintPath>Library\ScriptAssemblies\Unity.Scenes.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Scenes.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Scenes.Editor.dll</HintPath>
     </Reference>
@@ -898,6 +901,9 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
       <HintPath>Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
     </Reference>
@@ -921,12 +927,6 @@
     </Reference>
     <Reference Include="Unity.Transforms.Hybrid">
       <HintPath>Library\ScriptAssemblies\Unity.Transforms.Hybrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
