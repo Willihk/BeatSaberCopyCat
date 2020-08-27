@@ -16,6 +16,7 @@ namespace BeatGame.Utility
                     rotation = new quaternion(0,0,1,0);
                     break;
                 case CutDirection.Downwards:
+                    rotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
                     break;
                 case CutDirection.TowardsLeft:
                     euler = new float3(0, 0, -90);
@@ -42,6 +43,7 @@ namespace BeatGame.Utility
                     rotation = new quaternion(0, 0, 0.3826834f, 0.9238796f);
                     break;
                 case CutDirection.Any:
+                    rotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
                     break;
                 default:
                     break;

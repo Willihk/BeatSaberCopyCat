@@ -56,11 +56,11 @@ namespace BeatGame.Logic.Saber
 
                         if (affectsNoteType == 1)
                         {
-                            Pulse(.1f, 160, 1, SteamVR_Input_Sources.RightHand);
+                            Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
                         }
                         else
                         {
-                            Pulse(.1f, 160, 1, SteamVR_Input_Sources.LeftHand);
+                            Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
                         }
 
                         hitVFX.gameObject.transform.position = hit.Position;
