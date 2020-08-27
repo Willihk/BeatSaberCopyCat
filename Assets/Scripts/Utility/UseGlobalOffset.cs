@@ -6,7 +6,7 @@ namespace BeatGame.Utility
 {
     public class UseGlobalOffset : MonoBehaviour
     {
-        private void Awake()
+        private void OnEnable()
         {
             transform.position += (Vector3)SettingsManager.GlobalOffset;
         }
