@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BeatGame.UI.Tabs
+namespace BeatGame.UI.Components.Tabs
 {
     [Serializable]
     public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
@@ -92,14 +92,5 @@ namespace BeatGame.UI.Tabs
             if (tabGroup != null)
                 tabGroup.Unbscribe(this);
         }
-    }
-
-    [Serializable]
-    public class TransitionInfo
-    {
-        public Graphic TargetGraphic;
-        public Color IdleColor;
-        public Color HoverColor;
-        public Color SelectedColor;
     }
 }

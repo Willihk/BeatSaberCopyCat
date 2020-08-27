@@ -1,6 +1,6 @@
 ﻿using BeatGame.Data;
 using BeatGame.Logic.Managers;
-using BeatGame.UI.Tabs;
+using BeatGame.UI.Components.Tabs;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         private TextMeshProUGUI songNameText;
         [SerializeField]
-        TabGroup difficultyTabGroup;
+        Components.Tabs.TabGroup difficultyTabGroup;
         [SerializeField]
         GameObject difficultyTabPrefab;
         [SerializeField]
@@ -64,7 +64,7 @@ namespace BeatGame.UI.Controllers
             for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length; i++)
             {
                 var tabButtonObject = Instantiate(difficultyTabPrefab, difficultyTabGroup.transform);
-                tabButtonObject.GetComponent<Tabs.TabButton>().SetTabGroup(difficultyTabGroup);
+                tabButtonObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(difficultyTabGroup);
             }
 
             for (int i = 0; i < availableDifficulties.Length; i++)

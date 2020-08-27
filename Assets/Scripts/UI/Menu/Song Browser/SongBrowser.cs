@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Linq;
 using Newtonsoft.Json;
 using BeatGame.Data;
-using BeatGame.UI.Tabs;
 using BeatGame.Logic.Managers;
+using BeatGame.UI.Components.Tabs;
 
 namespace BeatGame.UI.Controllers
 {
@@ -46,7 +45,7 @@ namespace BeatGame.UI.Controllers
             }
         }
 
-        public void SongSelected(Tabs.TabButton tabButton)
+        public void SongSelected(Components.Tabs.TabButton tabButton)
         {
             infoController.DisplaySong(AvailableSongs[tabGroup.TabButtons.IndexOf(tabButton)], tabButton.gameObject);
         }
@@ -79,7 +78,7 @@ namespace BeatGame.UI.Controllers
             {
                 var songEntryObject = Instantiate(songEntryPrefab, songEntryHolder);
                 songEntryObject.GetComponent<SongEntryController>().Initizalize(item);
-                songEntryObject.GetComponent<Tabs.TabButton>().SetTabGroup(tabGroup);
+                songEntryObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(tabGroup);
             }
 
         }

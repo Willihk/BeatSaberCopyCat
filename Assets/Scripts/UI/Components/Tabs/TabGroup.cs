@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BeatGame.UI.Tabs
+namespace BeatGame.UI.Components.Tabs
 {
     [Serializable]
     public class TabButtonSelected : UnityEvent<TabButton>
