@@ -10,6 +10,7 @@ using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using Valve.VR;
 
 namespace BeatGame.Logic.Managers
 {
@@ -23,6 +24,9 @@ namespace BeatGame.Logic.Managers
 
         public double CurrentBeat;
         public double LastBeat;
+
+        [SerializeField]
+        SteamVR_Action_Boolean returnToMenuAction;
 
         [SerializeField]
         public AudioSource audioSource;
@@ -87,7 +91,7 @@ namespace BeatGame.Logic.Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand))
             {
                 IsPlaying = false;
                 CurrentBeat = 0;
