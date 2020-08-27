@@ -37,11 +37,16 @@ namespace BeatGame.Logic.Managers
             {
                 CreateNewConfig();
             }
+
+            GlobalOffset.y = Settings["General"]["HeightOffset"].FloatValue;
         }
 
         public void CreateNewConfig()
         {
             Settings = new Configuration();
+
+            Settings["General"]["HeightOffset"].FloatValue = 0;
+            Settings["General"]["HitEffects"].IntValue = 1;
 
             Settings["Audio"]["MasterVolume"].FloatValue = .7f;
             Settings["Audio"]["MusicVolume"].FloatValue = .7f;
