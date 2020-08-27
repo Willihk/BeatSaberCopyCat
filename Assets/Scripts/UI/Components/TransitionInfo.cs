@@ -9,8 +9,8 @@ namespace BeatGame.UI.Components
     public class TransitionInfo
     {
         public Graphic TargetGraphic;
-        public Color IdleColor;
-        public Color HoverColor;
-        public Color SelectedColor;
+        public Color IdleColor = new Color(1,1,1,1);
+        public Color HoverColor = new Color(0.85f, 0.85f, 0.85f, 0.85f);
+        public Color SelectedColor = new Color(0.73f, 0.73f, 0.73f, 0.73f);
     }
 }

@@ -6,13 +6,11 @@ using BeatGame.Data;
 
 namespace BeatGame.UI.Components.Buttons
 {
-    public class ButtonPlus : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+    public class ButtonPlus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         public UnityEvent OnClick;
 
         public TransitionInfo[] Transitions;
-
-        float pressedTime;
 
         private void Awake()
         {
@@ -33,9 +31,9 @@ namespace BeatGame.UI.Components.Buttons
                         item.TargetGraphic.color = item.HoverColor;
                         break;
                     case UIPointerEvent.Pressed:
-                        break;
                     case UIPointerEvent.Selected:
                         item.TargetGraphic.color = item.SelectedColor;
+                        OnClick?.Invoke();
                         break;
                     default:
                         break;
@@ -43,9 +41,14 @@ namespace BeatGame.UI.Components.Buttons
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
             SetState(UIPointerEvent.Pressed);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            SetState(UIPointerEvent.Idle);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
