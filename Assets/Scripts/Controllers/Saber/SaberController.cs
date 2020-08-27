@@ -23,6 +23,8 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         VisualEffect hitVFX;
 
+        bool IsVFXTurnedOn;
+
         float3 previousPosition;
         EntityManager EntityManager;
 
@@ -39,6 +41,11 @@ namespace BeatGame.Logic.Saber
         void Update()
         {
             var hit = ECSRaycast.Raycast(transform.position, transform.forward * saberLength);
+            if (hit.Entity == Entity.Null)
+            {
+                if (IsVFXTurnedOn)
+                    hitVFX.SendEvent("Stop");
+            }
 
             if (EntityManager.HasComponent<Note>(hit.Entity))
             {
@@ -75,6 +82,13 @@ namespace BeatGame.Logic.Saber
                 {
                     // Hit Bomb
                     Debug.LogWarning("Saber hit a bomb");
+                }
+                else
+                {
+                    hitVFX.gameObject.transform.position = hit.Position;
+
+                    if (!IsVFXTurnedOn)
+                        hitVFX.SendEvent("Contact");
                 }
             }
             previousPosition = transform.position;
