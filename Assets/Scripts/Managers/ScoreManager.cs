@@ -33,8 +33,8 @@ namespace BeatGame.Logic.Managers
 
         public void AddScore(int amount)
         {
-            CurrentScore += amount * CurrentMultiplier;
             AddCombo();
+            CurrentScore += amount * CurrentMultiplier;
         }
 
         public void AddCombo()
