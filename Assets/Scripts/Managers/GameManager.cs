@@ -91,7 +91,7 @@ namespace BeatGame.Logic.Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand))
+            if (IsPlaying && (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand)))
             {
                 IsPlaying = false;
                 CurrentBeat = 0;
