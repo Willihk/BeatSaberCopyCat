@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Managers;
 using BeatGame.Data;
+using BeatGame.UI.Controllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -108,9 +109,14 @@ namespace BeatGame.Logic.Managers
                     IsPlaying = false;
                     CurrentBeat = 0;
                     audioSource.Stop();
-                    Invoke("ReturnToMenu", 5);
+                    Invoke("DisplayEndScreen", 5);
                 }
             }
+        }
+
+        public void DisplayEndScreen()
+        {
+            SongCompletedUIController.Instance.Display();
         }
 
         public void ReturnToMenu()

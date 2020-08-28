@@ -26,6 +26,7 @@ namespace BeatGame.Logic.Managers
 
         private void Awake()
         {
+            Debug.Log("Application Version : " + Application.version);
             if (Instance == null)
                 Instance = this;
 
