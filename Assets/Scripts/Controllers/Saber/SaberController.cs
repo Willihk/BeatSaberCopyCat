@@ -24,7 +24,7 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         Transform tipPoint;
         [SerializeField]
-        Transform raycastPoint;
+        Transform[] raycastPoints;
         [SerializeField]
         VisualEffect hitVFX;
 
@@ -37,7 +37,7 @@ namespace BeatGame.Logic.Saber
         private void Start()
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            raycastHits = new NativeList<RaycastHit>(4,Allocator.Persistent);
+            raycastHits = new NativeList<RaycastHit>(4, Allocator.Persistent);
         }
 
         void OnDestroy()
@@ -52,57 +52,62 @@ namespace BeatGame.Logic.Saber
 
         void Update()
         {
-            ECSRaycast.RaycastAll(raycastPoint.position, raycastPoint.position + raycastPoint.forward * saberLength, ref raycastHits);
-
-            for (int i = 0; i < raycastHits.Length; i++)
+            for (int i = 0; i < raycastPoints.Length; i++)
             {
-                var hit = raycastHits[i];
-                if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
+
+                ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+
+                for (int j = 0; j < raycastHits.Length; j++)
                 {
-                    var note = EntityManager.GetComponentData<Note>(hit.Entity);
-                    if (note.Type == affectsNoteType)
+                    var hit = raycastHits[j];
+                    if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
                     {
-                        quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
-                        Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
-
-                        float angle = Vector3.Angle((float3)tipPoint.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
-
-                        if (angle > 130 || note.CutDirection == 8)
+                        var note = EntityManager.GetComponentData<Note>(hit.Entity);
+                        if (note.Type == affectsNoteType)
                         {
-                            ScoreManager.Instance.AddScore(100);
+                            quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
+                            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
-                            if (affectsNoteType == 1)
+                            float angle = Vector3.Angle((float3)tipPoint.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
+
+                            if (angle > 130 || note.CutDirection == 8)
                             {
-                                Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
-                            }
-                            else
-                            {
-                                Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
-                            }
+                                ScoreManager.Instance.AddScore(100);
 
-                            if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
-                            {
-                                hitVFX.gameObject.transform.position = hit.Position;
-                                hitVFX.SendEvent("Burst");
+                                if (affectsNoteType == 1)
+                                {
+                                    Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
+                                }
+                                else
+                                {
+                                    Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
+                                }
+
+                                if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
+                                {
+                                    hitVFX.gameObject.transform.position = hit.Position;
+                                    hitVFX.SendEvent("Burst");
+                                }
+
+                                SaberHitAudioManager.Instance.PlaySound();
+
+                                DestroyNote(hit.Entity);
+                                break;
                             }
-
-                            SaberHitAudioManager.Instance.PlaySound();
-
-                            DestroyNote(hit.Entity);
+                        }
+                        else if (note.Type == 3)
+                        {
+                            // Hit Bomb
+                            Debug.LogWarning("Saber hit a bomb");
+                            ScoreManager.Instance.MissedNote();
+                            ScoreManager.Instance.MissedNote();
+                            ScoreManager.Instance.MissedNote();
                         }
                     }
-                    else if (note.Type == 3)
-                    {
-                        // Hit Bomb
-                        Debug.LogWarning("Saber hit a bomb");
-                        ScoreManager.Instance.MissedNote();
-                        ScoreManager.Instance.MissedNote();
-                        ScoreManager.Instance.MissedNote();
-                    }
                 }
+                raycastHits.Clear();
             }
 
-            raycastHits.Clear();
             previousPosition = tipPoint.position;
         }
 
