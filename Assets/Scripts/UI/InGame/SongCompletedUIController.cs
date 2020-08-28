@@ -8,9 +8,13 @@ namespace BeatGame.UI.Controllers
     public class SongCompletedUIController : MonoBehaviour
     {
         public static SongCompletedUIController Instance;
-
+        [SerializeField]
+        Canvas canvas;
+        [SerializeField]
         TextMeshProUGUI songNameText;
+        [SerializeField]
         TextMeshProUGUI difficultyText;
+        [SerializeField]
         TextMeshProUGUI scoreText;
 
         private void OnEnable()
@@ -21,6 +25,7 @@ namespace BeatGame.UI.Controllers
 
         public void Display()
         {
+
             gameObject.SetActive(true);
             songNameText.text = CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName;
             difficultyText.text = CurrentSongDataManager.Instance.Difficulity;
