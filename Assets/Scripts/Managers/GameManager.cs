@@ -116,6 +116,14 @@ namespace BeatGame.Logic.Managers
 
         public void DisplayEndScreen()
         {
+            leftSaber.SetActive(false);
+
+            rightSaber.SetActive(false);
+
+            UIPointer.SetActive(true);
+            UIPointer.transform.localPosition = Vector3.zero;
+            UIPointer.transform.localRotation = Quaternion.identity;
+
             SongCompletedUIController.Instance.Display();
         }
 

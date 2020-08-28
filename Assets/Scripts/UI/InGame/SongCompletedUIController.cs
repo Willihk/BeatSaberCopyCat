@@ -19,14 +19,14 @@ namespace BeatGame.UI.Controllers
 
         private void OnEnable()
         {
-            gameObject.SetActive(false);
+            canvas.worldCamera = Camera.main;
+            canvas.enabled = false;
             Instance = this;
         }
 
         public void Display()
         {
-
-            gameObject.SetActive(true);
+            canvas.enabled = true;
             songNameText.text = CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName;
             difficultyText.text = CurrentSongDataManager.Instance.Difficulity;
             scoreText.text = ScoreManager.Instance.CurrentScore.ToString();
