@@ -92,7 +92,6 @@ namespace BeatGame.Logic.Saber
                                 SaberHitAudioManager.Instance.PlaySound();
 
                                 DestroyNote(hit.Entity);
-                                break;
                             }
                         }
                         else if (note.Type == 3)
