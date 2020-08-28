@@ -22,6 +22,10 @@ namespace BeatGame.Logic.Saber
         SteamVR_Action_Vibration hapticAction;
 
         [SerializeField]
+        Transform tipPoint;
+        [SerializeField]
+        Transform raycastPoint;
+        [SerializeField]
         VisualEffect hitVFX;
 
 
@@ -48,7 +52,7 @@ namespace BeatGame.Logic.Saber
 
         void Update()
         {
-            ECSRaycast.RaycastAll(transform.position, transform.position + transform.forward * saberLength, ref raycastHits);
+            ECSRaycast.RaycastAll(raycastPoint.position, raycastPoint.position + raycastPoint.forward * saberLength, ref raycastHits);
 
             for (int i = 0; i < raycastHits.Length; i++)
             {
@@ -61,7 +65,7 @@ namespace BeatGame.Logic.Saber
                         quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                         Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
-                        float angle = Vector3.Angle((float3)transform.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
+                        float angle = Vector3.Angle((float3)tipPoint.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
 
                         if (angle > 130 || note.CutDirection == 8)
                         {
@@ -99,7 +103,7 @@ namespace BeatGame.Logic.Saber
             }
 
             raycastHits.Clear();
-            previousPosition = transform.position;
+            previousPosition = tipPoint.position;
         }
 
         private void DestroyNote(Entity entity)
