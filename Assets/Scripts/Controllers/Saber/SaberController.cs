@@ -24,10 +24,9 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         Transform tipPoint;
         [SerializeField]
-        Transform[] raycastPoints;
-        [SerializeField]
         VisualEffect hitVFX;
-
+        [SerializeField]
+        Transform[] raycastPoints;
 
         float3 previousPosition;
         EntityManager EntityManager;
@@ -54,7 +53,6 @@ namespace BeatGame.Logic.Saber
         {
             for (int i = 0; i < raycastPoints.Length; i++)
             {
-
                 ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
 
                 for (int j = 0; j < raycastHits.Length; j++)
@@ -75,13 +73,9 @@ namespace BeatGame.Logic.Saber
                                 ScoreManager.Instance.AddScore(100);
 
                                 if (affectsNoteType == 1)
-                                {
                                     Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
-                                }
                                 else
-                                {
                                     Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
-                                }
 
                                 if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
                                 {
