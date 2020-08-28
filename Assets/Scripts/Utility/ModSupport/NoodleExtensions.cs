@@ -23,7 +23,7 @@ namespace BeatGame.Utility.ModSupport
             }
             if (customData.LocalRotation.w != 0)
             {
-                transformData.LocalRotation = quaternion.Euler(customData.LocalRotation.xyz);
+                transformData.LocalRotation = Quaternion.Euler(customData.LocalRotation.xyz);
             }
             if (customData.Position.w != 0)
             {
