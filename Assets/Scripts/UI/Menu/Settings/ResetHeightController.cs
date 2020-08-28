@@ -8,10 +8,10 @@ namespace BeatGame.UI.Controllers
     {
         public void ResetHeight()
         {
-            float heightOffset = 1.76f - Camera.main.transform.localPosition.y;
+            float heightOffset = Camera.main.transform.localPosition.y - 1.74f;
             SettingsManager.GlobalOffset.y = heightOffset;
             SettingsManager.Instance.UpdateConfigSetting("General", "HeightOffset", heightOffset);
-            Debug.Log($"Manager Offset: {SettingsManager.GlobalOffset.y}, actual offset {heightOffset}");
+            Debug.Log(SettingsManager.GlobalOffset.y);
         }
     }
 }

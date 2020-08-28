@@ -51,7 +51,7 @@ public class NoteSpawningSystem : SystemBase
                 HeightOffset = SettingsManager.GlobalOffset.y,
                 LastBeat = GameManager.Instance.LastBeat,
                 CurrentBeat = (float)GameManager.Instance.CurrentBeat,
-                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
+                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration
             };
             job.Schedule(notesToSpawn.Length, 64).Complete();

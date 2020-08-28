@@ -11,7 +11,7 @@ namespace BeatGame.UI.Controllers
 
         private void OnEnable()
         {
-            if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 0)
+            if (SettingsManager.Instance != null && SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 0)
             {
                 checkMark.SetActive(false);
             }

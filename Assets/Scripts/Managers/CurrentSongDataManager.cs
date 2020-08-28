@@ -204,16 +204,17 @@ namespace BeatGame.Logic.Managers
                 num8 /= 2f;
             }
 
-            float num9 = num8 + SongSpawningInfo.NoteJumpStartBeatOffset;
+            float HalfJumpDuration = num8 + SongSpawningInfo.NoteJumpStartBeatOffset;
 
-            if ((double)num9 < num4)
+            if ((double)HalfJumpDuration < num4)
             {
-                num9 = num4;
+                HalfJumpDuration = num4;
             }
 
-            SongSpawningInfo.HalfJumpDuration = num9;
+            SongSpawningInfo.HalfJumpDuration = HalfJumpDuration;
             SongSpawningInfo.DistanceToMove = (float)SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
-            SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (float)SongSpawningInfo.SecondEquivalentOfBeat * num9 * 2;
+            SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (((float)SongSpawningInfo.SecondEquivalentOfBeat) * (HalfJumpDuration * 2));
+            SongSpawningInfo.JumpDistance += 1.4f;
         }
 
         [BurstCompile]

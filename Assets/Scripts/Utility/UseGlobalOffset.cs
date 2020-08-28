@@ -17,13 +17,14 @@ namespace BeatGame.Utility
 
         private void OnConfigChanged()
         {
-            transform.position = defaultHeight + (Vector3)SettingsManager.GlobalOffset;
+            if (transform != null)
+                transform.position = defaultHeight + (Vector3)SettingsManager.GlobalOffset;
         }
 
         private void OnDisable()
         {
             if (SettingsManager.Instance != null)
-                SettingsManager.Instance.OnConfigChanged += OnConfigChanged;
+                SettingsManager.Instance.OnConfigChanged -= OnConfigChanged;
         }
     }
 }

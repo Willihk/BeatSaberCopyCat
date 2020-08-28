@@ -15,7 +15,7 @@ public class NoteRemovementSystem : SystemBase
         int missedCount = 0;
         Entities.WithAny<Note>().ForEach((Entity entity, in DestroyOnBeat destroyOnBeat) =>
         {
-            if (destroyOnBeat.Beat + jumpDuration * 1 <= currentBeat)
+            if (destroyOnBeat.Beat + jumpDuration * 2.2f <= currentBeat)
             {
                 missedCount++;
                 commandBuffer.DestroyEntity(entity);
