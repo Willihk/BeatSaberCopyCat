@@ -6,9 +6,24 @@ namespace BeatGame.Utility
 {
     public class UseGlobalOffset : MonoBehaviour
     {
+        Vector3 defaultHeight;
+
         private void OnEnable()
         {
-            transform.position += (Vector3)SettingsManager.GlobalOffset;
+            defaultHeight = transform.position;
+            if (SettingsManager.Instance != null)
+                SettingsManager.Instance.OnConfigChanged += OnConfigChanged;
+        }
+
+        private void OnConfigChanged()
+        {
+            transform.position = defaultHeight + (Vector3)SettingsManager.GlobalOffset;
+        }
+
+        private void OnDisable()
+        {
+            if (SettingsManager.Instance != null)
+                SettingsManager.Instance.OnConfigChanged += OnConfigChanged;
         }
     }
 }
