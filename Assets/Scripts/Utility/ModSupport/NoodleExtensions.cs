@@ -25,6 +25,10 @@ namespace BeatGame.Utility.ModSupport
             {
                 transformData.LocalRotation = Quaternion.Euler(customData.LocalRotation.xyz);
             }
+            if (customData.WorldRotation != 0)
+            {
+                transformData.WorldRotation = customData.WorldRotation;
+            }
             if (customData.Position.w != 0)
             {
                 transformData.Position = PlacementHelper.GetVanillaPosition(customData.Position.x, customData.Position.y, lineOffset);
@@ -45,9 +49,8 @@ namespace BeatGame.Utility.ModSupport
         {
             obstacle.TransformData = ApplyNoodleExtensionsToTransform(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat, lineOffset);
 
-            var temp = obstacle.TransformData;
-            temp.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.5f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
-            obstacle.TransformData = temp;
+            obstacle.TransformData.Scale.c2.z = PlacementHelper.ConvertDurationToZScale((float)rawData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2;
+            obstacle.TransformData.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.5f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
 
             return obstacle;
         }

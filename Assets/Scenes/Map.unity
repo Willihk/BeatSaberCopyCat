@@ -3688,6 +3688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 518721628}
   - component: {fileID: 518721627}
+  - component: {fileID: 518721629}
   m_Layer: 0
   m_Name: Reflection Probe
   m_TagString: Untagged
@@ -3742,6 +3743,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518721629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518721626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4357f5d1eebd3ab47b9ea9e202fa3fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reflectionProbe: {fileID: 518721627}
 --- !u!1 &528715344
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,10 +4,12 @@ namespace BeatGame.Data
 {
     public struct TransformData
     {
-        public float3 Position { get; set; }
+        public float3 Position;
 
-        public float4x4 Scale { get; set; }
+        public float4x4 Scale;
 
-        public quaternion LocalRotation { get; set; }
+        public quaternion LocalRotation;
+
+        public float WorldRotation;
     }
 }

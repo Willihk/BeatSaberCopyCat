@@ -6,7 +6,7 @@ namespace BeatGame.Data
 {
     public struct CustomSpawnedObjectData
     {
-        // Using float4 last value to check if there is a value defined
+        // Last value of float4 is 1 if it is defined
 
         [JsonProperty("_position"), JsonConverter(typeof(Float4ConverterWithValidation))]
         public float4 Position { get; set; }
@@ -17,7 +17,10 @@ namespace BeatGame.Data
         [JsonProperty("_color"), JsonConverter(typeof(Float4ConverterWithValidation))]
         public float4 Color { get; set; }
 
-        [JsonProperty("_localRotation", NullValueHandling = NullValueHandling.Ignore), JsonConverter(typeof(Float4ConverterWithValidation))]
+        [JsonProperty("_rotation", NullValueHandling = NullValueHandling.Ignore)]
+        public float WorldRotation { get; set; }
+
+        [JsonProperty("_localRotation"), JsonConverter(typeof(Float4ConverterWithValidation))]
         public float4 LocalRotation { get; set; }
     }
 }

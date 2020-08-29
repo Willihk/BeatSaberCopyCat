@@ -7,8 +7,8 @@ namespace BeatGame.Data
     {
         public double Time { get; set; }
 
-        public TransformData TransformData { get; set; }
+        public TransformData TransformData;
 
-        public float3 Color { get; set; }
+        public float3 Color;
     }
 }
