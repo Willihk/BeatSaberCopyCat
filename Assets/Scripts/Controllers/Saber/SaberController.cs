@@ -68,7 +68,7 @@ namespace BeatGame.Logic.Saber
 
                             float angle = Vector3.Angle((float3)tipPoint.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
 
-                            if (angle > 130 || note.CutDirection == 8)
+                            if (angle > 170 || note.CutDirection == 8)
                             {
                                 ScoreManager.Instance.AddScore(100);
 

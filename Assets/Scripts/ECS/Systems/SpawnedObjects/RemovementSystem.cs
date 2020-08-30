@@ -13,11 +13,13 @@ public class NoteRemovementSystem : SystemBase
         double jumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration;
 
         int missedCount = 0;
-        Entities.WithAny<Note>().ForEach((Entity entity, in DestroyOnBeat destroyOnBeat) =>
+        Entities.ForEach((Entity entity, in DestroyOnBeat destroyOnBeat, in Note note) =>
         {
             if (destroyOnBeat.Beat + jumpDuration * 2.2f <= currentBeat)
             {
-                missedCount++;
+                if (note.Type != 3)
+                    missedCount++;
+
                 commandBuffer.DestroyEntity(entity);
             }
         }).Run();
