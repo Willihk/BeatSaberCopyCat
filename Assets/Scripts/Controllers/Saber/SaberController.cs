@@ -32,6 +32,9 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         Transform[] raycastPoints;
 
+        [SerializeField]
+        float velocity;
+
         float3 previousTipPosition;
         float3 previousBasePosition;
         EntityManager EntityManager;
@@ -115,6 +118,8 @@ namespace BeatGame.Logic.Saber
                 }
                 raycastHits.Clear();
             }
+
+            velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
