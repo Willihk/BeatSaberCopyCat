@@ -30,7 +30,8 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         Transform[] raycastPoints;
 
-        float3 previousPosition;
+        float3 previousTipPosition;
+        float3 previousBasePosition;
         EntityManager EntityManager;
 
         NativeList<RaycastHit> raycastHits;
@@ -55,9 +56,8 @@ namespace BeatGame.Logic.Saber
         {
             for (int i = 0; i < raycastPoints.Length; i++)
             {
-            // Draws a 5 unit long red line in front of the object
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(raycastPoints[i].position,basePoint.forward * saberLength);
+                Gizmos.color = Color.magenta;
+                Gizmos.DrawRay(raycastPoints[i].position, basePoint.forward * saberLength);
             }
         }
 
@@ -65,7 +65,7 @@ namespace BeatGame.Logic.Saber
         {
             for (int i = 0; i < raycastPoints.Length; i++)
             {
-                ECSRaycast.RaycastAll(raycastPoints[i].position,raycastPoints[i].forward * saberLength, ref raycastHits);
+                ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].forward * saberLength, ref raycastHits);
 
                 for (int j = 0; j < raycastHits.Length; j++)
                 {
@@ -78,9 +78,10 @@ namespace BeatGame.Logic.Saber
                             quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
                             Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
-                            float angle = Vector3.Angle((float3)tipPoint.position - previousPosition, matrix.MultiplyPoint(Vector3.up));
+                            float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
+                            float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
 
-                            if (angle > 170 || note.CutDirection == 8)
+                            if (baseAngle > 170 || tipAngle > 170 || note.CutDirection == 8)
                             {
                                 ScoreManager.Instance.AddScore(100);
 
@@ -113,7 +114,8 @@ namespace BeatGame.Logic.Saber
                 raycastHits.Clear();
             }
 
-            previousPosition = tipPoint.position;
+            previousTipPosition = tipPoint.position;
+            previousBasePosition = basePoint.position;
         }
 
         private void DestroyNote(Entity entity)
