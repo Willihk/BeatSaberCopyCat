@@ -1,14 +1,11 @@
 ﻿using BeatGame.Data;
 using BeatGame.Logic.Managers;
-using BeatGame.UI.Components.Tabs;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BeatGame.UI.Controllers
@@ -90,6 +87,7 @@ namespace BeatGame.UI.Controllers
                     $"file://{songData.DirectoryPath}/{songData.SongInfoFileData.SongFilename}",
                     AudioType.OGGVORBIS))
                 {
+
                     yield return www.SendWebRequest();
 
                     if (www.isNetworkError)
@@ -98,7 +96,7 @@ namespace BeatGame.UI.Controllers
                     }
                     else
                     {
-                        songData.AudioClip = DownloadHandlerAudioClip.GetContent(www);
+                        songData.AudioClip = ((DownloadHandlerAudioClip)www.downloadHandler).audioClip;
                     }
                 }
             }
@@ -127,7 +125,7 @@ namespace BeatGame.UI.Controllers
                 }
 
                 yield return null;
-            }//end while
+            }
         }
 
         public void PlayLevel()

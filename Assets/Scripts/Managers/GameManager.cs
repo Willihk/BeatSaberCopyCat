@@ -110,7 +110,7 @@ namespace BeatGame.Logic.Managers
                     IsPlaying = false;
                     CurrentBeat = 0;
                     audioSource.Stop();
-                    Invoke("ReturnToMenu", 5);
+                    Invoke("DisplayEndScreen", 5);
                 }
             }
         }
