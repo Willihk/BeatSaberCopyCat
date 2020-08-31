@@ -105,9 +105,6 @@ namespace BeatGame.UI.Controllers
             songPreviewAudioSource.clip = songData.AudioClip;
             songPreviewAudioSource.time = (float)songData.SongInfoFileData.PreviewStartTime;
             StopCoroutine("fadeSource");
-            StopCoroutine("fadeSource");
-            StartCoroutine(fadeSource(songPreviewAudioSource, 1, 0, .2f));
-            yield return new WaitForSeconds(.2f);
             songPreviewAudioSource.Play();
             StartCoroutine(fadeSource(songPreviewAudioSource, 0, 1, .4f));
 

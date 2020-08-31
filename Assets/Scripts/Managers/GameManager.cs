@@ -172,6 +172,7 @@ namespace BeatGame.Logic.Managers
                 if (!isLoaded)
                     yield return null;
             }
+            audioSource.clip = songClip;
 
             var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
             mapLoad.completed += (AsyncOperation operation) =>
