@@ -105,8 +105,29 @@ namespace BeatGame.UI.Controllers
             songPreviewAudioSource.clip = songData.AudioClip;
             songPreviewAudioSource.time = (float)songData.SongInfoFileData.PreviewStartTime;
             songPreviewAudioSource.Play();
+            StopCoroutine("fadeSource");
+            StartCoroutine(fadeSource(songPreviewAudioSource, 0, 1, .5f));
 
             SetStats();
+        }
+
+        IEnumerator fadeSource(AudioSource sourceToFade, float startVolume, float endVolume, float duration)
+        {
+            float startTime = Time.time;
+
+            while (true)
+            {
+                float elapsed = Time.time - startTime;
+
+                sourceToFade.volume = Mathf.Clamp01(Mathf.Lerp(startVolume, endVolume, elapsed / duration));
+
+                if (sourceToFade.volume == endVolume)
+                {
+                    break;
+                }
+
+                yield return null;
+            }//end while
         }
 
         public void PlayLevel()
