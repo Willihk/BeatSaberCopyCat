@@ -23,10 +23,11 @@ namespace BeatGame.Logic.Managers
 
         public void PlaySound()
         {
-            audioSource.clip = ShortHitSounds[Random.Range(0, ShortHitSounds.Length)];
+            audioSource.PlayOneShot(ShortHitSounds[Random.Range(0, ShortHitSounds.Length)]);
+            //audioSource.clip = ShortHitSounds[Random.Range(0, ShortHitSounds.Length)];
 
-            if (audioSource.clip != null)
-                audioSource.Play();
+            //if (audioSource.clip != null)
+            //    audioSource.Play();
         }
     }
 }
