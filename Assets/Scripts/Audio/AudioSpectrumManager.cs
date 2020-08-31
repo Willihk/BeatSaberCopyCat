@@ -10,6 +10,7 @@ namespace BeatGame.Logic.Audio
         public static AudioSpectrumManager Instance;
 
         public AudioSource audioSource;
+        public DoubleAudioSource doubleAudioSource;
 
         public AnimationCurve FrequencyDistributionCurve;
         float[] frequencyDistribution = new float[512];
@@ -62,6 +63,14 @@ namespace BeatGame.Logic.Audio
 
         void GetSpectrumAudioSource()
         {
+            //if (doubleAudioSource.cur_is_source0)
+            //{
+            //    doubleAudioSource._source0.GetSpectrumData(samplesLeft, 0, FrequencyReadMethod);
+            //}
+            //else
+            //{
+            //    doubleAudioSource._source1.GetSpectrumData(samplesLeft, 0, FrequencyReadMethod);
+            //}
             audioSource.GetSpectrumData(samplesLeft, 0, FrequencyReadMethod);
         }
 
