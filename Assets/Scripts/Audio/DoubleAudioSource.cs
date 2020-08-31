@@ -21,7 +21,7 @@ public class DoubleAudioSource : MonoBehaviour
     public AudioSource _source0;
     public AudioSource _source1;
 
-   public bool cur_is_source0 = true; //is _source0 currently the active AudioSource (plays some sound right now)
+    public bool cur_is_source0 = true; //is _source0 currently the active AudioSource (plays some sound right now)
     #region internal vars
 
     Coroutine _curSourceFadeRoutine = null;
@@ -90,6 +90,11 @@ public class DoubleAudioSource : MonoBehaviour
     }
     #endregion
 
+
+    public void Fade(AudioSource audioSource, float startVolume, float endVolume, float duration)
+    {
+        StartCoroutine(fadeSource(audioSource, startVolume, endVolume, duration));
+    }
 
     //gradually shifts the sound comming from our audio sources to the this clip:
     // maxVolume should be in 0-to-1 range

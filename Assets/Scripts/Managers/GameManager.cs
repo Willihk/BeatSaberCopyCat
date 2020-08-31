@@ -29,7 +29,6 @@ namespace BeatGame.Logic.Managers
         [SerializeField]
         SteamVR_Action_Boolean returnToMenuAction;
 
-        [SerializeField]
         public AudioSource audioSource;
 
         [SerializeField]
@@ -41,6 +40,8 @@ namespace BeatGame.Logic.Managers
         GameObject UIPointer;
         [SerializeField]
         Camera pointerCamera;
+
+        AudioClip songClip;
 
         private void Awake()
         {
@@ -165,7 +166,7 @@ namespace BeatGame.Logic.Managers
 
             while (!isLoaded)
             {
-                if (audioSource.clip != null && CurrentSongDataManager.Instance.HasLoadedData)
+                if (songClip != null && CurrentSongDataManager.Instance.HasLoadedData)
                     isLoaded = true;
 
                 if (!isLoaded)
@@ -185,7 +186,7 @@ namespace BeatGame.Logic.Managers
         {
             if (CurrentSongDataManager.Instance.SelectedSongData.AudioClip != null)
             {
-                audioSource.clip = CurrentSongDataManager.Instance.SelectedSongData.AudioClip;
+                songClip = CurrentSongDataManager.Instance.SelectedSongData.AudioClip;
             }
             else
             {
@@ -193,7 +194,7 @@ namespace BeatGame.Logic.Managers
                     $"file://{CurrentSongDataManager.Instance.SelectedSongData.DirectoryPath}/{CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongFilename}",
                     AudioType.OGGVORBIS))
                 {
-                    audioSource.clip = null;
+                    songClip = null;
 
                     yield return www.SendWebRequest();
 
@@ -203,8 +204,7 @@ namespace BeatGame.Logic.Managers
                     }
                     else
                     {
-                        AudioClip songClip = DownloadHandlerAudioClip.GetContent(www);
-                        audioSource.clip = songClip;
+                        songClip = DownloadHandlerAudioClip.GetContent(www);
                     }
                 }
             }
