@@ -12,7 +12,10 @@ namespace BeatGame.Utility
         {
             defaultHeight = transform.position;
             if (SettingsManager.Instance != null)
+            {
                 SettingsManager.Instance.OnConfigChanged += OnConfigChanged;
+                OnConfigChanged();
+            }
         }
 
         private void OnConfigChanged()
