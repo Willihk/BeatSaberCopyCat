@@ -17,6 +17,8 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         int affectsNoteType;
         [SerializeField]
+        float hitAngle;
+        [SerializeField]
         float saberLength = 1;
         [SerializeField]
         SteamVR_Action_Vibration hapticAction;
@@ -81,7 +83,7 @@ namespace BeatGame.Logic.Saber
                             float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
                             float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
 
-                            if (baseAngle > 170 || tipAngle > 170 || note.CutDirection == 8)
+                            if (baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
                             {
                                 ScoreManager.Instance.AddScore(100);
 
