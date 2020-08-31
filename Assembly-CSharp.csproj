@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Controllers\Laser\LaserControllerBase.cs" />
     <Compile Include="Assets\Scripts\Managers\Audio\SaberHitAudioManager.cs" />
+    <Compile Include="Assets\Scripts\Utility\GameObjectToggler.cs" />
     <Compile Include="Assets\Scripts\Controllers\MasterAudioBarController.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveSpeed.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Audio\AudioVisualizationData.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Assets\Scripts\Controllers\MasterLaserController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\EventPlayingSystem.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\UIPointerEvent.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Reflection\ReflectionProbeUpdater.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Obstacle\ColorData.cs" />
     <Compile Include="Assets\Scripts\Controllers\Volumetric\LightBeamController.cs" />
     <Compile Include="Assets\Scripts\Controllers\VR\SteamInputModule.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Assets\Scripts\Controllers\MasterRingController.cs" />
     <Compile Include="Assets\Scripts\Utility\JsonConverters\Float4ConverterWithValidation.cs" />
     <Compile Include="Assets\Scripts\Controllers\Saber\SaberController.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu\Settings\HitEffectsController.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\EventType.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\EventData.cs" />
     <Compile Include="Assets\Scripts\Utility\Placement\PlacementHelper.cs" />
@@ -96,11 +99,13 @@
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Audio\AudioVolumeManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tabs\TabButton.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\SongCompletedUIController.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\NoteData.cs" />
     <Compile Include="Assets\Scripts\Data\SongInfoFileData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\CustomData\CustomEventData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\TransformData.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Note\Note.cs" />
+    <Compile Include="Assets\Scripts\ECS\Components\Mods\WorldRotation.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\VR\VRInputModule.cs" />
     <Compile Include="Assets\Scripts\Controllers\Volumetric\VolumetricControllerBase.cs" />
@@ -128,9 +133,7 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\SongCompletedUIController.cs" />
-    <Compile Include="Assets\Scripts\UI\Menu\Settings\HitEffectsController.cs" />
-    <Compile Include="Assets\Scripts\Utility\GameObjectToggler.cs" />
+    <Compile Include="Assets\Scripts\Audio\DoubleAudioSource.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
