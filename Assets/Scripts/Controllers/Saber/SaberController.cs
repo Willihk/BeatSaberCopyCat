@@ -24,6 +24,8 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         Transform tipPoint;
         [SerializeField]
+        Transform basePoint;
+        [SerializeField]
         VisualEffect hitVFX;
         [SerializeField]
         Transform[] raycastPoints;
@@ -49,11 +51,21 @@ namespace BeatGame.Logic.Saber
             hapticAction.Execute(0, duration, frequency, amplitude, source);
         }
 
+        void OnDrawGizmosSelected()
+        {
+            for (int i = 0; i < raycastPoints.Length; i++)
+            {
+            // Draws a 5 unit long red line in front of the object
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(raycastPoints[i].position,basePoint.forward * saberLength);
+            }
+        }
+
         void Update()
         {
             for (int i = 0; i < raycastPoints.Length; i++)
             {
-                ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+                ECSRaycast.RaycastAll(raycastPoints[i].position,raycastPoints[i].forward * saberLength, ref raycastHits);
 
                 for (int j = 0; j < raycastHits.Length; j++)
                 {
