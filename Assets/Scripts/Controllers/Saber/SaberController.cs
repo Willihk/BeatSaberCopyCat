@@ -19,7 +19,7 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         float hitAngle = 130;
         [SerializeField]
-        float minCutVelocity = 0.007f;
+        float minCutVelocity = 0.012f;
         [SerializeField]
         float saberLength = 1;
         [SerializeField]
