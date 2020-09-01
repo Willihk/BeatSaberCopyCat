@@ -18,16 +18,17 @@ namespace BeatGame.Logic.Managers
         {
             if (Instance == null)
                 Instance = this;
-
-            SceneManager.sceneLoaded += SceneLoaded;
         }
 
-        private void SceneLoaded(Scene scene, LoadSceneMode mode)
+        private void Start()
         {
-            if (scene.name.Contains("Map"))
-            {
-                ResetScore();
-            }
+            GameManager.Instance.OnSongStart += ResetScore;
+        }
+
+        private void OnDestroy()
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.OnSongStart -= ResetScore;
         }
 
         public void AddScore(int amount)

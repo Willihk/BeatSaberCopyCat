@@ -136,6 +136,7 @@
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
     <Compile Include="Assets\Scripts\Data\HighScore\HighScoreData.cs" />
     <Compile Include="Assets\Scripts\Managers\Score\HighScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\HealthManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

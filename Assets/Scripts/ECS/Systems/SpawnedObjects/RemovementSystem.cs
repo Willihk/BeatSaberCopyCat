@@ -28,6 +28,7 @@ public class NoteRemovementSystem : SystemBase
         for (int i = 0; i < missedCount; i++)
         {
             ScoreManager.Instance.MissedNote();
+            HealthManager.Instance.MissedNote();
         }
 
         // Obstacles

@@ -21,7 +21,7 @@ namespace BeatGame.UI.Controllers
 
         private void OnEnable()
         {
-            GameManager.Instance.OnLoadingFinished += Setup;
+            GameManager.Instance.OnSongStart += Setup;
         }
 
         private void Setup()

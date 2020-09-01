@@ -19,7 +19,7 @@ namespace BeatGame.Logic.Managers
     {
         public static GameManager Instance;
 
-        public event Action OnLoadingFinished;
+        public event Action OnSongStart;
 
         public bool IsPlaying;
 
@@ -53,8 +53,25 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
+            HealthManager.Instance.OnDeath += GameOver;
             LoadMenu();
             SceneFader.Instance.FadeOut(1);
+        }
+
+        void GameOver()
+        {
+            IsPlaying = false;
+            CurrentBeat = 0;
+            audioSource.Stop();
+
+            SceneFader.Instance.FadeIn(.3f, () =>
+            {
+                ActivatePointer();
+
+                SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
+                SongCompletedUIController.Instance.Display(true);
+                SceneFader.Instance.FadeOut(.3f);
+            });
         }
 
         void LoadMenu()
@@ -67,11 +84,7 @@ namespace BeatGame.Logic.Managers
             if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
                 IsPlaying = true;
 
-            leftSaber.SetActive(true);
-
-            rightSaber.SetActive(true);
-
-            UIPointer.SetActive(false);
+            ActivatePointer();
 
             if (scene.name == "Menu")
             {
@@ -81,14 +94,28 @@ namespace BeatGame.Logic.Managers
                     item.worldCamera = pointerCamera;
                 }
 
-                leftSaber.SetActive(false);
-
-                rightSaber.SetActive(false);
-
-                UIPointer.SetActive(true);
-                UIPointer.transform.localPosition = Vector3.zero;
-                UIPointer.transform.localRotation = Quaternion.identity;
+                ActivateSabers();
             }
+        }
+
+        void ActivateSabers()
+        {
+            leftSaber.SetActive(true);
+
+            rightSaber.SetActive(true);
+
+            UIPointer.SetActive(false);
+        }
+
+        void ActivatePointer()
+        {
+            leftSaber.SetActive(false);
+
+            rightSaber.SetActive(false);
+
+            UIPointer.SetActive(true);
+            UIPointer.transform.localPosition = Vector3.zero;
+            UIPointer.transform.localRotation = Quaternion.identity;
         }
 
         private void Update()
@@ -122,30 +149,24 @@ namespace BeatGame.Logic.Managers
                 SceneFader.Instance.FadeOut(.5f);
 
                 CurrentBeat = 0;
-                ScoreManager.Instance.ResetScore();
 
                 leftSaber.SetActive(true);
                 rightSaber.SetActive(true);
 
                 UIPointer.SetActive(false);
 
+                OnSongStart?.Invoke();
                 IsPlaying = true;
                 Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
             });
         }
 
-        public void DisplayEndScreen()
+        public void DisplayEndScreen(bool failed = false)
         {
-            leftSaber.SetActive(false);
-
-            rightSaber.SetActive(false);
-
-            UIPointer.SetActive(true);
-            UIPointer.transform.localPosition = Vector3.zero;
-            UIPointer.transform.localRotation = Quaternion.identity;
+            ActivatePointer();
 
             SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
-            SongCompletedUIController.Instance.Display();
+            SongCompletedUIController.Instance.Display(failed);
         }
 
         public void ReturnToMenu()
@@ -197,7 +218,7 @@ namespace BeatGame.Logic.Managers
             var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
             mapLoad.completed += (AsyncOperation operation) =>
             {
-                OnLoadingFinished?.Invoke();
+                OnSongStart?.Invoke();
                 SceneFader.Instance.FadeOut(.5f);
                 IsPlaying = true;
                 Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));

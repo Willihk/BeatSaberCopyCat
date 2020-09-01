@@ -132,13 +132,15 @@ namespace BeatGame.Logic.Saber
 
                                     SaberHitAudioManager.Instance.PlaySound();
 
+                                    HealthManager.Instance.HitNote();
+
                                     DestroyNote(hit.Entity);
                                 }
                             }
                             else if (note.Type == 3)
                             {
                                 // Hit Bomb
-                                Debug.LogWarning("Saber hit a bomb");
+                                HealthManager.Instance.HitBomb();
                                 ScoreManager.Instance.MissedNote();
                                 ScoreManager.Instance.MissedNote();
                                 ScoreManager.Instance.MissedNote();
