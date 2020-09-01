@@ -125,6 +125,7 @@ namespace BeatGame.Logic.Managers
             UIPointer.transform.localPosition = Vector3.zero;
             UIPointer.transform.localRotation = Quaternion.identity;
 
+            SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
             SongCompletedUIController.Instance.Display();
         }
 

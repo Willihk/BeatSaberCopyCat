@@ -9,7 +9,7 @@ namespace BeatGame.UI.Controllers
     {
         public static SongCompletedUIController Instance;
         [SerializeField]
-        Canvas canvas;
+        public Canvas canvas;
         [SerializeField]
         TextMeshProUGUI songNameText;
         [SerializeField]
