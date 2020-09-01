@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\ObstacleData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawEventData.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\ResetHeightController.cs" />
+    <Compile Include="Assets\Scripts\Audio\DoubleAudioSource.cs" />
     <Compile Include="Assets\Scripts\Controllers\MasterLaserController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\EventPlayingSystem.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\UIPointerEvent.cs" />
@@ -133,7 +134,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
-    <Compile Include="Assets\Scripts\Audio\DoubleAudioSource.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
