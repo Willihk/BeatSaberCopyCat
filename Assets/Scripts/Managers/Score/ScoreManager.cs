@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace BeatGame.Logic.Managers
 {
@@ -25,9 +26,7 @@ namespace BeatGame.Logic.Managers
         {
             if (scene.name.Contains("Map"))
             {
-                CurrentScore = 0;
-                CurrentCombo = 0;
-                CurrentMultiplier = 1;
+                ResetScore();
             }
         }
 
@@ -71,6 +70,14 @@ namespace BeatGame.Logic.Managers
                 CurrentMultiplier = 4;
             else if (CurrentMultiplierCount == 14)
                 CurrentMultiplier = 8;
+        }
+
+        public void ResetScore()
+        {
+            CurrentCombo = 0;
+            CurrentMultiplier = 1;
+            CurrentMultiplierCount = 0;
+            CurrentScore = 0;
         }
     }
 }

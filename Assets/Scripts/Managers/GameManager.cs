@@ -115,6 +115,25 @@ namespace BeatGame.Logic.Managers
             }
         }
 
+        public void Restart()
+        {
+            SceneFader.Instance.FadeIn(1, () =>
+            {
+                SceneFader.Instance.FadeOut(.5f);
+
+                CurrentBeat = 0;
+                ScoreManager.Instance.ResetScore();
+
+                leftSaber.SetActive(true);
+                rightSaber.SetActive(true);
+
+                UIPointer.SetActive(false);
+
+                IsPlaying = true;
+                Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
+            });
+        }
+
         public void DisplayEndScreen()
         {
             leftSaber.SetActive(false);
@@ -131,7 +150,7 @@ namespace BeatGame.Logic.Managers
 
         public void ReturnToMenu()
         {
-            SceneFader.Instance.FadeIn(1, () =>
+            SceneFader.Instance.FadeIn(1.5f, () =>
             {
                 SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
                 SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
@@ -180,6 +199,7 @@ namespace BeatGame.Logic.Managers
             {
                 OnLoadingFinished?.Invoke();
                 SceneFader.Instance.FadeOut(.5f);
+                IsPlaying = true;
                 Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
             };
         }
