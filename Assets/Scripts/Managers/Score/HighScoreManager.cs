@@ -60,10 +60,11 @@ namespace BeatGame.Logic.Managers
                 {
                     HighScores[i] = scoreData;
                     SaveScores();
-                    break;
+                    return;
                 }
             }
-
+            HighScores.Add(scoreData);
+            SaveScores();
         }
 
         public void SaveScores()
