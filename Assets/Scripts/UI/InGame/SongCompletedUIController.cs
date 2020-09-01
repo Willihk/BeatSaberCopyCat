@@ -34,6 +34,17 @@ namespace BeatGame.UI.Controllers
 
         public void ReturnToMenu()
         {
+            var highScore = HighScoreManager.Instance.GetHighScoreForSong(
+                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName,
+                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.LevelAuthorName,
+                CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty);
+
+            if (ScoreManager.Instance.CurrentScore > highScore.Score)
+            {
+                highScore.Score = ScoreManager.Instance.CurrentScore;
+                HighScoreManager.Instance.UpdateScore(highScore);
+            }
+
             GameManager.Instance.ReturnToMenu();
         }
 

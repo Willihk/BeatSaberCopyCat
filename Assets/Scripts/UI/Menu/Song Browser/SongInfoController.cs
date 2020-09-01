@@ -1,5 +1,6 @@
 ﻿using BeatGame.Data;
 using BeatGame.Logic.Managers;
+using BeatGame.UI.Components.Tabs;
 using System.Collections;
 using System.Linq;
 using TMPro;
@@ -17,6 +18,8 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         private TextMeshProUGUI songNameText;
         [SerializeField]
+        private TextMeshProUGUI ScoreText;
+        [SerializeField]
         Components.Tabs.TabGroup difficultyTabGroup;
         [SerializeField]
         GameObject difficultyTabPrefab;
@@ -27,6 +30,8 @@ namespace BeatGame.UI.Controllers
         private TextMeshProUGUI timeValueText;
 
         AvailableSongData songData;
+
+        HighScoreData HighScoreData;
 
         public void DisplaySong(AvailableSongData songData, GameObject selectedSongObject)
         {
@@ -50,8 +55,23 @@ namespace BeatGame.UI.Controllers
             }
         }
 
+        public void DifficultyChanged(Components.Tabs.TabButton tabButton)
+        {
+            SetStats();
+        }
+
         void SetStats()
         {
+            HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(songData.SongInfoFileData.SongName, songData.SongInfoFileData.LevelAuthorName, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+            if (HighScoreData.Score == 0)
+            {
+                ScoreText.text = "-";
+            }
+            else
+            {
+                ScoreText.text = HighScoreData.Score.ToString();
+            }
+
             if (songData.AudioClip != null)
                 timeValueText.text = $"{math.floor(songData.AudioClip.length / 60)}:{math.floor(songData.AudioClip.length % 60).ToString("00")}";
         }
