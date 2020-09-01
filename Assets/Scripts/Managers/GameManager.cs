@@ -81,10 +81,7 @@ namespace BeatGame.Logic.Managers
 
         private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            if (scene.name == "Map" && loadSceneMode == LoadSceneMode.Additive)
-                IsPlaying = true;
-
-            ActivatePointer();
+            ActivateSabers();
 
             if (scene.name == "Menu")
             {
@@ -94,7 +91,8 @@ namespace BeatGame.Logic.Managers
                     item.worldCamera = pointerCamera;
                 }
 
-                ActivateSabers();
+                ActivatePointer();
+
             }
         }
 

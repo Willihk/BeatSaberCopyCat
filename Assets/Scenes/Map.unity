@@ -4471,7 +4471,7 @@ MonoBehaviour:
   songNameText: {fileID: 1006366552}
   difficultyText: {fileID: 285363890}
   scoreText: {fileID: 1102446491}
-  newHighScoreText: {fileID: 0}
+  newHighScoreText: {fileID: 893908625}
 --- !u!114 &608831491
 MonoBehaviour:
   m_ObjectHideFlags: 0
