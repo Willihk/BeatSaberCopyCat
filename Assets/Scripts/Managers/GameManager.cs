@@ -112,16 +112,17 @@ namespace BeatGame.Logic.Managers
 
         private void Update()
         {
-            if (IsPlaying && (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand)))
-            {
-                IsPlaying = false;
-                CurrentBeat = 0;
-                audioSource.Stop();
-                ReturnToMenu();
-            }
-
             if (IsPlaying)
             {
+
+                if (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand))
+                {
+                    IsPlaying = false;
+                    CurrentBeat = 0;
+                    audioSource.Stop();
+                    ReturnToMenu();
+                }
+
                 LastBeat = CurrentBeat;
                 CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
                 if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + 5) && !audioSource.isPlaying)
@@ -149,7 +150,7 @@ namespace BeatGame.Logic.Managers
 
                 OnSongStart?.Invoke();
                 IsPlaying = true;
-                Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
+                Invoke(nameof(PlaySong), (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
             });
         }
 
@@ -195,25 +196,21 @@ namespace BeatGame.Logic.Managers
 
         IEnumerator Loading()
         {
-            bool isLoaded = false;
-
-            while (!isLoaded)
+            while (true)
             {
                 if (songClip != null && CurrentSongDataManager.Instance.HasLoadedData)
-                    isLoaded = true;
+                    break;
 
-                if (!isLoaded)
-                    yield return null;
+                yield return null;
             }
+
             audioSource.clip = songClip;
 
             var mapLoad = SceneManager.LoadSceneAsync((int)SceneIndexes.Map, LoadSceneMode.Additive);
+
             mapLoad.completed += (AsyncOperation operation) =>
             {
-                OnSongStart?.Invoke();
-                SceneFader.Instance.FadeOut(.5f);
-                IsPlaying = true;
-                Invoke("PlaySong", (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
+                Restart();
             };
         }
 

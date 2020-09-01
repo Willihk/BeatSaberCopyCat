@@ -46,7 +46,6 @@ namespace BeatGame.Logic.Managers
 
         IEnumerator FadeOut()
         {
-            color.a = 1;
             while (color.a > 0)
             {
                 // StartValue / duration * deltaTime
@@ -59,7 +58,6 @@ namespace BeatGame.Logic.Managers
 
         IEnumerator FadeIn()
         {
-            color.a = 0;
             while (color.a < 1)
             {
                 // StartValue / duration * deltaTime
