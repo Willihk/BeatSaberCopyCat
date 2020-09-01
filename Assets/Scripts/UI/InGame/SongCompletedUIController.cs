@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using BeatGame.Logic.Managers;
+using BeatGame.Data;
 
 namespace BeatGame.UI.Controllers
 {
@@ -16,6 +17,8 @@ namespace BeatGame.UI.Controllers
         TextMeshProUGUI difficultyText;
         [SerializeField]
         TextMeshProUGUI scoreText;
+        [SerializeField]
+        TextMeshProUGUI newHighScoreText;
 
         private void OnEnable()
         {
@@ -24,21 +27,28 @@ namespace BeatGame.UI.Controllers
             Instance = this;
         }
 
+        HighScoreData highScore;
+
         public void Display()
         {
             canvas.enabled = true;
             songNameText.text = CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName;
             difficultyText.text = CurrentSongDataManager.Instance.Difficulity;
             scoreText.text = ScoreManager.Instance.CurrentScore.ToString();
+
+            highScore = HighScoreManager.Instance.GetHighScoreForSong(
+               CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName,
+               CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.LevelAuthorName,
+               CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty);
+
+            if (ScoreManager.Instance.CurrentScore > highScore.Score)
+                newHighScoreText.enabled = true;
+            else
+                newHighScoreText.enabled = false;
         }
 
         public void ReturnToMenu()
         {
-            var highScore = HighScoreManager.Instance.GetHighScoreForSong(
-                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName,
-                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.LevelAuthorName,
-                CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty);
-
             if (ScoreManager.Instance.CurrentScore > highScore.Score)
             {
                 highScore.Score = ScoreManager.Instance.CurrentScore;
