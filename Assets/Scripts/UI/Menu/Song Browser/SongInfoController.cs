@@ -158,6 +158,5 @@ namespace BeatGame.UI.Controllers
 
             GameManager.Instance.PlayLevel();
         }
-
     }
 }

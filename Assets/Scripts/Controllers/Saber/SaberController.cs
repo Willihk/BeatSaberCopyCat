@@ -75,7 +75,8 @@ namespace BeatGame.Logic.Saber
         {
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
-            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f))
+            var obstacleCast = ECSRaycast.Raycast(raycastPoints[0].position, raycastPoints[0].forward * 1.25f);
+            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f) || EntityManager.HasComponent<Obstacle>(obstacleCast.Entity))
             {
                 if (!isInContact)
                 {
@@ -83,7 +84,7 @@ namespace BeatGame.Logic.Saber
                     hitVFX.SendEvent("Contact");
                 }
 
-                    hitVFX.transform.position = raycastHit.point;
+                hitVFX.transform.position = raycastHit.point;
             }
             else
             {
