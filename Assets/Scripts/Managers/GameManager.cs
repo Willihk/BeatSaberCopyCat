@@ -115,7 +115,7 @@ namespace BeatGame.Logic.Managers
             if (IsPlaying)
             {
 
-                if (Input.GetKeyDown(KeyCode.X) || returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand))
+                if (Input.GetKeyDown(KeyCode.X) || (returnToMenuAction != null && returnToMenuAction.GetStateDown(SteamVR_Input_Sources.RightHand)))
                 {
                     IsPlaying = false;
                     CurrentBeat = 0;
