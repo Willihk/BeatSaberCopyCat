@@ -137,6 +137,7 @@
     <Compile Include="Assets\Scripts\Data\HighScore\HighScoreData.cs" />
     <Compile Include="Assets\Scripts\Managers\Score\HighScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\HealthManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu\Settings\CheckBoxSettingController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
