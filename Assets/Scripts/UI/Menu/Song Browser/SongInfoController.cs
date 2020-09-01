@@ -62,14 +62,17 @@ namespace BeatGame.UI.Controllers
 
         void SetStats()
         {
-            HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(songData.SongInfoFileData.SongName, songData.SongInfoFileData.LevelAuthorName, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
-            if (HighScoreData.Score == 0)
+            if (difficultyTabGroup.SelectedTab != null)
             {
-                ScoreText.text = "-";
-            }
-            else
-            {
-                ScoreText.text = HighScoreData.Score.ToString();
+                HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(songData.SongInfoFileData.SongName, songData.SongInfoFileData.LevelAuthorName, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+                if (HighScoreData.Score == 0)
+                {
+                    ScoreText.text = "-";
+                }
+                else
+                {
+                    ScoreText.text = HighScoreData.Score.ToString();
+                }
             }
 
             if (songData.AudioClip != null)
