@@ -97,7 +97,7 @@
     <Compile Include="Assets\Scripts\UI\InGame\SongTimeUIController.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Buttons\ButtonPlus.cs" />
     <Compile Include="Assets\Scripts\Utility\ECSRaycast.cs" />
-    <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Score\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Audio\AudioVolumeManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tabs\TabButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongCompletedUIController.cs" />
@@ -134,6 +134,8 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Utility\DrawGizmoIcon.cs" />
+    <Compile Include="Assets\Scripts\Data\HighScore\HighScoreData.cs" />
+    <Compile Include="Assets\Scripts\Managers\Score\HighScoreManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
