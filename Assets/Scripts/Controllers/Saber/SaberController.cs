@@ -75,7 +75,7 @@ namespace BeatGame.Logic.Saber
         {
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
-            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, saberLength))
+            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f))
             {
                 if (!isInContact)
                 {
