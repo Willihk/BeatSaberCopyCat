@@ -60,7 +60,7 @@ namespace BeatGame.Logic.Managers
 
         public void MissedNote()
         {
-            RemoveHealth(5);
+            RemoveHealth(8);
         }
 
         public void HitBomb()
