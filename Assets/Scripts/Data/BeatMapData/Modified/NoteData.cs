@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map.Modified
 {
     public struct NoteData
     {

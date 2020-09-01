@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using BeatGame.Logic.Managers;
 using BeatGame.Data;
+using BeatGame.Data.Score;
 
 namespace BeatGame.UI.Controllers
 {
@@ -83,6 +84,5 @@ namespace BeatGame.UI.Controllers
             }
             GameManager.Instance.ReturnToMenu();
         }
-
     }
 }

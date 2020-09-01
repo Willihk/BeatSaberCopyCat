@@ -1,4 +1,5 @@
 ﻿using BeatGame.Data;
+using BeatGame.Data.Score;
 using BeatGame.Logic.Managers;
 using BeatGame.UI.Components.Tabs;
 using System.Collections;

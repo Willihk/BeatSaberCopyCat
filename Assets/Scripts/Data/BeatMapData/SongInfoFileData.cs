@@ -1,13 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-
-using System;
-using System.Collections.Generic;
-
+﻿using System;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map
 {
     [Serializable]
     public struct SongInfoFileData

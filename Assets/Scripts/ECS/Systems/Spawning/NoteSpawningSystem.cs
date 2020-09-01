@@ -10,6 +10,7 @@ using BeatGame.Data;
 using BeatGame.Logic.Managers;
 using Unity.Jobs;
 using Unity.Burst;
+using BeatGame.Data.Map.Modified;
 
 public class NoteSpawningSystem : SystemBase
 {

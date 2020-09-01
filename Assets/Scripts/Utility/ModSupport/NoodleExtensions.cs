@@ -4,6 +4,8 @@ using BeatGame.Data;
 using Unity.Mathematics;
 using BeatGame.Utility;
 using BeatGame.Logic.Managers;
+using BeatGame.Data.Map.Modified;
+using BeatGame.Data.Map.Raw;
 
 namespace BeatGame.Utility.ModSupport
 {

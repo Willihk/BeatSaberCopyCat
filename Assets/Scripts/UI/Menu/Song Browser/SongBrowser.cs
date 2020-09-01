@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using BeatGame.Data;
 using BeatGame.Logic.Managers;
 using BeatGame.UI.Components.Tabs;
+using BeatGame.Data.Map;
 
 namespace BeatGame.UI.Controllers
 {

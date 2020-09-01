@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BeatGame.Data
+namespace BeatGame.Data.Score
 {
     [Serializable]
     public struct HighScoreData : IEquatable<HighScoreData>

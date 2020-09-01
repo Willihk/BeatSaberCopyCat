@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Entities;
 using System.Linq;
 using BeatGame.Data;
+using BeatGame.Data.Map.Modified;
 
 namespace BeatGame.Logic.Lasers
 {

@@ -1,5 +1,7 @@
 ﻿using Unity.Mathematics;
 using BeatGame.Data;
+using BeatGame.Data.Map.Modified;
+using BeatGame.Data.Map.Raw;
 
 namespace BeatGame.Utility
 {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BeatGame.Data;
 using System.Linq;
+using BeatGame.Data.Score;
 
 namespace BeatGame.Logic.Managers
 {

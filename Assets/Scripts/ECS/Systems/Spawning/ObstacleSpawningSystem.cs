@@ -1,4 +1,5 @@
 ﻿using BeatGame.Data;
+using BeatGame.Data.Map.Modified;
 using BeatGame.Logic.Managers;
 using System;
 using System.Linq;

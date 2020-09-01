@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Unity.Mathematics;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map.Raw
 {
     public struct CustomSpawnedObjectData
     {

@@ -7,6 +7,7 @@ using Unity.Jobs;
 using Unity.Burst;
 using BeatGame.Data;
 using BeatGame.Logic.Managers;
+using BeatGame.Data.Map.Modified;
 
 public class EventPlayingSystem : SystemBase
 {

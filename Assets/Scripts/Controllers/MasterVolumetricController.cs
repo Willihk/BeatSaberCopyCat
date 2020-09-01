@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Entities;
 using System.Collections.Generic;
 using BeatGame.Data;
+using BeatGame.Data.Map.Modified;
 
 namespace BeatGame.Logic.Volumetrics
 {

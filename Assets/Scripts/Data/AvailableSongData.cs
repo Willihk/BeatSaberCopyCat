@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using BeatGame.Data.Map;
 
 namespace BeatGame.Data
 {

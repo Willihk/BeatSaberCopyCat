@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using BeatGame.Data.Map.Modified;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map
 {
     [Serializable]
     public struct MapData

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map.Raw
 {
     public struct RawObstacleData
     {
