@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BeatGame.Data
+namespace BeatGame.Data.Map
 {
     public enum SongEventType
     {

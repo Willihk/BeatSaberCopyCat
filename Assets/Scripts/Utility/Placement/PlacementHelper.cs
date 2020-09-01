@@ -2,6 +2,7 @@
 using BeatGame.Data;
 using BeatGame.Data.Map.Modified;
 using BeatGame.Data.Map.Raw;
+using BeatGame.Data.Map;
 
 namespace BeatGame.Utility
 {

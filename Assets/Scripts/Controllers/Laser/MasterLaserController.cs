@@ -1,40 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Linq;
-using Unity.Entities;
 using System.Collections.Generic;
+using Unity.Entities;
+using System.Linq;
 using BeatGame.Data;
 using BeatGame.Data.Map.Modified;
+using BeatGame.Data.Map;
 
-namespace BeatGame.Logic.Volumetrics
+namespace BeatGame.Logic.Lasers
 {
-    public class MasterVolumetricController : MonoBehaviour
+    public class MasterLaserController : MonoBehaviour
     {
         [SerializeField]
         bool findLaserControllersInChildren = false;
         [SerializeField]
-        List<VolumetricControllerBase> controllers;
+        List<LaserControllerBase> controllers;
 
         [SerializeField]
         SongEventType[] supportedEventTypes;
 
         [SerializeField]
-        Material material;
+        protected float laserIntensity = 3;
+        [SerializeField]
+        protected float laserFlashIntensity = 6;
 
-        Color currentColor;
-        float maxAlpha = 0.77f;
+        Material material;
 
         private void OnEnable()
         {
-            material = new Material(material);
-
             if (controllers == null)
-                controllers = new List<VolumetricControllerBase>();
+                controllers = new List<LaserControllerBase>();
+
+
+            material = new Material(Resources.Load<Material>("Materials/Map/Lasers/LaserMaterial"));
+
+            material.SetFloat("_EmissionIntensity", laserIntensity);
+
+            EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
+
 
             if (findLaserControllersInChildren)
                 GetControllersInChildReqursive(transform);
-
-            EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
 
             controllers.ForEach(x => x.SetMaterial(material));
 
@@ -54,7 +60,7 @@ namespace BeatGame.Logic.Volumetrics
         {
             foreach (Transform item in child)
             {
-                if (item.TryGetComponent(out VolumetricControllerBase controller))
+                if (item.TryGetComponent(out LaserControllerBase controller))
                 {
                     controllers.Add(controller);
                 }
@@ -73,11 +79,8 @@ namespace BeatGame.Logic.Volumetrics
                     case 2:
                     case 3:
                     case 4:
-                        currentColor.r = eventData.Color.x;
-                        currentColor.g = eventData.Color.y;
-                        currentColor.b = eventData.Color.z;
-                        currentColor.a = maxAlpha;
-                        material.SetColor("_Color", currentColor);
+                        Color color = new Color(eventData.Color.x, eventData.Color.y, eventData.Color.z, eventData.Color.w);
+                        material.SetColor("_Color", color);
 
                         // Easier value switch
                         if (eventData.Value > 4)
@@ -101,6 +104,16 @@ namespace BeatGame.Logic.Volumetrics
                                 break;
                         }
                         break;
+                    case 12:
+                    case 13:
+                        for (int i = 0; i < controllers.Count; i++)
+                        {
+                            if (i % 2 == 0)
+                                controllers[i].SetRotation(eventData.Value);
+                            else
+                                controllers[i].SetRotation(-eventData.Value);
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -109,40 +122,63 @@ namespace BeatGame.Logic.Volumetrics
 
         public virtual void TurnOff()
         {
-            currentColor.a = 0;
-            material.SetColor("_Color", currentColor);
+            material.SetFloat("_FadeAmount", 0);
+            controllers.ForEach(x => x.TurnOff());
         }
 
         public virtual void TurnOn()
         {
-            currentColor.a = maxAlpha;
-            material.SetColor("_Color", currentColor);
+            material.SetFloat("_FadeAmount", 1);
         }
 
         public virtual void Flash()
         {
-            StopAllCoroutines();
             TurnOn();
+            StopAllCoroutines();
+            StartCoroutine(FlashMaterial());
         }
 
         public virtual void Fade()
         {
-            StopAllCoroutines();
             TurnOn();
-            StartCoroutine(FadeVolume());
+            StopAllCoroutines();
+            StartCoroutine(FadeLaser());
         }
 
-        protected IEnumerator FadeVolume()
+        protected IEnumerator FlashMaterial()
         {
-            currentColor.a = maxAlpha;
-            while (currentColor.a > 0)
+            float intensity = laserIntensity;
+            while (intensity < laserFlashIntensity)
             {
-                currentColor.a -= maxAlpha / .55f * Time.deltaTime;
-                material.SetColor("_Color", currentColor);
+                intensity += (laserFlashIntensity - laserIntensity) / .1f * Time.deltaTime;
+                material.SetFloat("_EmissionIntensity", intensity);
+
+                yield return null;
+            }
+
+            while (intensity > laserIntensity)
+            {
+                intensity -= (laserFlashIntensity - laserIntensity) / .2f * Time.deltaTime;
+                material.SetFloat("_EmissionIntensity", intensity);
+
+                yield return null;
+            }
+
+        }
+
+        protected IEnumerator FadeLaser()
+        {
+            float fadeAmount = .7f;
+            while (fadeAmount > 0)
+            {
+                fadeAmount -= .7f / .6f * Time.deltaTime;
+
+                material.SetFloat("_FadeAmount", fadeAmount);
                 yield return null;
             }
 
             TurnOff();
+            material.SetFloat("_FadeAmount", fadeAmount);
         }
     }
 }

@@ -55,17 +55,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\Internal\AsyncCoroutineRunner.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Tests\Util\TestButtonHandler.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\TaskExtensions.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\AwaitExtensions.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\IEnumeratorAwaitExtensions.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\WaitForUpdate.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\WaitForBackgroundThread.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\Awaiters.cs" />
     <Compile Include="Assets\Plugins\KawaseBlur\KawaseBlur.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Source\Internal\SyncContextUtil.cs" />
-    <Compile Include="Assets\Plugins\AsyncAwaitUtil\Tests\AsyncUtilTests.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Plugins\Harmony\0Harmony.xml" />

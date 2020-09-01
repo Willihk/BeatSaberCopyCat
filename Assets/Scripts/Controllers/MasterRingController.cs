@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using Random = UnityEngine.Random;
 using BeatGame.Data;
 using BeatGame.Data.Map.Modified;
+using BeatGame.Data.Map;
 
 namespace BeatGame.Logic.Rings
 {

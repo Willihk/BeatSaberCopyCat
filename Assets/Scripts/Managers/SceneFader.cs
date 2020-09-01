@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 
-namespace Assets.Scripts.Managers
+namespace BeatGame.Logic.Managers
 {
     public class SceneFader : MonoBehaviour
     {

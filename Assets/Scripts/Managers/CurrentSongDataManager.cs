@@ -45,7 +45,7 @@ namespace BeatGame.Logic.Managers
                 Instance = this;
         }
 
-        public async void LoadLevelDataAsync()
+        public void LoadLevelData()
         {
             HasLoadedData = false;
 
@@ -83,13 +83,9 @@ namespace BeatGame.Logic.Managers
                 var eventJobHandle = convertEventJob.Schedule();
 
 
-                RawNoteData[] rawNoteDataArray = new RawNoteData[MapJsonObject["_notes"].Count()];
 
-                await new WaitForBackgroundThread();
-                rawNoteDataArray = await Task.Run(() => { return MapJsonObject["_notes"].ToObject<RawNoteData[]>(); });
-                await new WaitForUpdate();
 
-                NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(rawNoteDataArray, Allocator.TempJob);
+                NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(new RawNoteData[MapJsonObject["_notes"].Count()], Allocator.TempJob);
                 NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
                 Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
                 var convertNoteJob = new ConvertNoteDatas
@@ -103,9 +99,6 @@ namespace BeatGame.Logic.Managers
 
 
                 RawObstacleData[] rawObstacleDataArray = new RawObstacleData[MapJsonObject["_obstacles"].Count()];
-                await new WaitForBackgroundThread();
-                rawObstacleDataArray = MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>();
-                await new WaitForUpdate();
 
                 NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(rawObstacleDataArray, Allocator.TempJob);
                 NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
@@ -144,7 +137,6 @@ namespace BeatGame.Logic.Managers
 
                 AssignDataToSystems();
 
-                await new WaitForSeconds(.1f);
                 HasLoadedData = true;
             }
         }

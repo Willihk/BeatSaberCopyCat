@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace BeatGame.Data
+namespace BeatGame.Data.Map
 {
     public enum CutDirection
     {

@@ -1,13 +1,7 @@
-﻿using Assets.Scripts.Managers;
-using BeatGame.Data;
+﻿using BeatGame.Data;
 using BeatGame.UI.Controllers;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.Collections;
-using Unity.Entities;
-using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -194,7 +188,7 @@ namespace BeatGame.Logic.Managers
 
             StartCoroutine(GetAudioClip());
 
-            CurrentSongDataManager.Instance.LoadLevelDataAsync();
+            CurrentSongDataManager.Instance.LoadLevelData();
 
             StartCoroutine(Loading());
         }
