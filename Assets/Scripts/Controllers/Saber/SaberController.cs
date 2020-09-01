@@ -9,6 +9,7 @@ using BeatGame.Logic.Managers;
 using UnityEngine.VFX;
 using Unity.Collections;
 using RaycastHit = Unity.Physics.RaycastHit;
+using Unity.Physics;
 
 namespace BeatGame.Logic.Saber
 {
@@ -36,6 +37,8 @@ namespace BeatGame.Logic.Saber
 
         [SerializeField]
         float velocity;
+
+        bool isInContact;
 
         float3 previousTipPosition;
         float3 previousBasePosition;
@@ -71,6 +74,25 @@ namespace BeatGame.Logic.Saber
         void Update()
         {
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
+
+            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, saberLength))
+            {
+                if (!isInContact)
+                {
+                    isInContact = true;
+                    hitVFX.SendEvent("Contact");
+                }
+
+                    hitVFX.transform.position = raycastHit.point;
+            }
+            else
+            {
+                if (isInContact)
+                {
+                    isInContact = false;
+                    hitVFX.SendEvent("Stop");
+                }
+            }
 
             if (velocity >= minCutVelocity)
             {
