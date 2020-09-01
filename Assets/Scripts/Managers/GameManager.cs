@@ -159,12 +159,12 @@ namespace BeatGame.Logic.Managers
             });
         }
 
-        public void DisplayEndScreen(bool failed = false)
+        public void DisplayEndScreen()
         {
             ActivatePointer();
 
             SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
-            SongCompletedUIController.Instance.Display(failed);
+            SongCompletedUIController.Instance.Display();
         }
 
         public void ReturnToMenu()
