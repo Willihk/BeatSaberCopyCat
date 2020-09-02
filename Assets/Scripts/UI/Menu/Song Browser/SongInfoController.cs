@@ -29,6 +29,8 @@ namespace BeatGame.UI.Controllers
 
         [SerializeField, Header("Stats")]
         private TextMeshProUGUI timeValueText;
+        [SerializeField]
+        private TextMeshProUGUI BPMValueText;
 
         AvailableSongData songData;
 
@@ -75,6 +77,8 @@ namespace BeatGame.UI.Controllers
                     ScoreText.text = HighScoreData.Score.ToString();
                 }
             }
+
+            BPMValueText.text = songData.SongInfoFileData.BeatsPerMinute.ToString();
 
             if (songData.AudioClip != null)
                 timeValueText.text = $"{math.floor(songData.AudioClip.length / 60)}:{math.floor(songData.AudioClip.length % 60).ToString("00")}";

@@ -69,7 +69,7 @@
     <Compile Include="Assets\Scripts\Controllers\Laser\MasterLaserController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\EventPlayingSystem.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\UIPointerEvent.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Reflection\ReflectionProbeUpdater.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Reflection\ReflectionProbeOptimizer.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\MaterialProperties\ColorData.cs" />
     <Compile Include="Assets\Scripts\Controllers\Volumetric\LightBeamController.cs" />
     <Compile Include="Assets\Scripts\Controllers\VR\SteamInputModule.cs" />
