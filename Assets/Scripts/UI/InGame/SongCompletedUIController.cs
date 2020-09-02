@@ -63,12 +63,14 @@ namespace BeatGame.UI.Controllers
 
             if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)
             {
-                highScore.Score = ScoreManager.Instance.CurrentScore;
-                HighScoreManager.Instance.UpdateScore(highScore);
+                if (SettingsManager.Instance.Settings["General"]["NoFail"].IntValue == 0)
+                {
+                    highScore.Score = ScoreManager.Instance.CurrentScore;
+                    HighScoreManager.Instance.UpdateScore(highScore);
 
-                newHighScoreText.enabled = true;
-
-                fireworkController.StartFireworks();
+                    newHighScoreText.enabled = true;
+                    fireworkController.StartFireworks();
+                }
             }
             else
             {
