@@ -54,7 +54,8 @@ namespace BeatGame.Logic.Managers
             Settings["Audio"]["MusicVolume"].FloatValue = .7f;
             Settings["Audio"]["EffectsVolume"].FloatValue = .7f;
 
-            Settings["Other"]["SongFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Beat Saber Songs\";
+            Settings["Other"]["RootFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\";
+            Settings["Other"]["SongFolderPath"].StringValue = $@"{Settings["Other"]["RootFolderPath"]}BeatSaber\Beat Saber_Data\CustomLevels\";
 
             SaveConfig();
         }
@@ -73,14 +74,14 @@ namespace BeatGame.Logic.Managers
 
         public void LoadConfig()
         {
-            Settings = Configuration.LoadFromFile(Application.persistentDataPath + configFile);
+            Settings = Configuration.LoadFromFile(Settings["Other"]["RootFolderPath"] + configFile);
             HasLoadedSettings = true;
             OnConfigLoaded?.Invoke();
         }
 
         public void SaveConfig()
         {
-            Settings.SaveToFile(Application.persistentDataPath + configFile);
+            Settings.SaveToFile(Settings["Other"]["RootFolderPath"] + configFile);
             OnConfigSaved?.Invoke();
         }
     }
