@@ -23,6 +23,9 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         TextMeshProUGUI newHighScoreText;
 
+        [SerializeField]
+        FireworkController fireworkController;
+
         bool failed;
 
         private void OnEnable()
@@ -59,29 +62,32 @@ namespace BeatGame.UI.Controllers
                CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty);
 
             if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)
+            {
+                highScore.Score = ScoreManager.Instance.CurrentScore;
+                HighScoreManager.Instance.UpdateScore(highScore);
+
                 newHighScoreText.enabled = true;
+
+                fireworkController.StartFireworks();
+            }
             else
+            {
                 newHighScoreText.enabled = false;
+            }
         }
 
         public void RestartSong()
         {
-            if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)
-            {
-                highScore.Score = ScoreManager.Instance.CurrentScore;
-                HighScoreManager.Instance.UpdateScore(highScore);
-            }
+            fireworkController.StopFireworks();
+
             GameManager.Instance.Restart();
             canvas.enabled = false;
         }
 
         public void ReturnToMenu()
         {
-            if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)
-            {
-                highScore.Score = ScoreManager.Instance.CurrentScore;
-                HighScoreManager.Instance.UpdateScore(highScore);
-            }
+            fireworkController.StopFireworks();
+
             GameManager.Instance.ReturnToMenu();
         }
     }
