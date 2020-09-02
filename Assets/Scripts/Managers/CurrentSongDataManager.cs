@@ -89,6 +89,7 @@ namespace BeatGame.Logic.Managers
                 var convertNoteJob = new ConvertNoteDatas
                 {
                     RawData = rawNoteDatas,
+                    NoArrows = SettingsManager.Instance.Settings["Modifiers"]["NoArrows"].IntValue == 1,
                     UsesNoodleExtensions = usesNoodleExtensions,
                     LineOffset = SettingsManager.LineOffset,
                     ConvertedData = noteDatas,
@@ -214,6 +215,8 @@ namespace BeatGame.Logic.Managers
             [ReadOnly]
             public bool UsesNoodleExtensions;
             [ReadOnly]
+            public bool NoArrows;
+            [ReadOnly]
             public NativeArray<RawNoteData> RawData;
             [ReadOnly]
             public float3 LineOffset;
@@ -225,7 +228,10 @@ namespace BeatGame.Logic.Managers
                 for (int i = 0; i < ConvertedData.Length; i++)
                 {
                     NoteData note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
-
+                    if (NoArrows)
+                    {
+                        note.TransformData.LocalRotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
+                    }
                     note.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 
                     if (UsesNoodleExtensions)

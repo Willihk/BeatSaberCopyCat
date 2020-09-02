@@ -7,7 +7,7 @@ namespace BeatGame.Data.Map.Modified
     {
         public double Time { get; set; }
 
-        public TransformData TransformData { get; set; }
+        public TransformData TransformData;
 
         public int Type { get; set; }
 

@@ -35,9 +35,12 @@ public class TotalMultiplierController : MonoBehaviour
         {
             multiplier += -0.50f;
         }
-
+        if (modifiers["NoArrows"].IntValue == 1)
+        {
+            multiplier += -0.10f;
+        }
 
         ScoreManager.Instance.TotalMultiplier = multiplier;
-        multiplierText.text = multiplier + "x";
+        multiplierText.text = multiplier.ToString("00") + "x";
     }
 }
