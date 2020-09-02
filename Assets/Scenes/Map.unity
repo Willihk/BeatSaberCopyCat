@@ -3092,8 +3092,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
-  laserIntensity: 11
-  laserFlashIntensity: 15
+  laserIntensity: 9
+  laserFlashIntensity: 13
 --- !u!1 &374234362
 GameObject:
   m_ObjectHideFlags: 0
@@ -3146,8 +3146,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
-  laserIntensity: 11
-  laserFlashIntensity: 14
+  laserIntensity: 9
+  laserFlashIntensity: 12
 --- !u!114 &374234365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3294,8 +3294,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
-  laserIntensity: 11
-  laserFlashIntensity: 15
+  laserIntensity: 9
+  laserFlashIntensity: 13
 --- !u!1 &399987298
 GameObject:
   m_ObjectHideFlags: 0
@@ -5118,8 +5118,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
-  laserIntensity: 11
-  laserFlashIntensity: 15
+  laserIntensity: 9
+  laserFlashIntensity: 13
 --- !u!1 &701038740
 GameObject:
   m_ObjectHideFlags: 0
@@ -5649,8 +5649,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 0300000003000000
-  laserIntensity: 10
-  laserFlashIntensity: 12
+  laserIntensity: 8
+  laserFlashIntensity: 10
 --- !u!114 &763970824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5959,8 +5959,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 020000000c000000
-  laserIntensity: 10
-  laserFlashIntensity: 12
+  laserIntensity: 8
+  laserFlashIntensity: 10
 --- !u!114 &805946939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8606,8 +8606,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
-  laserIntensity: 11
-  laserFlashIntensity: 13
+  laserIntensity: 9
+  laserFlashIntensity: 11
 --- !u!114 &1170679209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11457,8 +11457,8 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
-  laserIntensity: 11
-  laserFlashIntensity: 14
+  laserIntensity: 9
+  laserFlashIntensity: 12
 --- !u!114 &1742850298
 MonoBehaviour:
   m_ObjectHideFlags: 0
