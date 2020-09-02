@@ -14,6 +14,8 @@ namespace BeatGame.Logic.Managers
         public int CurrentMultiplier;
         public int CurrentMultiplierCount;
 
+        public float TotalMultiplier;
+
         private void Awake()
         {
             if (Instance == null)
@@ -34,7 +36,7 @@ namespace BeatGame.Logic.Managers
         public void AddScore(int amount)
         {
             AddCombo();
-            CurrentScore += amount * CurrentMultiplier;
+            CurrentScore += (int)(amount * CurrentMultiplier * TotalMultiplier);
         }
 
         public void AddCombo()
