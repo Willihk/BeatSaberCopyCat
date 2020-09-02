@@ -63,7 +63,7 @@ namespace BeatGame.UI.Controllers
 
             if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)
             {
-                if (SettingsManager.Instance.Settings["General"]["NoFail"].IntValue == 0)
+                if (SettingsManager.Instance.Settings["Modifiers"]["NoFail"].IntValue == 0)
                 {
                     highScore.Score = ScoreManager.Instance.CurrentScore;
                     HighScoreManager.Instance.UpdateScore(highScore);

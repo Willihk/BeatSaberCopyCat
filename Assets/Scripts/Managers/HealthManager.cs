@@ -49,7 +49,7 @@ namespace BeatGame.Logic.Managers
             Health -= amount;
             if (Health <= 0)
             {
-                if (SettingsManager.Instance.Settings["General"]["NoFail"].IntValue != 1)
+                if (SettingsManager.Instance.Settings["Modifiers"]["NoFail"].IntValue != 1)
                 {
                     OnDeath?.Invoke();
                 }

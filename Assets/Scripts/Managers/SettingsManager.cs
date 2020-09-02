@@ -48,7 +48,8 @@ namespace BeatGame.Logic.Managers
 
             Settings["General"]["HeightOffset"].FloatValue = 0;
             Settings["General"]["HitEffects"].IntValue = 1;
-            Settings["General"]["NoFail"].IntValue = 0;
+
+            Settings["Modifiers"]["NoFail"].IntValue = 0;
 
             Settings["Audio"]["MasterVolume"].FloatValue = .7f;
             Settings["Audio"]["MusicVolume"].FloatValue = .7f;
