@@ -57,6 +57,12 @@ namespace BeatGame.Logic.Saber
             raycastHits.Dispose();
         }
 
+        private void OnDisable()
+        {
+            isInContact = false;
+            hitVFX.SendEvent("Stop");
+        }
+
         private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
         {
             hapticAction.Execute(0, duration, frequency, amplitude, source);
