@@ -231,6 +231,7 @@ namespace BeatGame.Logic.Managers
                     if (NoArrows)
                     {
                         note.TransformData.LocalRotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
+                        note.CutDirection = 8;
                     }
                     note.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 

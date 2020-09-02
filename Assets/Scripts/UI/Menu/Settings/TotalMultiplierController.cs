@@ -41,6 +41,6 @@ public class TotalMultiplierController : MonoBehaviour
         }
 
         ScoreManager.Instance.TotalMultiplier = multiplier;
-        multiplierText.text = multiplier.ToString("00") + "x";
+        multiplierText.text = multiplier + "x";
     }
 }
