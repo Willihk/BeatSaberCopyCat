@@ -4472,7 +4472,7 @@ MonoBehaviour:
   difficultyText: {fileID: 285363890}
   scoreText: {fileID: 1102446491}
   newHighScoreText: {fileID: 893908625}
-  fireworkController: {fileID: 0}
+  fireworkController: {fileID: 1064052624}
 --- !u!114 &608831491
 MonoBehaviour:
   m_ObjectHideFlags: 0
