@@ -70,13 +70,13 @@ namespace BeatGame.Logic.Managers
 
         public void SaveScores()
         {
-            PlayerPrefs.SetString("HighScores", JsonUtility.ToJson(HighScores));
+            PlayerPrefs.SetString("HighScores", JsonUtility.ToJson(HighScores.ToArray()));
             PlayerPrefs.Save();
         }
 
         public void LoadScores()
         {
-            HighScores = JsonUtility.FromJson<List<HighScoreData>>(PlayerPrefs.GetString("HighScores"));
+            HighScores = new List<HighScoreData>(JsonUtility.FromJson<HighScoreData[]>(PlayerPrefs.GetString("HighScores")));
         }
     }
 }
