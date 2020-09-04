@@ -125,7 +125,7 @@ namespace BeatGame.Logic.Managers
 
                 LastBeat = CurrentBeat;
                 CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
-                if (CurrentBeat >= (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + 5) && !audioSource.isPlaying)
+                if (CurrentBeat > (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + audioSource.clip.length) && !audioSource.isPlaying)
                 {
                     IsPlaying = false;
                     CurrentBeat = 0;

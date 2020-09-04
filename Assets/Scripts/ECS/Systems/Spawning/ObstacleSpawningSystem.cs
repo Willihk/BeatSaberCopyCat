@@ -29,34 +29,26 @@ public class ObstacleSpawningSystem : SystemBase
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            SpawnNeededNotes();
+            EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
+
+            var job = new SpawnJobParallel
+            {
+                CommandBuffer = commandBuffer.AsParallelWriter(),
+                Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
+                Obstacles = obstacles,
+                HeightOffset = SettingsManager.GlobalOffset.y,
+                CurrentBeat = GameManager.Instance.CurrentBeat,
+                LastBeat = GameManager.Instance.LastBeat,
+                HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
+                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
+                Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
+                SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
+            };
+            job.Schedule(obstacles.Length, 64).Complete();
+
+            commandBuffer.Playback(EntityManager);
+            commandBuffer.Dispose();
         }
-    }
-
-    void SpawnNeededNotes()
-    {
-        if (obstacles.IsCreated == false)
-            return;
-
-        EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
-
-        var job = new SpawnJobParallel
-        {
-            CommandBuffer = commandBuffer.AsParallelWriter(),
-            Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
-            Obstacles = obstacles,
-            HeightOffset = SettingsManager.GlobalOffset.y,
-            CurrentBeat = GameManager.Instance.CurrentBeat,
-            LastBeat = GameManager.Instance.LastBeat,
-            HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
-            JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
-            Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
-            SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
-        };
-        job.Schedule(obstacles.Length, 64).Complete();
-
-        commandBuffer.Playback(EntityManager);
-        commandBuffer.Dispose();
     }
 
     [BurstCompile]
