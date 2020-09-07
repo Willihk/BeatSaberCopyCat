@@ -1,8 +1,5 @@
-﻿using BeatGame.Data;
-using BeatGame.Data.Map.Modified;
+﻿using BeatGame.Data.Map.Modified;
 using BeatGame.Logic.Managers;
-using System;
-using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -94,6 +91,11 @@ public class ObstacleSpawningSystem : SystemBase
                     w = .7f
                 };
                 CommandBuffer.SetComponent(index, entity, new ColorData { Value = color });
+
+                if (obstacle.TransformData.Speed != Speed)
+                {
+                    CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = obstacle.TransformData.Speed });
+                }
 
                 if (obstacle.TransformData.WorldRotation != 0)
                 {

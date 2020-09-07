@@ -22,5 +22,8 @@ namespace BeatGame.Data.Map.Raw
 
         [JsonProperty("_localRotation"), JsonConverter(typeof(Float4ConverterWithValidation))]
         public float4 LocalRotation { get; set; }
+
+        [JsonProperty("_noteJumpSpeed")]
+        public float? NoteJumpSpeed;
     }
 }
