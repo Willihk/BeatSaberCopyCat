@@ -46,18 +46,19 @@ public class NoteMovementSystem : SystemBase
         {
             NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
 
-            if (chunk.HasChunkComponent(WorldRotationType))
+            if (chunk.Has(WorldRotationType))
             {
                 NativeArray<WorldRotation> WorldRotations = chunk.GetNativeArray(WorldRotationType);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    var translation = translations[i];
 
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, WorldRotations[i].Value, Vector3.one);
                     float3 forward = matrix.MultiplyPoint(Vector3.forward);
 
+                    var translation = translations[i];
                     translation.Value -= forward * (Speed * DeltaTime);
+                    translations[i] = translation;
                 }
                 return;
             }
