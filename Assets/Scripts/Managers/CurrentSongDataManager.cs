@@ -90,6 +90,7 @@ namespace BeatGame.Logic.Managers
                 {
                     RawData = rawNoteDatas,
                     NoArrows = SettingsManager.Instance.Settings["Modifiers"]["NoArrows"].IntValue == 1,
+                    NoteJumpSpeed = SongSpawningInfo.NoteJumpSpeed,
                     UsesNoodleExtensions = usesNoodleExtensions,
                     LineOffset = SettingsManager.LineOffset,
                     ConvertedData = noteDatas,
@@ -217,6 +218,8 @@ namespace BeatGame.Logic.Managers
             [ReadOnly]
             public bool NoArrows;
             [ReadOnly]
+            public float NoteJumpSpeed;
+            [ReadOnly]
             public NativeArray<RawNoteData> RawData;
             [ReadOnly]
             public float3 LineOffset;
@@ -233,6 +236,8 @@ namespace BeatGame.Logic.Managers
                         note.TransformData.LocalRotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
                         note.CutDirection = 8;
                     }
+
+                    note.TransformData.Speed = NoteJumpSpeed;
                     note.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 
                     if (UsesNoodleExtensions)
@@ -266,6 +271,7 @@ namespace BeatGame.Logic.Managers
                     ObstacleData obstacle = PlacementHelper.ConvertObstacleDataWithVanillaMethod(RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
                     obstacle.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
+                    obstacle.TransformData.Speed = NoteJumpSpeed;
 
                     if (UsesNoodleExtensions)
                         obstacle = NoodleExtensions.ConvertObstacleDataToNoodleExtensions(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);

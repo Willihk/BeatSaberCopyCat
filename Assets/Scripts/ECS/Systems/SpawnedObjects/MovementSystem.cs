@@ -16,7 +16,7 @@ public class NoteMovementSystem : SystemBase
 
         objectsToMoveQuery = GetEntityQuery(new EntityQueryDesc
         {
-            Any = new ComponentType[] {typeof(Note), typeof(Obstacle) }
+            Any = new ComponentType[] { typeof(Note), typeof(Obstacle) }
         });
     }
 
@@ -40,11 +40,24 @@ public class NoteMovementSystem : SystemBase
 
         public ComponentTypeHandle<Translation> TranslationType;
         [ReadOnly]
+        public ComponentTypeHandle<CustomSpeed> SpeedType;
+        [ReadOnly]
         public ComponentTypeHandle<WorldRotation> WorldRotationType;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
+
+
+            if (chunk.Has(SpeedType))
+            {
+                NativeArray<CustomSpeed> Speeds = chunk.GetNativeArray(SpeedType);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+
+                }
+            }
 
             if (chunk.Has(WorldRotationType))
             {
@@ -52,23 +65,24 @@ public class NoteMovementSystem : SystemBase
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-
                     Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, WorldRotations[i].Value, Vector3.one);
                     float3 forward = matrix.MultiplyPoint(Vector3.forward);
 
-                    var translation = translations[i];
-                    translation.Value -= forward * (Speed * DeltaTime);
-                    translations[i] = translation;
+                    translations[i] = Move(translations[i], forward, Speed);
                 }
                 return;
             }
 
             for (int i = 0; i < chunk.Count; i++)
             {
-                var translation = translations[i];
-                translation.Value.z -= Speed * DeltaTime;
-                translations[i] = translation;
+                translations[i] = Move(translations[i], new float3(0, 0, 1), Speed);
             }
+        }
+
+        public Translation Move(Translation translation, float3 forward, float speed)
+        {
+            translation.Value -= forward * (speed * DeltaTime);
+            return translation;
         }
     }
 }

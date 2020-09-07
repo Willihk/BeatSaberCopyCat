@@ -47,7 +47,7 @@ public class ObstacleSpawningSystem : SystemBase
             commandBuffer.Dispose();
         }
     }
- 
+
     [BurstCompile]
     struct SpawnJobParallel : IJobParallelFor
     {
@@ -91,6 +91,11 @@ public class ObstacleSpawningSystem : SystemBase
                     w = .7f
                 };
                 CommandBuffer.SetComponent(index, entity, new ColorData { Value = color });
+
+                if (obstacle.TransformData.Speed != Speed)
+                {
+                    CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = obstacle.TransformData.Speed });
+                }
 
                 if (obstacle.TransformData.WorldRotation != 0)
                 {

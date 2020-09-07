@@ -13,6 +13,15 @@ namespace BeatGame.Utility.ModSupport
     {
         public static TransformData ApplyNoodleExtensionsToTransform(TransformData transformData, CustomSpawnedObjectData customData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
         {
+            if (customData.NoteJumpSpeed == null)
+            {
+                transformData.Speed = jumpSpeed;
+            }
+            else
+            {
+                transformData.Speed = (float)customData.NoteJumpSpeed;
+            }
+
             if (customData.Scale.w != 0)
             {
                 transformData.Scale = new float4x4

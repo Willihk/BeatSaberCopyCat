@@ -11,5 +11,7 @@ namespace BeatGame.Data.Map.Modified
         public quaternion LocalRotation;
 
         public float WorldRotation;
+
+        public float Speed;
     }
 }
