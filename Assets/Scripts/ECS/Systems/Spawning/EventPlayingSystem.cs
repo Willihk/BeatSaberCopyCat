@@ -41,26 +41,21 @@ public class EventPlayingSystem : SystemBase
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            SpawnNeededEvents();
-        }
-    }
+            var job = new GetEventsToSpawn
+            {
+                CurrentBeat = GameManager.Instance.CurrentBeat,
+                LastBeat = GameManager.Instance.LastBeat,
+                HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
+                EventDatas = Events,
+                EventsToSpawnIndexQueue = eventsToSpawnIndexQueue.AsParallelWriter()
+            };
 
-    void SpawnNeededEvents()
-    {
-        var job = new GetEventsToSpawn
-        {
-            CurrentBeat = GameManager.Instance.CurrentBeat,
-            LastBeat = GameManager.Instance.LastBeat,
-            HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
-            EventDatas = Events,
-            EventsToSpawnIndexQueue = eventsToSpawnIndexQueue.AsParallelWriter()
-        };
+            job.Schedule(Events.Length, 64, Dependency).Complete();
 
-        job.Schedule(Events.Length, 64, Dependency).Complete();
-
-        while (eventsToSpawnIndexQueue.TryDequeue(out int index))
-        {
-            PlayEvent(Events[index]);
+            while (eventsToSpawnIndexQueue.TryDequeue(out int index))
+            {
+                PlayEvent(Events[index]);
+            }
         }
     }
 

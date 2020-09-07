@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveSpeed.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Audio\AudioVisualizationData.cs" />
     <Compile Include="Assets\Scripts\Managers\CurrentSongDataManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu\Settings\TotalMultiplierController.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\ObstacleData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawEventData.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\ResetHeightController.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Assets\Scripts\Managers\EntityPrefabManager.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Obstacle\Obstacle.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\ObstacleSpawningSystem.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Visual\FireworkController.cs" />
     <Compile Include="Assets\Scripts\Utility\Math\MathHelper.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\AudioSettingController.cs" />
     <Compile Include="Assets\Scripts\Utility\Other\DrawGizmoIcon.cs" />
@@ -136,8 +138,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Visual\FireworkController.cs" />
-    <Compile Include="Assets\Scripts\UI\Menu\Settings\TotalMultiplierController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
@@ -910,10 +910,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{178AB5DE-D35E-B046-7F12-44FAC6F4A05C}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="SteamVR_Actions.csproj">
       <Project>{37082B73-F62E-9F00-ACFF-E9BA5C2CF36D}</Project>
       <Name>SteamVR_Actions</Name>
