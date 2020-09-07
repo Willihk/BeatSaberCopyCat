@@ -1,4 +1,6 @@
 ﻿using BeatGame.Logic.Managers;
+using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -6,21 +8,66 @@ using UnityEngine;
 
 public class NoteMovementSystem : SystemBase
 {
+    EntityQuery objectsToMoveQuery;
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+
+        objectsToMoveQuery = GetEntityQuery(new EntityQueryDesc
+        {
+            Any = new ComponentType[] {typeof(Note), typeof(Obstacle) }
+        });
+    }
+
     protected override void OnUpdate()
     {
-        float deltaTime = Time.DeltaTime;
-        float speed = CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed;
-        Entities.WithAny<Note, Obstacle>().WithNone<WorldRotation>().ForEach((ref Translation translation) =>
+        new MoveJob
         {
-            translation.Value.z -= speed * deltaTime;
-        }).Schedule(Dependency).Complete();
+            DeltaTime = Time.DeltaTime,
+            Speed = CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed,
+            TranslationType = GetComponentTypeHandle<Translation>(),
+            WorldRotationType = GetComponentTypeHandle<WorldRotation>(true),
+        }.Schedule(objectsToMoveQuery, Dependency).Complete();
+    }
 
-        Entities.WithAll<Obstacle>().ForEach((ref Translation translation, in WorldRotation worldRotation) =>
+    [BurstCompile]
+    struct MoveJob : IJobChunk
+    {
+        public float Speed;
+        [ReadOnly]
+        public float DeltaTime;
+
+        public ComponentTypeHandle<Translation> TranslationType;
+        [ReadOnly]
+        public ComponentTypeHandle<WorldRotation> WorldRotationType;
+
+        public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
-            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, worldRotation.Value, Vector3.one);
+            NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
 
-            float3 forward = matrix.MultiplyPoint(Vector3.forward);
-            translation.Value -= forward * (speed * deltaTime);
-        }).Schedule(Dependency).Complete();
+            if (chunk.HasChunkComponent(WorldRotationType))
+            {
+                NativeArray<WorldRotation> WorldRotations = chunk.GetNativeArray(WorldRotationType);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    var translation = translations[i];
+
+                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, WorldRotations[i].Value, Vector3.one);
+                    float3 forward = matrix.MultiplyPoint(Vector3.forward);
+
+                    translation.Value -= forward * (Speed * DeltaTime);
+                }
+                return;
+            }
+
+            for (int i = 0; i < chunk.Count; i++)
+            {
+                var translation = translations[i];
+                translation.Value.z -= Speed * DeltaTime;
+                translations[i] = translation;
+            }
+        }
     }
 }
