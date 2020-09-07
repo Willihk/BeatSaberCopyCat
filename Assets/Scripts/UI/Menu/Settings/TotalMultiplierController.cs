@@ -15,6 +15,7 @@ public class TotalMultiplierController : MonoBehaviour
         if (SettingsManager.Instance != null)
         {
             SettingsManager.Instance.OnConfigChanged += CalcMultiplier;
+            CalcMultiplier();
         }
     }
 
