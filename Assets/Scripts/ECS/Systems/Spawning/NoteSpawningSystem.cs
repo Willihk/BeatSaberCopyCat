@@ -107,39 +107,39 @@ public class NoteSpawningSystem : SystemBase
                 //    CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = Notes[index].TransformData.Speed });
                 //}
 
-                //if (Notes[index].TransformData.WorldRotation != 0)
-                //{
-                //    CommandBuffer.AddComponent<WorldRotation>(index, entity);
-                //    CommandBuffer.SetComponent(index, entity, new WorldRotation { Value = Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0) });
-                //    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0), Vector3.one);
-
-                //    float3 forward = matrix.MultiplyPoint(Vector3.forward);
-                //    forward *= JumpDistance;
-                //    CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset });
-
-                //    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
-                //    CommandBuffer.SetComponent(
-                //        index,
-                //        entity,
-                //        new MoveOverTime
-                //        {
-                //            Duration = SecondEquivalentOfBeat * spawnOffset,
-                //            StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset,
-                //            EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward
-                //        });
-                //}
-                //else
-                //{
-                CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset) });
-
-                CommandBuffer.AddComponent<MoveOverTime>(index, entity);
-                CommandBuffer.SetComponent(index, entity, new MoveOverTime
+                if (Notes[index].TransformData.WorldRotation != 0)
                 {
-                    Duration = SecondEquivalentOfBeat * spawnOffset,
-                    StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset),
-                    EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance)
-                });
-                //}
+                    CommandBuffer.AddComponent<WorldRotation>(index, entity);
+                    CommandBuffer.SetComponent(index, entity, new WorldRotation { Value = Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0) });
+                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0), Vector3.one);
+
+                    float3 forward = matrix.MultiplyPoint(Vector3.forward);
+                    forward *= JumpDistance;
+                    CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset });
+
+                    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                    CommandBuffer.SetComponent(
+                        index,
+                        entity,
+                        new MoveOverTime
+                        {
+                            Duration = SecondEquivalentOfBeat * spawnOffset,
+                            StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset,
+                            EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward
+                        });
+                }
+                else
+                {
+                    CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset) });
+
+                    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                    CommandBuffer.SetComponent(index, entity, new MoveOverTime
+                    {
+                        Duration = SecondEquivalentOfBeat * spawnOffset,
+                        StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset),
+                        EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance)
+                    });
+                }
 
                 CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = CurrentBeat + spawnOffset });
 

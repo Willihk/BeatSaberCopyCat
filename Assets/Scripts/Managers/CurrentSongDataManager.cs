@@ -231,6 +231,7 @@ namespace BeatGame.Logic.Managers
                 for (int i = 0; i < ConvertedData.Length; i++)
                 {
                     NoteData note = PlacementHelper.ConvertNoteDataWithVanillaMethod(RawData[i], LineOffset);
+
                     if (NoArrows)
                     {
                         note.TransformData.LocalRotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
@@ -238,7 +239,6 @@ namespace BeatGame.Logic.Managers
                     }
 
                     note.TransformData.Speed = NoteJumpSpeed;
-                    note.Color = ChromaSupport.GetColorForObstacle(RawData[i].CustomData);
 
                     if (UsesNoodleExtensions)
                         note = NoodleExtensions.ConvertNoteDataToNoodleExtensions(note, RawData[i], LineOffset);
