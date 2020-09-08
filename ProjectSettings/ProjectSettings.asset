@@ -592,7 +592,7 @@ PlayerSettings:
     1: ENABLE_HYBRID_RENDERER_V2
   platformArchitecture: {}
   scriptingBackend:
-    Standalone: 0
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
