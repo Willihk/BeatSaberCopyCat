@@ -12,6 +12,10 @@ public class ObstacleSpawningSystem : SystemBase
 {
     public NativeList<ObstacleData> obstacles;
 
+    bool hasJob;
+    JobHandle previousJob;
+    EntityCommandBuffer commandBuffer;
+
     protected override void OnCreate()
     {
         obstacles = new NativeList<ObstacleData>(Allocator.Persistent);
@@ -26,7 +30,15 @@ public class ObstacleSpawningSystem : SystemBase
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
+            if (hasJob)
+            {
+                previousJob.Complete();
+                commandBuffer.Playback(EntityManager);
+                commandBuffer.Dispose();
+                hasJob = false;
+            }
+
+            commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
             var job = new SpawnJobParallel
             {
@@ -34,17 +46,15 @@ public class ObstacleSpawningSystem : SystemBase
                 Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
                 Obstacles = obstacles,
                 HeightOffset = SettingsManager.GlobalOffset.y,
-                CurrentBeat = GameManager.Instance.CurrentBeat,
-                LastBeat = GameManager.Instance.LastBeat,
+                CurrentBeat = GameManager.Instance.CurrentBeat - Time.DeltaTime,
+                LastBeat = GameManager.Instance.LastBeat - Time.DeltaTime,
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
                 JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
                 Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
             };
-            job.Schedule(obstacles.Length, 64).Complete();
-
-            commandBuffer.Playback(EntityManager);
-            commandBuffer.Dispose();
+            previousJob = job.Schedule(obstacles.Length, 64);
+            hasJob = true;
         }
     }
 
@@ -54,6 +64,7 @@ public class ObstacleSpawningSystem : SystemBase
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
         [ReadOnly]
         public NativeList<ObstacleData> Obstacles;
+
         [ReadOnly]
         public float HeightOffset;
         [ReadOnly]
@@ -64,7 +75,6 @@ public class ObstacleSpawningSystem : SystemBase
         public double LastBeat;
         [ReadOnly]
         public float JumpDistance;
-
         [ReadOnly]
         public float Speed;
         [ReadOnly]
