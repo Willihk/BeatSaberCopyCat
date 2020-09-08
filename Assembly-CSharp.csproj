@@ -122,6 +122,7 @@
     <Compile Include="Assets\Scripts\UI\Components\Tabs\TabGroup.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Song Browser\SongBrowser.cs" />
     <Compile Include="Assets\Scripts\Utility\ModSupport\NoodleExtensions.cs" />
+    <Compile Include="Assets\Scripts\ECS\Components\Mods\CustomSpeed.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Audio\AudioVisualizationSystem.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawObstacleData.cs" />
     <Compile Include="Assets\Scripts\Utility\Other\BetterBloomController.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
-    <Compile Include="Assets\Scripts\ECS\Components\Mods\CustomSpeed.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

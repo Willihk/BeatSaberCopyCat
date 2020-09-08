@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-public class NoteMovementSystem : SystemBase
+public class MovementSystem : SystemBase
 {
     EntityQuery objectsToMoveQuery;
 
@@ -28,6 +28,7 @@ public class NoteMovementSystem : SystemBase
             Speed = CurrentSongDataManager.Instance.SelectedDifficultyMap.NoteJumpMovementSpeed,
             TranslationType = GetComponentTypeHandle<Translation>(),
             WorldRotationType = GetComponentTypeHandle<WorldRotation>(true),
+            SpeedType = GetComponentTypeHandle<CustomSpeed>(true),
         }.Schedule(objectsToMoveQuery, Dependency).Complete();
     }
 
@@ -40,42 +41,49 @@ public class NoteMovementSystem : SystemBase
 
         public ComponentTypeHandle<Translation> TranslationType;
         [ReadOnly]
-        public ComponentTypeHandle<CustomSpeed> SpeedType;
-        [ReadOnly]
         public ComponentTypeHandle<WorldRotation> WorldRotationType;
+        [ReadOnly]
+        public ComponentTypeHandle<CustomSpeed> SpeedType;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
+            NativeArray<CustomSpeed> speeds = default;
+            NativeArray<WorldRotation> worldRotations = default;
 
+            bool customSpeeds = false;
+            bool customRotations = false;
 
             if (chunk.Has(SpeedType))
             {
-                NativeArray<CustomSpeed> Speeds = chunk.GetNativeArray(SpeedType);
-
-                for (int i = 0; i < chunk.Count; i++)
-                {
-
-                }
+                speeds = chunk.GetNativeArray(SpeedType);
+                customSpeeds = true;
             }
 
             if (chunk.Has(WorldRotationType))
             {
-                NativeArray<WorldRotation> WorldRotations = chunk.GetNativeArray(WorldRotationType);
+                worldRotations = chunk.GetNativeArray(WorldRotationType);
 
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, WorldRotations[i].Value, Vector3.one);
-                    float3 forward = matrix.MultiplyPoint(Vector3.forward);
-
-                    translations[i] = Move(translations[i], forward, Speed);
-                }
-                return;
+                customRotations = true;
             }
 
             for (int i = 0; i < chunk.Count; i++)
             {
-                translations[i] = Move(translations[i], new float3(0, 0, 1), Speed);
+                float speed = Speed;
+                float3 forward = new float3(0, 0, 1);
+
+                if (customSpeeds)
+                {
+                    speed = speeds[i].Value;
+                }
+
+                if (customRotations)
+                {
+                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, worldRotations[i].Value, Vector3.one);
+                    forward = matrix.MultiplyPoint(Vector3.forward);
+                }
+
+                translations[i] = Move(translations[i], forward, speed);
             }
         }
 

@@ -3,7 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 
-public class NoteRemovementSystem : SystemBase
+public class RemovementSystem : SystemBase
 {
     protected override void OnUpdate()
     {
