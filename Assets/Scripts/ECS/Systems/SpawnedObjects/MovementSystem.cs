@@ -16,7 +16,8 @@ public class MovementSystem : SystemBase
 
         objectsToMoveQuery = GetEntityQuery(new EntityQueryDesc
         {
-            Any = new ComponentType[] { typeof(Note), typeof(Obstacle) }
+            Any = new ComponentType[] { typeof(Note), typeof(Obstacle) },
+            None = new ComponentType[] { typeof(MoveOverTime) }
         });
     }
 

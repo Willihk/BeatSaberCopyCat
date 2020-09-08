@@ -32,7 +32,7 @@ public class RemovementSystem : SystemBase
         }
 
         // Obstacles
-        Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref Translation translation, ref DestroyOnBeat destroyOnBeat) =>
+        Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref DestroyOnBeat destroyOnBeat) =>
         {
             if (destroyOnBeat.Beat + jumpDuration * 4 <= currentBeat)
             {

@@ -37,7 +37,7 @@ public class ObstacleSpawningSystem : SystemBase
                 CurrentBeat = GameManager.Instance.CurrentBeat,
                 LastBeat = GameManager.Instance.LastBeat,
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration,
-                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance + 3,
+                JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
                 Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
             };
@@ -76,8 +76,10 @@ public class ObstacleSpawningSystem : SystemBase
         public void Execute(int index)
         {
             var obstacle = Obstacles[index];
+            float spawnOffset = 2;
+            float distanceOffset = 6;
 
-            if (obstacle.Time - HalfJumpDuration <= CurrentBeat && obstacle.Time - HalfJumpDuration >= LastBeat)
+            if (obstacle.Time - HalfJumpDuration <= CurrentBeat + spawnOffset && obstacle.Time - HalfJumpDuration >= LastBeat + spawnOffset)
             {
                 var entity = CommandBuffer.Instantiate(index, Entity);
                 CommandBuffer.RemoveComponent<Prefab>(index, entity);
@@ -105,20 +107,39 @@ public class ObstacleSpawningSystem : SystemBase
 
                     float3 forward = matrix.MultiplyPoint(Vector3.forward);
                     forward *= JumpDistance;
-                    CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, HeightOffset, 0) + forward });
+                    CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset });
                     CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + 100 });
+
+                    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                    CommandBuffer.SetComponent(
+                        index,
+                        entity,
+                        new MoveOverTime
+                        {
+                            Duration = SecondEquivalentOfBeat * spawnOffset,
+                            StartPosition = obstacle.TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset,
+                            EndPosition = obstacle.TransformData.Position + new float3(0, HeightOffset, 0) + forward
+                        });
                 }
                 else
                 {
-                    CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
+                    CommandBuffer.SetComponent(index, entity, new Translation { Value = obstacle.TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset) });
                     CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
+
+                    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                    CommandBuffer.SetComponent(index, entity, new MoveOverTime
+                    {
+                        Duration = SecondEquivalentOfBeat * spawnOffset,
+                        StartPosition = obstacle.TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset),
+                        EndPosition = obstacle.TransformData.Position + new float3(0, HeightOffset, JumpDistance)
+                    });
                 }
 
                 CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
 
                 CommandBuffer.SetComponent(index, entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
 
-                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
+                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat - spawnOffset + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
             }
         }
     }

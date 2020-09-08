@@ -139,6 +139,8 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Animation\MoveOverTimeSystem.cs" />
+    <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveOverTime.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

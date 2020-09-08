@@ -50,6 +50,8 @@ public class NoteSpawningSystem : SystemBase
                 CommandBuffer = commandBuffer.AsParallelWriter(),
                 Notes = notesToSpawn,
                 NotePrefabs = notePrefabs,
+                JumpSpeed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
+                SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat,
                 HeightOffset = SettingsManager.GlobalOffset.y,
                 LastBeat = GameManager.Instance.LastBeat,
                 CurrentBeat = (float)GameManager.Instance.CurrentBeat,
@@ -72,7 +74,11 @@ public class NoteSpawningSystem : SystemBase
         [ReadOnly]
         public float HeightOffset;
         [ReadOnly]
+        public float SecondEquivalentOfBeat;
+        [ReadOnly]
         public float JumpDistance;
+        [ReadOnly]
+        public float JumpSpeed;
         [ReadOnly]
         public float CurrentBeat;
         [ReadOnly]
@@ -84,56 +90,89 @@ public class NoteSpawningSystem : SystemBase
 
         public void Execute(int index)
         {
-            if (Notes[index].Time - HalfJumpDuration <= CurrentBeat && Notes[index].Time - HalfJumpDuration >= LastBeat)
+            float spawnOffset = 1;
+            float distanceOffset = 6;
+            if (Notes[index].Time - HalfJumpDuration <= CurrentBeat + spawnOffset && Notes[index].Time - HalfJumpDuration >= LastBeat + spawnOffset)
             {
+                Entity entity;
                 if (Notes[index].Type == 3)
-                {
-                    SpawnBomb(index);
-                }
+                    entity = SpawnBomb(index);
                 else
+                    entity = SpawnNote(index);
+
+                CommandBuffer.RemoveComponent<Prefab>(index, entity);
+
+                //if (Notes[index].TransformData.Speed != JumpSpeed)
+                //{
+                //    CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = Notes[index].TransformData.Speed });
+                //}
+
+                //if (Notes[index].TransformData.WorldRotation != 0)
+                //{
+                //    CommandBuffer.AddComponent<WorldRotation>(index, entity);
+                //    CommandBuffer.SetComponent(index, entity, new WorldRotation { Value = Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0) });
+                //    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, Notes[index].TransformData.WorldRotation, 0), Vector3.one);
+
+                //    float3 forward = matrix.MultiplyPoint(Vector3.forward);
+                //    forward *= JumpDistance;
+                //    CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset });
+
+                //    CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                //    CommandBuffer.SetComponent(
+                //        index,
+                //        entity,
+                //        new MoveOverTime
+                //        {
+                //            Duration = SecondEquivalentOfBeat * spawnOffset,
+                //            StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward * distanceOffset,
+                //            EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, 0) + forward
+                //        });
+                //}
+                //else
+                //{
+                CommandBuffer.SetComponent(index, entity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset) });
+
+                CommandBuffer.AddComponent<MoveOverTime>(index, entity);
+                CommandBuffer.SetComponent(index, entity, new MoveOverTime
                 {
-                    SpawnNote(index);
-                }
+                    Duration = SecondEquivalentOfBeat * spawnOffset,
+                    StartPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance * distanceOffset),
+                    EndPosition = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance)
+                });
+                //}
+
+                CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = CurrentBeat + spawnOffset });
+
+                CommandBuffer.SetComponent(index, entity, new Rotation { Value = Notes[index].TransformData.LocalRotation });
+
+                CommandBuffer.SetComponent(index, entity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
+
             }
         }
 
-        void SpawnBomb(int index)
+        Entity SpawnBomb(int index)
         {
-            var noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[4]);
+            return CommandBuffer.Instantiate(index, NotePrefabs[4]);
 
-            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
 
-            CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
-
-            CommandBuffer.SetComponent(index, noteEntity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
         }
 
-        public void SpawnNote(int index)
+        public Entity SpawnNote(int index)
         {
-            Entity noteEntity;
             if (Notes[index].CutDirection == (int)CutDirection.Any)
             {
                 if (Notes[index].Type == 1)
-                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[0]);
+                    return CommandBuffer.Instantiate(index, NotePrefabs[0]);
                 else
-                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[1]);
+                    return CommandBuffer.Instantiate(index, NotePrefabs[1]);
             }
             else
             {
                 if (Notes[index].Type == 1)
-                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[2]);
+                    return CommandBuffer.Instantiate(index, NotePrefabs[2]);
                 else
-                    noteEntity = CommandBuffer.Instantiate(index, NotePrefabs[3]);
+                    return CommandBuffer.Instantiate(index, NotePrefabs[3]);
             }
-
-            CommandBuffer.RemoveComponent<Prefab>(index, noteEntity);
-
-            CommandBuffer.SetComponent(index, noteEntity, new DestroyOnBeat { Beat = CurrentBeat });
-
-            CommandBuffer.SetComponent(index, noteEntity, new Rotation { Value = Notes[index].TransformData.LocalRotation });
-            CommandBuffer.SetComponent(index, noteEntity, new Translation { Value = Notes[index].TransformData.Position + new float3(0, HeightOffset, JumpDistance) });
-
-            CommandBuffer.SetComponent(index, noteEntity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
         }
     }
 }
