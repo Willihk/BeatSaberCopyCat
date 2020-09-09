@@ -9,11 +9,15 @@ using UnityEngine;
 
 public class MoveOverTimeSystem : SystemBase
 {
+    EndSimulationEntityCommandBufferSystem entityCommandBufferSystem;
+
     EntityQuery objectsToMoveQuery;
 
     protected override void OnCreate()
     {
         base.OnCreate();
+
+        entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         objectsToMoveQuery = GetEntityQuery(new EntityQueryDesc
         {
@@ -23,19 +27,14 @@ public class MoveOverTimeSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
-
         new MoveJob
         {
-            CommandBuffer = commandBuffer.AsParallelWriter(),
+            CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
             DeltaTime = Time.DeltaTime,
             EntityType = GetEntityTypeHandle(),
             TranslationType = GetComponentTypeHandle<Translation>(),
             MoveOverTimeType = GetComponentTypeHandle<MoveOverTime>(),
         }.Schedule(objectsToMoveQuery, Dependency).Complete();
-
-        commandBuffer.Playback(EntityManager);
-        commandBuffer.Dispose();
     }
 
     [BurstCompile]

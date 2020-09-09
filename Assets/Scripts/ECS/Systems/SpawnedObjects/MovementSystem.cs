@@ -84,14 +84,10 @@ public class MovementSystem : SystemBase
                     forward = matrix.MultiplyPoint(Vector3.forward);
                 }
 
-                translations[i] = Move(translations[i], forward, speed);
+                var translation = translations[i];
+                translation.Value -= forward * (speed * DeltaTime);
+                translations[i] = translation;
             }
-        }
-
-        public Translation Move(Translation translation, float3 forward, float speed)
-        {
-            translation.Value -= forward * (speed * DeltaTime);
-            return translation;
         }
     }
 }
