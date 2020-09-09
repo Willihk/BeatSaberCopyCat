@@ -24,13 +24,22 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
+            if (GameManager.Instance != null)
             GameManager.Instance.OnSongStart += ResetScore;
+
+            if (SettingsManager.Instance != null)
+                SettingsManager.Instance.OnConfigChanged += CalcMultiplier;
+
+            CalcMultiplier();
         }
 
         private void OnDestroy()
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart -= ResetScore;
+
+            if (SettingsManager.Instance != null)
+                SettingsManager.Instance.OnConfigChanged -= CalcMultiplier;
         }
 
         public void AddScore(int amount)
@@ -73,6 +82,21 @@ namespace BeatGame.Logic.Managers
                 CurrentMultiplier = 4;
             else if (CurrentMultiplierCount == 14)
                 CurrentMultiplier = 8;
+        }
+
+        public void CalcMultiplier()
+        {
+            float TotalMultiplier = 1;
+            var modifiers = SettingsManager.Instance.Settings["Modifiers"];
+
+            if (modifiers["NoFail"].IntValue == 1)
+            {
+                TotalMultiplier += -0.50f;
+            }
+            if (modifiers["NoArrows"].IntValue == 1)
+            {
+                TotalMultiplier += -0.10f;
+            }
         }
 
         public void ResetScore()

@@ -1,7 +1,4 @@
 ﻿using BeatGame.Logic.Managers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -14,8 +11,8 @@ public class TotalMultiplierController : MonoBehaviour
     {
         if (SettingsManager.Instance != null)
         {
-            SettingsManager.Instance.OnConfigChanged += CalcMultiplier;
-            CalcMultiplier();
+            SettingsManager.Instance.OnConfigChanged += Refresh;
+            Refresh();
         }
     }
 
@@ -23,25 +20,12 @@ public class TotalMultiplierController : MonoBehaviour
     {
         if (SettingsManager.Instance != null)
         {
-            SettingsManager.Instance.OnConfigChanged -= CalcMultiplier;
+            SettingsManager.Instance.OnConfigChanged -= Refresh;
         }
     }
 
-    private void CalcMultiplier()
+    private void Refresh()
     {
-        float multiplier = 1;
-        var modifiers = SettingsManager.Instance.Settings["Modifiers"];
-
-        if (modifiers["NoFail"].IntValue == 1)
-        {
-            multiplier += -0.50f;
-        }
-        if (modifiers["NoArrows"].IntValue == 1)
-        {
-            multiplier += -0.10f;
-        }
-
-        ScoreManager.Instance.TotalMultiplier = multiplier;
-        multiplierText.text = multiplier + "x";
+        multiplierText.text = ScoreManager.Instance.TotalMultiplier + "x";
     }
 }
