@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Entities;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
-using BeatGame.Data;
 using BeatGame.Data.Map.Modified;
 using BeatGame.Data.Map;
 
@@ -30,10 +27,11 @@ namespace BeatGame.Logic.Rings
         float ringSpeedMultiplier = 4;
 
         float ringSpeed;
-        float currentZoomLevel;
+
         // 0 Default
         // 1 zoom in
         // 2 zoom out
+        float currentZoomLevel;
 
         private void Awake()
         {
@@ -105,11 +103,6 @@ namespace BeatGame.Logic.Rings
             }
         }
 
-        void NewRotation()
-        {
-            ringSpeed = Random.Range(-10, 10);
-        }
-
         private void PlayEvent(int type, EventData eventData)
         {
             if (supportedEventTypes.Any(x => (int)x == type))
@@ -117,7 +110,7 @@ namespace BeatGame.Logic.Rings
                 switch (type)
                 {
                     case 8:
-                        NewRotation();
+                        ringSpeed = Random.Range(-10, 10);
                         break;
                     case 9:
                         if (currentZoomLevel == 0)
