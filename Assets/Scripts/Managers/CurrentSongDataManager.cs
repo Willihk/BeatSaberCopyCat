@@ -55,7 +55,6 @@ namespace BeatGame.Logic.Managers
                 MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
 
                 MapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
-                Stopwatch stopwatch = new Stopwatch();
 
                 if (SelectedDifficultyMap.CustomData.Requirements == null)
                 {
@@ -68,12 +67,9 @@ namespace BeatGame.Logic.Managers
                 if (SelectedDifficultyMap.CustomData.Requirements != null)
                     usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
 
-                stopwatch.Start();
-
 
                 NativeArray<RawEventData> rawEventDatas = new NativeArray<RawEventData>(MapJsonObject["_events"].ToObject<RawEventData[]>(), Allocator.TempJob);
                 NativeArray<EventData> eventDatas = new NativeArray<EventData>(rawEventDatas.Length, Allocator.TempJob);
-                Debug.Log("event job assigned : " + stopwatch.ElapsedMilliseconds);
                 var convertEventJob = new ConvertEventDatas
                 {
                     RawData = rawEventDatas,
@@ -85,7 +81,6 @@ namespace BeatGame.Logic.Managers
 
                 NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(MapJsonObject["_notes"].ToObject<RawNoteData[]>(), Allocator.TempJob);
                 NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
-                Debug.Log("note job assigned : " + stopwatch.ElapsedMilliseconds);
                 var convertNoteJob = new ConvertNoteDatas
                 {
                     RawData = rawNoteDatas,
@@ -100,7 +95,6 @@ namespace BeatGame.Logic.Managers
 
                 NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(), Allocator.TempJob);
                 NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
-                Debug.Log("obstacle job assigned : " + stopwatch.ElapsedMilliseconds);
 
                 var convertObstacleJob = new ConvertObstacleDatas
                 {
@@ -116,8 +110,6 @@ namespace BeatGame.Logic.Managers
                 eventJobHandle.Complete();
                 noteJobHandle.Complete();
                 obstacleJobHandle.Complete();
-                stopwatch.Stop();
-                Debug.Log("jobs completed : " + stopwatch.ElapsedMilliseconds);
 
                 MapData.Events = eventDatas.ToArray();
                 MapData.Notes = noteDatas.ToArray();
@@ -130,8 +122,6 @@ namespace BeatGame.Logic.Managers
                 eventDatas.Dispose();
                 noteDatas.Dispose();
                 obstacleDatas.Dispose();
-
-                Debug.Log("Using Noodle Extensions: " + usesNoodleExtensions);
 
                 AssignDataToSystems();
 
@@ -169,7 +159,6 @@ namespace BeatGame.Logic.Managers
 
         public void SetSpawningData()
         {
-
             foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
             {
                 if (item.Difficulty == Difficulity)
