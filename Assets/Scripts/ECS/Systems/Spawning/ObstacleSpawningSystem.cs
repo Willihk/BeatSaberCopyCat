@@ -12,12 +12,12 @@ public class ObstacleSpawningSystem : SystemBase
 {
     public NativeList<ObstacleData> obstacles;
 
-    bool hasJob;
-    JobHandle previousJob;
-    EntityCommandBuffer commandBuffer;
+    BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
 
     protected override void OnCreate()
     {
+        base.OnCreate();
+        entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
         obstacles = new NativeList<ObstacleData>(Allocator.Persistent);
     }
 
@@ -30,19 +30,9 @@ public class ObstacleSpawningSystem : SystemBase
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            if (hasJob)
-            {
-                previousJob.Complete();
-                commandBuffer.Playback(EntityManager);
-                commandBuffer.Dispose();
-                hasJob = false;
-            }
-
-            commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
-
             var job = new SpawnJobParallel
             {
-                CommandBuffer = commandBuffer.AsParallelWriter(),
+                CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
                 Obstacles = obstacles,
                 HeightOffset = SettingsManager.GlobalOffset.y,
@@ -53,8 +43,8 @@ public class ObstacleSpawningSystem : SystemBase
                 Speed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
             };
-            previousJob = job.Schedule(obstacles.Length, 64);
-            hasJob = true;
+
+            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, job.Schedule(obstacles.Length, 64)));
         }
     }
 

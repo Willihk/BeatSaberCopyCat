@@ -145,8 +145,8 @@ namespace BeatGame.Logic.Managers
             // Load Notes
             NoteSpawningSystem noteSpawningSystem = (NoteSpawningSystem)World.DefaultGameObjectInjectionWorld.GetOrCreateSystem(typeof(NoteSpawningSystem));
             NativeArray<NoteData> noteSpawnDatas = new NativeArray<NoteData>(Instance.MapData.Notes, Allocator.TempJob);
-            noteSpawningSystem.notesToSpawn.Clear();
-            noteSpawningSystem.notesToSpawn.AddRange(noteSpawnDatas);
+            noteSpawningSystem.notes.Clear();
+            noteSpawningSystem.notes.AddRange(noteSpawnDatas);
             noteSpawnDatas.Dispose();
 
             // Load Obstacles

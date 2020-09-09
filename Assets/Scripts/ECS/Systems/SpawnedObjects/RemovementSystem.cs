@@ -1,13 +1,21 @@
 ﻿using BeatGame.Logic.Managers;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Transforms;
 
 public class RemovementSystem : SystemBase
 {
+    BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
+
+    protected override void OnCreate()
+    {
+        entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+    }
+
     protected override void OnUpdate()
     {
-        EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
+        EntityCommandBuffer commandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
 
         double currentBeat = GameManager.Instance.CurrentBeat;
         double jumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration;
@@ -24,6 +32,7 @@ public class RemovementSystem : SystemBase
             }
         }).Run();
 
+        commandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
 
         for (int i = 0; i < missedCount; i++)
         {
@@ -33,14 +42,11 @@ public class RemovementSystem : SystemBase
 
         // Obstacles
         Entities.WithAny<Note, Obstacle>().ForEach((Entity entity, ref DestroyOnBeat destroyOnBeat) =>
-        {
-            if (destroyOnBeat.Beat + jumpDuration * 4 <= currentBeat)
-            {
-                commandBuffer.DestroyEntity(entity);
-            }
-        }).Schedule(Dependency).Complete();
-
-        commandBuffer.Playback(EntityManager);
-        commandBuffer.Dispose();
+         {
+             if (destroyOnBeat.Beat + jumpDuration * 4 <= currentBeat)
+             {
+                 commandBuffer.DestroyEntity(entity);
+             }
+         }).Schedule(Dependency).Complete();
     }
 }

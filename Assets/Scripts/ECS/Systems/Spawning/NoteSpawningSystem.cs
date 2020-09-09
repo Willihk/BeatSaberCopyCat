@@ -15,13 +15,15 @@ using BeatGame.Data.Map;
 
 public class NoteSpawningSystem : SystemBase
 {
-    public NativeList<NoteData> notesToSpawn;
+    public NativeList<NoteData> notes;
     NativeArray<Entity> notePrefabs;
 
+    BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
 
     protected override void OnCreate()
     {
-        notesToSpawn = new NativeList<NoteData>(Allocator.Persistent);
+        entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+        notes = new NativeList<NoteData>(Allocator.Persistent);
     }
 
     protected override void OnStartRunning()
@@ -36,7 +38,7 @@ public class NoteSpawningSystem : SystemBase
 
     protected override void OnDestroy()
     {
-        notesToSpawn.Dispose();
+        notes.Dispose();
         notePrefabs.Dispose();
     }
 
@@ -44,11 +46,10 @@ public class NoteSpawningSystem : SystemBase
     {
         if (GameManager.Instance != null && GameManager.Instance.IsPlaying)
         {
-            EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
             SpawnNotesJob job = new SpawnNotesJob
             {
-                CommandBuffer = commandBuffer.AsParallelWriter(),
-                Notes = notesToSpawn,
+                CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                Notes = notes,
                 NotePrefabs = notePrefabs,
                 JumpSpeed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat,
@@ -58,10 +59,8 @@ public class NoteSpawningSystem : SystemBase
                 JumpDistance = CurrentSongDataManager.Instance.SongSpawningInfo.JumpDistance,
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration
             };
-            job.Schedule(notesToSpawn.Length, 64).Complete();
 
-            commandBuffer.Playback(EntityManager);
-            commandBuffer.Dispose();
+            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, job.Schedule(notes.Length, 64)));
         }
     }
 
