@@ -1,8 +1,6 @@
 ﻿using BeatGame.Logic.Managers;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
-using Unity.Transforms;
 
 public class RemovementSystem : SystemBase
 {

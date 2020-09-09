@@ -10,7 +10,16 @@ namespace BeatGame.Logic
 
         private void OnEnable()
         {
-            reflectionProbe.enabled = CurrentSongDataManager.Instance.MapData.Events.Length != 0;
+            if (SettingsManager.Instance.Settings["General"]["Reflections"].IntValue == 1)
+            {
+                reflectionProbe.enabled = true;
+                reflectionProbe.enabled = CurrentSongDataManager.Instance.MapData.Events.Length != 0;
+            }
+            else
+            {
+                reflectionProbe.enabled = false;
+            }
+
         }
     }
 }
