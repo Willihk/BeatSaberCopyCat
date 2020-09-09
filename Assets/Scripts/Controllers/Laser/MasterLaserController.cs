@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Entities;
 using System.Linq;
-using BeatGame.Data;
 using BeatGame.Data.Map.Modified;
 using BeatGame.Data.Map;
 

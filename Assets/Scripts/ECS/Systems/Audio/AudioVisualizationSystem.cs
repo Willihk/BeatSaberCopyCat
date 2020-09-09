@@ -1,6 +1,7 @@
 ﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
@@ -15,8 +16,7 @@ namespace BeatGame.Logic.Audio
         {
             audioBarQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new ComponentType[] { typeof(AudioVisualizationData), typeof(NonUniformScale)
-        }
+                All = new ComponentType[] { typeof(AudioVisualizationData), typeof(NonUniformScale) }
             });
 
             if (AudioSpectrumManager.Instance != null)
@@ -29,13 +29,15 @@ namespace BeatGame.Logic.Audio
                 return;
 
             frequencyBands.CopyFrom(AudioSpectrumManager.Instance.AudioBandBuffer);
+
             var job = new VisualizeJob
             {
                 FrequencyBands = frequencyBands,
                 AudioVisualizationDataType = GetComponentTypeHandle<AudioVisualizationData>(true),
                 NonUniformScaleType = GetComponentTypeHandle<NonUniformScale>(),
             };
-            job.Schedule(audioBarQuery).Complete();
+
+            Dependency = JobHandle.CombineDependencies(job.Schedule(audioBarQuery, Dependency), Dependency);
         }
 
         protected override void OnStopRunning()
