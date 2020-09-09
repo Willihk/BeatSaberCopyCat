@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BeatGame.Data;
 using System.Linq;
 using BeatGame.Data.Score;
+using Newtonsoft.Json;
 
 namespace BeatGame.Logic.Managers
 {
@@ -70,13 +71,14 @@ namespace BeatGame.Logic.Managers
 
         public void SaveScores()
         {
-            PlayerPrefs.SetString("HighScores", JsonUtility.ToJson(HighScores.ToArray()));
+            PlayerPrefs.SetString("HighScores", JsonConvert.SerializeObject(HighScores.ToArray()));
             PlayerPrefs.Save();
         }
 
         public void LoadScores()
         {
-            HighScores = new List<HighScoreData>(JsonUtility.FromJson<HighScoreData[]>(PlayerPrefs.GetString("HighScores")));
+            HighScores = new List<HighScoreData>(JsonConvert.DeserializeObject<HighScoreData[]>(PlayerPrefs.GetString("HighScores")));
+
         }
     }
 }

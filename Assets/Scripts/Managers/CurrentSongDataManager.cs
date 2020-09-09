@@ -27,7 +27,6 @@ namespace BeatGame.Logic.Managers
         public string Difficulity;
 
         public MapData MapData;
-        public JObject MapJsonObject;
 
         public SongSpawningInfo SongSpawningInfo;
 
@@ -60,7 +59,7 @@ namespace BeatGame.Logic.Managers
 
             MapData = JsonConvert.DeserializeObject<MapData>(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
 
-            MapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
+            var mapJsonObject = JObject.Parse(File.ReadAllText(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename));
 
             if (SelectedDifficultyMap.CustomData.Requirements == null)
             {
@@ -74,7 +73,7 @@ namespace BeatGame.Logic.Managers
                 usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
 
 
-            NativeArray<RawEventData> rawEventDatas = new NativeArray<RawEventData>(MapJsonObject["_events"].ToObject<RawEventData[]>(), Allocator.TempJob);
+            NativeArray<RawEventData> rawEventDatas = new NativeArray<RawEventData>(mapJsonObject["_events"].ToObject<RawEventData[]>(), Allocator.TempJob);
             NativeArray<EventData> eventDatas = new NativeArray<EventData>(rawEventDatas.Length, Allocator.TempJob);
             var convertEventJob = new ConvertEventDatas
             {
@@ -85,7 +84,7 @@ namespace BeatGame.Logic.Managers
             var eventJobHandle = convertEventJob.Schedule();
 
 
-            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(MapJsonObject["_notes"].ToObject<RawNoteData[]>(), Allocator.TempJob);
+            NativeArray<RawNoteData> rawNoteDatas = new NativeArray<RawNoteData>(mapJsonObject["_notes"].ToObject<RawNoteData[]>(), Allocator.TempJob);
             NativeArray<NoteData> noteDatas = new NativeArray<NoteData>(rawNoteDatas.Length, Allocator.TempJob);
             var convertNoteJob = new ConvertNoteDatas
             {
@@ -99,7 +98,7 @@ namespace BeatGame.Logic.Managers
             var noteJobHandle = convertNoteJob.Schedule();
 
 
-            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(MapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(), Allocator.TempJob);
+            NativeArray<RawObstacleData> rawObstacleDatas = new NativeArray<RawObstacleData>(mapJsonObject["_obstacles"].ToObject<RawObstacleData[]>(), Allocator.TempJob);
             NativeArray<ObstacleData> obstacleDatas = new NativeArray<ObstacleData>(rawObstacleDatas.Length, Allocator.TempJob);
 
             var convertObstacleJob = new ConvertObstacleDatas
