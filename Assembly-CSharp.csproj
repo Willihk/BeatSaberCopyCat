@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Managers\CurrentSongDataManager.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\TotalMultiplierController.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\ObstacleData.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Laser\RotatingMeshLaserController.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawEventData.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\ResetHeightController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Audio\DoubleAudioSource.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Laser\RotatingMeshLaserController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
@@ -374,11 +374,17 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0-preview\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="ZeroFormatter.Interfaces">
-      <HintPath>Assets\Plugins\ZeroFormatter\ZeroFormatter.Interfaces.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="ZeroFormatter">
-      <HintPath>Assets\Plugins\ZeroFormatter\ZeroFormatter.dll</HintPath>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\Plugins\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\Plugins\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>Assets\Plugins\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.4f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -938,6 +944,10 @@
     <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
       <Project>{F5D40044-EE12-DFBB-1ACD-F8A8EAE5F1D1}</Project>
       <Name>SteamVR_Windows_EditorHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="MessagePack.csproj">
+      <Project>{AB8D638C-4A2C-BAD1-2134-5FFFE178B4F9}</Project>
+      <Name>MessagePack</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
