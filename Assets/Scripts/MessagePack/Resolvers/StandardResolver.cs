@@ -5,6 +5,7 @@ using System.Linq;
 using MessagePack.Formatters;
 using MessagePack.Internal;
 using MessagePack.Resolvers;
+using UnityEngine.UIElements;
 
 #pragma warning disable SA1403 // File may only contain a single namespace
 

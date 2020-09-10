@@ -54,14 +54,12 @@ namespace MessagePack.Unity
 
             // standard + array
             { typeof(Vector2[]), new ArrayFormatter<Vector2>() },
-            { typeof(Vector3[]), new ArrayFormatter<Vector3>() },
             { typeof(Vector4[]), new ArrayFormatter<Vector4>() },
             { typeof(Quaternion[]), new ArrayFormatter<Quaternion>() },
             { typeof(Color[]), new ArrayFormatter<Color>() },
             { typeof(Bounds[]), new ArrayFormatter<Bounds>() },
             { typeof(Rect[]), new ArrayFormatter<Rect>() },
             { typeof(Vector2?[]), new ArrayFormatter<Vector2?>() },
-            { typeof(Vector3?[]), new ArrayFormatter<Vector3?>() },
             { typeof(Vector4?[]), new ArrayFormatter<Vector4?>() },
             { typeof(Quaternion?[]), new ArrayFormatter<Quaternion?>() },
             { typeof(Color?[]), new ArrayFormatter<Color?>() },

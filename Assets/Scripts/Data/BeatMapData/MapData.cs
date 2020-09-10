@@ -1,4 +1,5 @@
 ﻿using BeatGame.Data.Map.Modified;
+using MessagePack;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,11 @@ using System.Collections.Generic;
 namespace BeatGame.Data.Map
 {
     [Serializable]
+    [MessagePackObject(true)]
     public struct MapData
     {
         [Serializable]
+        [MessagePackObject(true)]
         public struct BPMChanx
         {
 
@@ -20,6 +23,7 @@ namespace BeatGame.Data.Map
         }
 
         [Serializable]
+        [MessagePackObject(true)]
         public struct CustomData
         {
 

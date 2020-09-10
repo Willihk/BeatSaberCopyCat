@@ -2,8 +2,11 @@
 using BeatGame.Data.Map;
 using BeatGame.Data.Map.Modified;
 using BeatGame.Data.Map.Raw;
+using BeatGame.MessagePack;
 using BeatGame.Utility;
 using BeatGame.Utility.ModSupport;
+using MessagePack;
+using MessagePack.Resolvers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
@@ -44,12 +47,42 @@ namespace BeatGame.Logic.Managers
 
             SetSpawningData();
 
-            if (LoadDataFromJson())
+            if (!LoadDataFromMessagePack())
             {
-                AssignDataToSystems();
-
-                HasLoadedData = true;
+                LoadDataFromJson();
+                ConvertToMessagePack();
+                Debug.Log("Loaded from json");
             }
+
+            LoadDataFromMessagePack();
+
+            AssignDataToSystems();
+
+            HasLoadedData = true;
+        }
+
+        bool LoadDataFromMessagePack()
+        {
+            if (!File.Exists(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus"))
+            {
+                ConvertToMessagePack();
+                return false;
+            }
+            var resolver = CompositeResolver.Create(CustomResolver.Instance, StandardResolver.Instance);
+            var options = MessagePackSerializerOptions.Standard.WithResolver(resolver);
+            MapData = MessagePackSerializer.Deserialize<MapData>(File.ReadAllBytes(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus"), options);
+
+            return true;
+        }
+
+        void ConvertToMessagePack()
+        {
+            var resolver = CompositeResolver.Create(CustomResolver.Instance, StandardResolver.Instance);
+            var options = MessagePackSerializerOptions.Standard.WithResolver(resolver);
+            var data = MessagePackSerializer.Serialize(MapData, options);
+            var fileStream = File.Create(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus");
+            fileStream.Close();
+            File.WriteAllBytes(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus", data);
         }
 
         bool LoadDataFromJson()
