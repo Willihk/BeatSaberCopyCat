@@ -31,7 +31,7 @@ namespace BeatGame.Data.Map
         {
             [Key(0)]
             public double _time { get; set; }
-            [Key(0)]
+            [Key(1)]
             public IList<BPMChanx> _BPMChanges { get; set; }
         }
 
