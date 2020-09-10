@@ -86,7 +86,7 @@ namespace BeatGame.Logic.Managers
 
         public void CalcMultiplier()
         {
-            float TotalMultiplier = 1;
+            TotalMultiplier = 1;
             var modifiers = SettingsManager.Instance.Settings["Modifiers"];
 
             if (modifiers["NoFail"].IntValue == 1)
