@@ -20,7 +20,7 @@ namespace BeatGame.Logic.Managers
         // Use this for initialization
         void Start()
         {
-            if (PlayerPrefs.HasKey("HighScores"))
+            if (PlayerPrefs.HasKey("HighScores") && PlayerPrefs.GetString("HighScores") != string.Empty)
             {
                 LoadScores();
             }

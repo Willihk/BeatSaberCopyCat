@@ -88,14 +88,12 @@ namespace BeatGame.Logic.Managers
                 }
 
                 ActivatePointer();
-
             }
         }
 
         void ActivateSabers()
         {
-
-            if (SettingsManager.Instance.Settings["Modifiers"][""].IntValue == 1)
+            if (SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
             {
                 doubleSaber.SetActive(true);
                 leftSaber.SetActive(false);
@@ -154,10 +152,7 @@ namespace BeatGame.Logic.Managers
 
                 CurrentBeat = 0;
 
-                leftSaber.SetActive(true);
-                rightSaber.SetActive(true);
-
-                UIPointer.SetActive(false);
+                ActivateSabers();
 
                 OnSongStart?.Invoke();
                 IsPlaying = true;
