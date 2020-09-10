@@ -51,6 +51,7 @@ namespace BeatGame.Logic.Managers
             Settings["General"]["HitEffects"].IntValue = 1;
 
             Settings["Modifiers"]["NoFail"].IntValue = 0;
+            Settings["Modifiers"]["DoubleSaber"].IntValue = 0;
             Settings["Modifiers"]["NoArrows"].IntValue = 0;
 
             Settings["Audio"]["MasterVolume"].FloatValue = .7f;

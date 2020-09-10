@@ -29,6 +29,8 @@ namespace BeatGame.Logic.Managers
         GameObject leftSaber;
         [SerializeField]
         GameObject rightSaber;
+        [SerializeField]
+        GameObject doubleSaber;
 
         [SerializeField]
         GameObject UIPointer;
@@ -92,17 +94,26 @@ namespace BeatGame.Logic.Managers
 
         void ActivateSabers()
         {
-            leftSaber.SetActive(true);
 
-            rightSaber.SetActive(true);
-
+            if (SettingsManager.Instance.Settings["Modifiers"][""].IntValue == 1)
+            {
+                doubleSaber.SetActive(true);
+                leftSaber.SetActive(false);
+                rightSaber.SetActive(false);
+            }
+            else
+            {
+                doubleSaber.SetActive(false);
+                leftSaber.SetActive(true);
+                rightSaber.SetActive(true);
+            }
             UIPointer.SetActive(false);
         }
 
         void ActivatePointer()
         {
+            doubleSaber.SetActive(false);
             leftSaber.SetActive(false);
-
             rightSaber.SetActive(false);
 
             UIPointer.SetActive(true);

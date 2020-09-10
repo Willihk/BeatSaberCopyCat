@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using BeatGame.Data;
-using System.Linq;
 using BeatGame.Data.Score;
-using Newtonsoft.Json;
+using MessagePack;
 
 namespace BeatGame.Logic.Managers
 {
@@ -71,14 +68,13 @@ namespace BeatGame.Logic.Managers
 
         public void SaveScores()
         {
-            PlayerPrefs.SetString("HighScores", JsonConvert.SerializeObject(HighScores.ToArray()));
+            PlayerPrefs.SetString("HighScores", MessagePackSerializer.SerializeToJson(HighScores.ToArray()));
             PlayerPrefs.Save();
         }
 
         public void LoadScores()
         {
-            HighScores = new List<HighScoreData>(JsonConvert.DeserializeObject<HighScoreData[]>(PlayerPrefs.GetString("HighScores")));
-
+            HighScores = new List<HighScoreData>(MessagePackSerializer.Deserialize<HighScoreData[]>(MessagePackSerializer.ConvertFromJson(PlayerPrefs.GetString("HighScores"))));
         }
     }
 }

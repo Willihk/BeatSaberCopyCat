@@ -97,6 +97,10 @@ namespace BeatGame.Logic.Managers
             {
                 TotalMultiplier += -0.10f;
             }
+            if (modifiers["DoubleSaber"].IntValue == 1)
+            {
+                TotalMultiplier += 0.10f;
+            }
         }
 
         public void ResetScore()
