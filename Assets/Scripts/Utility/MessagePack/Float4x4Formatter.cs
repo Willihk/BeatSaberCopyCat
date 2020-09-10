@@ -24,7 +24,7 @@ namespace BeatGame.MessagePack
             writer.Write(value.c3.y);
             writer.Write(value.c0.z);
             writer.Write(value.c1.z);
-            writer.Write(value.c1.z);
+            writer.Write(value.c2.z);
             writer.Write(value.c1.z);
             writer.Write(value.c0.w);
             writer.Write(value.c1.w);
