@@ -54,6 +54,7 @@ public class NoteSpawningSystem : SystemBase
                 CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 Notes = notes,
                 NotePrefabs = notePrefabs,
+                NoArrows = SettingsManager.Instance.Settings["Modifiers"]["NoArrows"].IntValue == 1,
                 JumpSpeed = CurrentSongDataManager.Instance.SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat,
                 HeightOffset = SettingsManager.GlobalOffset.y,
@@ -75,6 +76,8 @@ public class NoteSpawningSystem : SystemBase
         [ReadOnly]
         public NativeList<NoteData> Notes;
         [ReadOnly]
+        public bool NoArrows;
+        [ReadOnly]
         public float HeightOffset;
         [ReadOnly]
         public float SecondEquivalentOfBeat;
@@ -93,15 +96,23 @@ public class NoteSpawningSystem : SystemBase
 
         public void Execute(int index)
         {
+            var note = Notes[index];
+            if (NoArrows)
+            {
+                note.TransformData.LocalRotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
+                note.CutDirection = 8;
+            }
+
             float spawnOffset = 1;
             float distanceOffset = 6;
             if (Notes[index].Time - HalfJumpDuration <= CurrentBeat + spawnOffset && Notes[index].Time - HalfJumpDuration >= LastBeat + spawnOffset)
             {
+
                 Entity entity;
                 if (Notes[index].Type == 3)
                     entity = SpawnBomb(index);
                 else
-                    entity = SpawnNote(index);
+                    entity = SpawnNote(index, note.CutDirection, note.Type);
 
                 CommandBuffer.RemoveComponent<Prefab>(index, entity);
 
@@ -109,6 +120,7 @@ public class NoteSpawningSystem : SystemBase
                 //{
                 //    CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = Notes[index].TransformData.Speed });
                 //}
+
 
                 if (Notes[index].TransformData.WorldRotation != 0)
                 {
@@ -156,13 +168,11 @@ public class NoteSpawningSystem : SystemBase
         Entity SpawnBomb(int index)
         {
             return CommandBuffer.Instantiate(index, NotePrefabs[4]);
-
-
         }
 
-        public Entity SpawnNote(int index)
+        public Entity SpawnNote(int index, int cutDirection, int type)
         {
-            if (Notes[index].CutDirection == (int)CutDirection.Any)
+            if (cutDirection == (int)CutDirection.Any)
             {
                 if (Notes[index].Type == 1)
                     return CommandBuffer.Instantiate(index, NotePrefabs[0]);
