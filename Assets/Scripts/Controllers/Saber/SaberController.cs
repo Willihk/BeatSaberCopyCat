@@ -119,9 +119,10 @@ namespace BeatGame.Logic.Saber
                                 Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
 
                                 float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
+                                float midAngle = Vector3.Angle(((tipPoint.position + basePoint.position) / 2) - (((Vector3)previousTipPosition + (Vector3)previousBasePosition) / 2), matrix.MultiplyPoint(Vector3.up));
                                 float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
 
-                                if (baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
+                                if (baseAngle > hitAngle || tipAngle > hitAngle || midAngle > hitAngle || note.CutDirection == 8)
                                 {
                                     ScoreManager.Instance.AddScore(100);
 
