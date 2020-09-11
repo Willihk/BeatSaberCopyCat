@@ -12,6 +12,7 @@ public class ObstacleSpawningSystem : SystemBase
 {
     public NativeList<ObstacleData> obstacles;
 
+    JobHandle scheduledJob;
     BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
 
     protected override void OnCreate()
@@ -23,6 +24,7 @@ public class ObstacleSpawningSystem : SystemBase
 
     protected override void OnDestroy()
     {
+        scheduledJob.Complete();
         obstacles.Dispose();
     }
 
@@ -44,7 +46,8 @@ public class ObstacleSpawningSystem : SystemBase
                 SecondEquivalentOfBeat = (float)CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
             };
 
-            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, job.Schedule(obstacles.Length, 64)));
+            scheduledJob = job.Schedule(obstacles.Length, 64);
+            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, scheduledJob));
         }
     }
 

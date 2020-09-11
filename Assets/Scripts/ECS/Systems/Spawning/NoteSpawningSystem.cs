@@ -18,6 +18,8 @@ public class NoteSpawningSystem : SystemBase
     public NativeList<NoteData> notes;
     NativeArray<Entity> notePrefabs;
 
+    JobHandle scheduledJob;
+
     BeginSimulationEntityCommandBufferSystem entityCommandBufferSystem;
 
     protected override void OnCreate()
@@ -38,6 +40,7 @@ public class NoteSpawningSystem : SystemBase
 
     protected override void OnDestroy()
     {
+        scheduledJob.Complete();
         notes.Dispose();
         notePrefabs.Dispose();
     }
@@ -60,7 +63,8 @@ public class NoteSpawningSystem : SystemBase
                 HalfJumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration
             };
 
-            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, job.Schedule(notes.Length, 64)));
+            scheduledJob = job.Schedule(notes.Length, 64);
+            entityCommandBufferSystem.AddJobHandleForProducer(JobHandle.CombineDependencies(Dependency, scheduledJob));
         }
     }
 
