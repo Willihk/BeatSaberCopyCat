@@ -8,6 +8,7 @@ using BeatGame.Data;
 using BeatGame.Logic.Managers;
 using BeatGame.UI.Components.Tabs;
 using BeatGame.Data.Map;
+using MessagePack;
 
 namespace BeatGame.UI.Controllers
 {
@@ -106,7 +107,7 @@ namespace BeatGame.UI.Controllers
             string infoFilePath = path + "\\info.dat";
             if (File.Exists(infoFilePath))
             {
-                SongInfoFileData infoFileData = JsonConvert.DeserializeObject<SongInfoFileData>(File.ReadAllText(infoFilePath));
+                SongInfoFileData infoFileData = MessagePackSerializer.Deserialize<SongInfoFileData>(MessagePackSerializer.ConvertFromJson(File.ReadAllText(infoFilePath)));
 
                 availableSong.DirectoryPath = path;
                 availableSong.SongInfoFileData = infoFileData;
