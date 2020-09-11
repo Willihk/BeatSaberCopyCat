@@ -125,10 +125,12 @@ namespace BeatGame.Logic.Saber
                                 {
                                     ScoreManager.Instance.AddScore(100);
 
-                                    if (affectsNoteType == 1)
+                                    if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
                                         Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
                                     else
                                         Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
+
+
 
                                     if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
                                     {
