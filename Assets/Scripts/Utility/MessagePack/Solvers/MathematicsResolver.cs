@@ -53,10 +53,10 @@ namespace BeatGame.MessagePack.Resolvers
        
 
             // standard + list
-            { typeof(float3[]), new ListFormatter<float3>() },
-            { typeof(float4[]), new ListFormatter<float4>() },
-            { typeof(quaternion[]), new ListFormatter<quaternion>() },
-            { typeof(float4x4[]), new ListFormatter<float4x4>() },
+            { typeof(List<float3>), new ListFormatter<float3>() },
+            { typeof(List<float4>), new ListFormatter<float4>() },
+            { typeof(List<quaternion>), new ListFormatter<quaternion>() },
+            { typeof(List<float4x4>), new ListFormatter<float4x4>() },
         };
 
         internal static object GetFormatter(Type t)
