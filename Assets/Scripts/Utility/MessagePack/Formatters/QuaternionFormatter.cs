@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace BeatGame.MessagePack
+namespace BeatGame.MessagePack.Formatters
 {
     public sealed class QuaternionFormatter : global::MessagePack.Formatters.IMessagePackFormatter<quaternion>
     {

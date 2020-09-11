@@ -1,4 +1,5 @@
-﻿using MessagePack;
+﻿using BeatGame.MessagePack.Formatters;
+using MessagePack;
 using MessagePack.Formatters;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace BeatGame.MessagePack
+namespace BeatGame.MessagePack.Resolvers
 {
-    public class CustomResolver : IFormatterResolver
+    public class MathematicsResolver : IFormatterResolver
     {
-        public static readonly CustomResolver Instance = new CustomResolver();
+        public static readonly MathematicsResolver Instance = new MathematicsResolver();
 
-        private CustomResolver()
+        private MathematicsResolver()
         {
         }
 
@@ -52,7 +53,10 @@ namespace BeatGame.MessagePack
        
 
             // standard + list
-            //{ typeof(List<Vector2>), new ListFormatter<Vector2>() },
+            { typeof(float3[]), new ListFormatter<float3>() },
+            { typeof(float4[]), new ListFormatter<float4>() },
+            { typeof(quaternion[]), new ListFormatter<quaternion>() },
+            { typeof(float4x4[]), new ListFormatter<float4x4>() },
         };
 
         internal static object GetFormatter(Type t)

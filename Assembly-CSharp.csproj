@@ -141,11 +141,11 @@
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
-    <Compile Include="Assets\Scripts\Utility\MessagePack\Float4Formatter.cs" />
-    <Compile Include="Assets\Scripts\Utility\MessagePack\Float3Formatter.cs" />
-    <Compile Include="Assets\Scripts\Utility\MessagePack\QuaternionFormatter.cs" />
-    <Compile Include="Assets\Scripts\Utility\MessagePack\Float4x4Formatter.cs" />
-    <Compile Include="Assets\Scripts\Utility\MessagePack\CustomResolver.cs" />
+    <Compile Include="Assets\Scripts\Utility\MessagePack\Solvers\MathematicsResolver.cs" />
+    <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\QuaternionFormatter.cs" />
+    <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float4x4Formatter.cs" />
+    <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float3Formatter.cs" />
+    <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float4Formatter.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

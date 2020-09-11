@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace BeatGame.MessagePack
+namespace BeatGame.MessagePack.Formatters
 {
     public sealed class Float4x4Formatter :IMessagePackFormatter<float4x4>
     {
