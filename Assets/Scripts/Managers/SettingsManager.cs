@@ -12,7 +12,7 @@ namespace BeatGame.Logic.Managers
     {
         public static SettingsManager Instance;
 
-        public static float3 LineOffset = new float3(1f, 1f, 0);
+        public static float3 LineOffset = new float3(.55f, .55f, 0);
         public static float3 GlobalOffset = new float3(0, 0, 0);
 
         public event Action OnConfigLoaded;
@@ -46,8 +46,9 @@ namespace BeatGame.Logic.Managers
         {
             Settings = new Configuration();
 
-            Settings["General"]["HeightOffset"].FloatValue = 0;
+            Settings["General"]["FastLoad"].IntValue = 1;
             Settings["General"]["Reflections"].IntValue = 1;
+            Settings["General"]["HeightOffset"].FloatValue = 0;
             Settings["General"]["HitEffects"].IntValue = 1;
 
             Settings["Modifiers"]["NoFail"].IntValue = 0;

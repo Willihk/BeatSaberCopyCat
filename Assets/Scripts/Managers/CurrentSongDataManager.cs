@@ -50,7 +50,7 @@ namespace BeatGame.Logic.Managers
 
             try
             {
-                if (!LoadDataFromMessagePack())
+                if (SettingsManager.Instance.Settings["General"]["FastLoad"].IntValue != 1 || !LoadDataFromMessagePack())
                 {
                     LoadDataFromJson();
                     ConvertToMessagePack();
