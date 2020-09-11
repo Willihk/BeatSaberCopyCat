@@ -77,7 +77,6 @@ namespace BeatGame.Utility
                 c3 = new float4(0, 0, 0, 1)
             };
             scale.c0.x *= lineOffset.x;
-            scale.c1.y *= lineOffset.y;
 
             float lineIndex = rawObstacleData.LineIndex + (scale.c0.x / 2);
             float lineLayer = 0;
