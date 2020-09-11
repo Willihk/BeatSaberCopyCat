@@ -9,6 +9,7 @@ using MessagePack;
 using MessagePack.Resolvers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Linq;
 using Unity.Burst;
@@ -47,14 +48,21 @@ namespace BeatGame.Logic.Managers
 
             SetSpawningData();
 
-            if (!LoadDataFromMessagePack())
+            try
             {
+                if (!LoadDataFromMessagePack())
+                {
+                    LoadDataFromJson();
+                    ConvertToMessagePack();
+                    Debug.Log("Loaded from json");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
                 LoadDataFromJson();
                 ConvertToMessagePack();
-                Debug.Log("Loaded from json");
             }
-
-            LoadDataFromMessagePack();
 
             AssignDataToSystems();
 
