@@ -26,8 +26,8 @@ namespace BeatGame.Utility.ModSupport
             {
                 transformData.Scale = new float4x4
                 {
-                    c0 = new float4(customData.Scale.x, 0, 0, 0),
-                    c1 = new float4(0, customData.Scale.y, 0, 0),
+                    c0 = new float4(customData.Scale.x * lineOffset.x, 0, 0, 0),
+                    c1 = new float4(0, customData.Scale.y * lineOffset.y, 0, 0),
                     c2 = new float4(0, 0, PlacementHelper.ConvertDurationToZScale(customData.Scale.z, jumpSpeed, secondEquivalentOfBeat), 0),
                     c3 = new float4(0, 0, 0, 1)
                 };
@@ -61,7 +61,7 @@ namespace BeatGame.Utility.ModSupport
             obstacle.TransformData = ApplyNoodleExtensionsToTransform(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat, lineOffset);
 
             obstacle.TransformData.Scale.c2.z = PlacementHelper.ConvertDurationToZScale((float)rawData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2;
-            obstacle.TransformData.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + 1.5f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
+            obstacle.TransformData.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + lineOffset.x * 1.6f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
 
             return obstacle;
         }

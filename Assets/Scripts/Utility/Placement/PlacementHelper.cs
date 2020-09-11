@@ -16,7 +16,7 @@ namespace BeatGame.Utility
             {
                 case CutDirection.Upwards:
                     euler = new float3(0, 0, 180);
-                    rotation = new quaternion(0,0,1,0);
+                    rotation = new quaternion(0, 0, 1, 0);
                     break;
                 case CutDirection.Downwards:
                     rotation = new quaternion(0, 0, 0.0008726948f, 0.9999996f);
@@ -59,7 +59,7 @@ namespace BeatGame.Utility
                 Type = rawNoteData.Type,
                 TransformData = new TransformData
                 {
-                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset * .55f),
+                    Position = GetVanillaPosition(rawNoteData.LineIndex, rawNoteData.LineLayer, lineOffset),
                     LocalRotation = rotation,
                 },
             };
@@ -76,7 +76,10 @@ namespace BeatGame.Utility
                 c2 = new float4(0, 0, ConvertDurationToZScale((float)rawObstacleData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2, 0),
                 c3 = new float4(0, 0, 0, 1)
             };
-            float lineIndex = rawObstacleData.LineIndex + (rawObstacleData.Width / 2);
+            scale.c0.x *= lineOffset.x;
+            scale.c1.y *= lineOffset.y;
+
+            float lineIndex = rawObstacleData.LineIndex + (scale.c0.x / 2);
             float lineLayer = 0;
 
             if (rawObstacleData.Type == 0)
