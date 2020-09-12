@@ -91,7 +91,7 @@ namespace BeatGame.Logic.Managers
             }
         }
 
-        void ActivateSabers()
+        public void ActivateSabers(bool deactivatePointer = true)
         {
             if (SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
             {
@@ -105,14 +105,19 @@ namespace BeatGame.Logic.Managers
                 leftSaber.SetActive(true);
                 rightSaber.SetActive(true);
             }
-            UIPointer.SetActive(false);
+
+            if (deactivatePointer)
+                UIPointer.SetActive(false);
         }
 
-        void ActivatePointer()
+        public void ActivatePointer(bool deactivateSabers = true)
         {
-            doubleSaber.SetActive(false);
-            leftSaber.SetActive(false);
-            rightSaber.SetActive(false);
+            if (deactivateSabers)
+            {
+                doubleSaber.SetActive(false);
+                leftSaber.SetActive(false);
+                rightSaber.SetActive(false);
+            }
 
             UIPointer.SetActive(true);
             UIPointer.transform.localPosition = Vector3.zero;

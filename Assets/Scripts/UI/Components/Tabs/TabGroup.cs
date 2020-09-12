@@ -8,7 +8,7 @@ using UnityEngine.Events;
 namespace BeatGame.UI.Components.Tabs
 {
     [Serializable]
-    public class TabButtonSelected : UnityEvent<TabButton>
+    public class TabButtonSelected : UnityEvent<int>
     {
     }
 
@@ -98,7 +98,8 @@ namespace BeatGame.UI.Components.Tabs
             SelectedTab = tabButton;
             SelectedTab.Select();
 
-            OnTabSelection?.Invoke(tabButton);
+            if (TabButtons.Contains(tabButton))
+                OnTabSelection?.Invoke(TabButtons.IndexOf(tabButton));
 
             ResetTabs();
             tabButton.SetState(UIPointerEvent.Selected);

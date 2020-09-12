@@ -59,6 +59,8 @@ namespace BeatGame.Logic.Managers
             Settings["Audio"]["MusicVolume"].FloatValue = .7f;
             Settings["Audio"]["EffectsVolume"].FloatValue = .7f;
 
+            Settings["Other"]["DataFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\";
+            Settings["Other"]["SaberFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomSabers\";
             Settings["Other"]["SongFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomLevels\";
 
             SaveConfig();
