@@ -152,6 +152,7 @@
     <Compile Include="Assets\Scripts\Utility\MessagePack\Solvers\MathematicsResolver.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
