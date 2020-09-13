@@ -27,6 +27,8 @@ namespace BeatGame.Logic.Saber
         SteamVR_Action_Vibration hapticAction;
 
         [SerializeField]
+        Transform fakeNoteTransform;
+        [SerializeField]
         Transform tipPoint;
         [SerializeField]
         Transform basePoint;
@@ -112,17 +114,20 @@ namespace BeatGame.Logic.Saber
                         var hit = raycastHits[j];
                         if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
                         {
+                            // Hit Note
                             var note = EntityManager.GetComponentData<Note>(hit.Entity);
                             if (note.Type == affectsNoteType)
                             {
                                 quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
-                                Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
+                                fakeNoteTransform.rotation = noteRotation;
+                                fakeNoteTransform.position = EntityManager.GetComponentData<Translation>(hit.Entity).Value;
 
+                                Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
                                 float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
-                                float midAngle = Vector3.Angle(((tipPoint.position + basePoint.position) / 2) - (((Vector3)previousTipPosition + (Vector3)previousBasePosition) / 2), matrix.MultiplyPoint(Vector3.up));
                                 float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
 
-                                if (baseAngle > hitAngle || tipAngle > hitAngle || midAngle > hitAngle || note.CutDirection == 8)
+                                Vector3 cutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
+                                if (OkCut(cutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
                                 {
                                     ScoreManager.Instance.AddScore(100);
 
@@ -130,7 +135,6 @@ namespace BeatGame.Logic.Saber
                                         Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
                                     else
                                         Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
-
 
 
                                     if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
@@ -162,6 +166,18 @@ namespace BeatGame.Logic.Saber
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
+        }
+
+        public bool OkCut(Vector3 to, out float angle)
+        {
+            angle = Mathf.Atan2(to.y, to.x) * Mathf.Rad2Deg;
+
+            bool goodEnoughCut = angle > -150 && angle < -30;
+
+            if (goodEnoughCut)
+                return true;
+
+            return false;
         }
 
         private void DestroyNote(Entity entity)
