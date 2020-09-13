@@ -61,6 +61,9 @@ namespace BeatGame.Logic.Managers
                 newTrail.pointEnd = tlm.PointEnd.gameObject;
                 newTrail.pointStart = tlm.PointStart.gameObject;
                 newTrail.mat = tlm.TrailMaterial;
+                newTrail.startColor = LeftSaberMaterial.color;
+                newTrail.endColor = LeftSaberMaterial.color;
+                newTrail.endColor.a = 0;
                 newTrail.Onload();
             }
 
@@ -77,6 +80,9 @@ namespace BeatGame.Logic.Managers
                 newTrail.pointEnd = tlm.PointEnd.gameObject;
                 newTrail.pointStart = tlm.PointStart.gameObject;
                 newTrail.mat = tlm.TrailMaterial;
+                newTrail.startColor = RightSaberMaterial.color;
+                newTrail.endColor = RightSaberMaterial.color;
+                newTrail.endColor.a = 0;
                 newTrail.Onload();
             }
 
