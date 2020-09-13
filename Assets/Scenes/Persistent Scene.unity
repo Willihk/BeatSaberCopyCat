@@ -2521,7 +2521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 146900, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 147176, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: m_IsActive
@@ -4441,7 +4441,6 @@ GameObject:
   - component: {fileID: 1542644478}
   - component: {fileID: 1542644481}
   - component: {fileID: 1542644480}
-  - component: {fileID: 1542644479}
   m_Layer: 0
   m_Name: Foot (1)
   m_TagString: Untagged
@@ -4463,19 +4462,6 @@ Transform:
   m_Father: {fileID: 1904960409}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1542644479
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542644477}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1542644480
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5083,7 +5069,6 @@ GameObject:
   - component: {fileID: 1765948592}
   - component: {fileID: 1765948595}
   - component: {fileID: 1765948594}
-  - component: {fileID: 1765948593}
   m_Layer: 0
   m_Name: Foot
   m_TagString: Untagged
@@ -5105,19 +5090,6 @@ Transform:
   m_Father: {fileID: 1904960409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1765948593
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765948591}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1765948594
 MeshRenderer:
   m_ObjectHideFlags: 0
