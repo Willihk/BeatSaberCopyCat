@@ -59,7 +59,7 @@ namespace BeatGame.Logic.Managers
             newRightSaber.gameObject.SetActive(true);
         }
 
-        void CreateTrail(GameObject saber)
+        void CreateTrail(GameObject saber, bool leftSaber = true)
         {
             CustomTrail tlm;
             if (saber.GetComponent<CustomTrail>())
@@ -75,10 +75,28 @@ namespace BeatGame.Logic.Managers
                 newTrail.pointEnd = tlm.PointEnd.gameObject;
                 newTrail.pointStart = tlm.PointStart.gameObject;
 
-                newTrail.mat = new Material(trailShader);
-                newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
-                newTrail.startColor = LeftSaberMaterial.color;
-                newTrail.endColor = LeftSaberMaterial.color;
+                if (tlm.TrailMaterial.shader.name.Contains("Trail"))
+                {
+                    newTrail.mat = new Material(trailShader);
+                    newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
+                    newTrail.mat.SetColor("_Color", leftSaber ? LeftSaberMaterial.color : RightSaberMaterial.color);
+                }
+                else
+                {
+                    newTrail.mat = tlm.TrailMaterial;
+                }
+
+                if (leftSaber)
+                {
+                    newTrail.startColor = LeftSaberMaterial.color;
+                    newTrail.endColor = LeftSaberMaterial.color;
+                }
+                else
+                {
+                    newTrail.startColor = RightSaberMaterial.color;
+                    newTrail.endColor = RightSaberMaterial.color;
+                }
+
                 newTrail.endColor.a = 0;
                 newTrail.Onload();
             }
