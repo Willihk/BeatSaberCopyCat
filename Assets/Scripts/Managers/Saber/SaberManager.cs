@@ -14,6 +14,8 @@ namespace BeatGame.Logic.Managers
         GameObject leftSaberHolder;
         [SerializeField]
         GameObject rightSaberHolder;
+        [SerializeField]
+        Shader litShader;
 
         public Material LeftSaberMaterial;
         public Material RightSaberMaterial;
@@ -24,6 +26,7 @@ namespace BeatGame.Logic.Managers
         {
             if (Instance == null)
                 Instance = this;
+
         }
 
         public void SetNewActiveSaber(int saberIndex)
@@ -96,9 +99,9 @@ namespace BeatGame.Logic.Managers
             {
                 for (int i = 0; i < renderer.materials.Length; i++)
                 {
+                    Material[] materials = renderer.materials;
                     if (renderer.materials[i].name.Contains("Glow_mat"))
                     {
-                        Material[] materials = renderer.materials;
                         if (leftSaberMaterial)
                         {
                             materials[i] = LeftSaberMaterial;
@@ -107,8 +110,12 @@ namespace BeatGame.Logic.Managers
                         {
                             materials[i] = RightSaberMaterial;
                         }
-                        renderer.materials = materials;
                     }
+                    else
+                    {
+                        materials[i] = ConvertMaterial(materials[i]);
+                    }
+                    renderer.materials = materials;
                 }
             }
 
@@ -116,6 +123,18 @@ namespace BeatGame.Logic.Managers
             {
                 ReplaceGlowMaterialsReqursive(child, leftSaberMaterial);
             }
+        }
+
+        Material ConvertMaterial(Material material)
+        {
+            var color = material.color;
+            var intensitty = material.GetFloat("_Glow");
+
+            var newMaterial = new Material(LeftSaberMaterial);
+            newMaterial.color = color;
+            newMaterial.SetColor("_EmissionColor", color * (intensitty + 1.5f));
+
+            return newMaterial;
         }
 
         public void SetupSaber(GameObject prefab)
