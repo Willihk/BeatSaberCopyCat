@@ -16,6 +16,8 @@ namespace BeatGame.Logic.Managers
         GameObject rightSaberHolder;
         [SerializeField]
         Shader litShader;
+        [SerializeField]
+        Shader trailShader;
 
         public Material LeftSaberMaterial;
         public Material RightSaberMaterial;
@@ -50,47 +52,37 @@ namespace BeatGame.Logic.Managers
             newLeftSaber.transform.localPosition = Vector3.zero;
             newRightSaber.transform.localPosition = Vector3.zero;
 
+            CreateTrail(newLeftSaber.gameObject);
+            CreateTrail(newRightSaber.gameObject);
+
+            newLeftSaber.gameObject.SetActive(true);
+            newRightSaber.gameObject.SetActive(true);
+        }
+
+        void CreateTrail(GameObject saber)
+        {
             CustomTrail tlm;
-            if (newLeftSaber.GetComponent<CustomTrail>())
+            if (saber.GetComponent<CustomTrail>())
             {
-                tlm = newLeftSaber.GetComponent<CustomTrail>();
+                tlm = saber.GetComponent<CustomTrail>();
 
                 GameObject trail = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                trail.transform.SetParent(newLeftSaber);
+                trail.transform.SetParent(saber.transform);
                 Destroy(trail.GetComponent<BoxCollider>());
                 trail.transform.position = tlm.PointStart.position;
                 trail.transform.localEulerAngles = new Vector3(90, 0, 0);
                 TrailHandler newTrail = trail.AddComponent<TrailHandler>();
                 newTrail.pointEnd = tlm.PointEnd.gameObject;
                 newTrail.pointStart = tlm.PointStart.gameObject;
-                newTrail.mat = tlm.TrailMaterial;
+
+                newTrail.mat = new Material(trailShader);
+                newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
                 newTrail.startColor = LeftSaberMaterial.color;
                 newTrail.endColor = LeftSaberMaterial.color;
                 newTrail.endColor.a = 0;
                 newTrail.Onload();
             }
 
-            if (newRightSaber.GetComponent<CustomTrail>())
-            {
-                tlm = newRightSaber.GetComponent<CustomTrail>();
-
-                GameObject trail = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                trail.transform.SetParent(newRightSaber);
-                Destroy(trail.GetComponent<BoxCollider>());
-                trail.transform.position = tlm.PointStart.position;
-                trail.transform.localEulerAngles = new Vector3(90, 0, 0);
-                TrailHandler newTrail = trail.AddComponent<TrailHandler>();
-                newTrail.pointEnd = tlm.PointEnd.gameObject;
-                newTrail.pointStart = tlm.PointStart.gameObject;
-                newTrail.mat = tlm.TrailMaterial;
-                newTrail.startColor = RightSaberMaterial.color;
-                newTrail.endColor = RightSaberMaterial.color;
-                newTrail.endColor.a = 0;
-                newTrail.Onload();
-            }
-
-            newLeftSaber.gameObject.SetActive(true);
-            newRightSaber.gameObject.SetActive(true);
         }
 
         void ReplaceGlowMaterialsReqursive(Transform transform, bool leftSaberMaterial)
@@ -127,6 +119,7 @@ namespace BeatGame.Logic.Managers
 
         Material ConvertMaterial(Material material)
         {
+
             var color = material.color;
             var intensitty = material.GetFloat("_Glow");
 
