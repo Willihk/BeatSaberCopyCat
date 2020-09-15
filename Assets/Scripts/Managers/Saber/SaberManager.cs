@@ -75,20 +75,13 @@ namespace BeatGame.Logic.Managers
                 newTrail.pointEnd = tlm.PointEnd.gameObject;
                 newTrail.pointStart = tlm.PointStart.gameObject;
 
-                if (tlm.TrailMaterial.shader.name.Contains("Trail"))
-                {
-                    newTrail.mat = new Material(trailShader);
-                    if (tlm.TrailMaterial.HasProperty("_AlphaTex"))
-                        newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
-                    else
-                        newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_MainTex"));
-
-                    newTrail.mat.SetColor("_Color", leftSaber ? LeftSaberMaterial.color : RightSaberMaterial.color);
-                }
+                newTrail.mat = new Material(trailShader);
+                if (tlm.TrailMaterial.HasProperty("_AlphaTex"))
+                    newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
                 else
-                {
-                    newTrail.mat = tlm.TrailMaterial;
-                }
+                    newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_MainTex"));
+
+                newTrail.mat.SetColor("_Color", leftSaber ? LeftSaberMaterial.color : RightSaberMaterial.color);
 
                 if (leftSaber)
                 {
