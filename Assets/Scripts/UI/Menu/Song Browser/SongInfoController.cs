@@ -2,7 +2,9 @@
 using BeatGame.Data.Score;
 using BeatGame.Logic.Managers;
 using BeatGame.UI.Components.Tabs;
+using Newtonsoft.Json.Linq;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using TMPro;
 using Unity.Mathematics;
@@ -31,6 +33,8 @@ namespace BeatGame.UI.Controllers
         private TextMeshProUGUI timeValueText;
         [SerializeField]
         private TextMeshProUGUI BPMValueText;
+        [SerializeField]
+        private TextMeshProUGUI NoteCountValueText;
 
         AvailableSongData songData;
 
