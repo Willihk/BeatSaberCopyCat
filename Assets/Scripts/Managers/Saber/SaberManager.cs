@@ -53,7 +53,7 @@ namespace BeatGame.Logic.Managers
             newRightSaber.transform.localPosition = Vector3.zero;
 
             CreateTrail(newLeftSaber.gameObject);
-            CreateTrail(newRightSaber.gameObject);
+            CreateTrail(newRightSaber.gameObject, false);
 
             newLeftSaber.gameObject.SetActive(true);
             newRightSaber.gameObject.SetActive(true);

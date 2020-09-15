@@ -126,8 +126,9 @@ namespace BeatGame.Logic.Saber
                                 float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
                                 float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
 
-                                Vector3 cutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
-                                if (OkCut(cutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
+                                Vector3 tipCutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
+                                Vector3 baseCutDir = fakeNoteTransform.InverseTransformVector(basePoint.position - (Vector3)previousBasePosition);
+                                if (OkCut(tipCutDir, out _) || OkCut(baseCutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
                                 {
                                     ScoreManager.Instance.AddScore(100);
 
