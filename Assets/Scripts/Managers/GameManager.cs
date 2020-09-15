@@ -26,6 +26,10 @@ namespace BeatGame.Logic.Managers
         public AudioSource audioSource;
 
         [SerializeField]
+        GameObject leftModel;
+        [SerializeField]
+        GameObject rightModel;
+        [SerializeField]
         GameObject leftSaber;
         [SerializeField]
         GameObject rightSaber;
@@ -106,6 +110,9 @@ namespace BeatGame.Logic.Managers
                 rightSaber.SetActive(true);
             }
 
+            leftModel.SetActive(false);
+            rightModel.SetActive(false);
+
             if (deactivatePointer)
                 UIPointer.SetActive(false);
         }
@@ -118,6 +125,9 @@ namespace BeatGame.Logic.Managers
                 leftSaber.SetActive(false);
                 rightSaber.SetActive(false);
             }
+
+            leftModel.SetActive(true);
+            rightModel.SetActive(true);
 
             UIPointer.SetActive(true);
             UIPointer.transform.localPosition = Vector3.zero;
