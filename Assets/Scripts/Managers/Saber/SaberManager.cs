@@ -78,7 +78,11 @@ namespace BeatGame.Logic.Managers
                 if (tlm.TrailMaterial.shader.name.Contains("Trail"))
                 {
                     newTrail.mat = new Material(trailShader);
-                    newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
+                    if (tlm.TrailMaterial.HasProperty("_AlphaTex"))
+                        newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_AlphaTex"));
+                    else
+                        newTrail.mat.SetTexture("_AlphaTex", tlm.TrailMaterial.GetTexture("_MainTex"));
+
                     newTrail.mat.SetColor("_Color", leftSaber ? LeftSaberMaterial.color : RightSaberMaterial.color);
                 }
                 else
