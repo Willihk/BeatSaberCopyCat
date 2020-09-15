@@ -2,7 +2,6 @@
 using BeatGame.Data.Map;
 using BeatGame.Data.Map.Modified;
 using BeatGame.Data.Map.Raw;
-using BeatGame.MessagePack;
 using BeatGame.MessagePack.Resolvers;
 using BeatGame.Utility;
 using BeatGame.Utility.ModSupport;
@@ -88,7 +87,7 @@ namespace BeatGame.Logic.Managers
         {
             var resolver = CompositeResolver.Create(MathematicsResolver.Instance, StandardResolver.Instance);
             var options = MessagePackSerializerOptions.Standard.WithResolver(resolver);
-            var data = MessagePackSerializer.Serialize(MapData, options);
+            byte[] data = MessagePackSerializer.Serialize(MapData, options);
             var fileStream = File.Create(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus");
             fileStream.Close();
             File.WriteAllBytes(SelectedSongData.DirectoryPath + "\\" + SelectedDifficultyMap.BeatmapFilename + "plus", data);

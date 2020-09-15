@@ -12,7 +12,7 @@ namespace BeatGame.Logic.Managers
     {
         public static SettingsManager Instance;
 
-        public static float3 LineOffset = new float3(.55f, .55f, 0);
+        public static float3 LineOffset = new float3(.5f, .5f, 0);
         public static float3 GlobalOffset = new float3(0, 0, 0);
 
         public event Action OnConfigLoaded;

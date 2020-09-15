@@ -1,6 +1,4 @@
-﻿using System;
-using MessagePack;
-using Newtonsoft.Json;
+﻿using MessagePack;
 
 namespace BeatGame.Data.Map
 {
