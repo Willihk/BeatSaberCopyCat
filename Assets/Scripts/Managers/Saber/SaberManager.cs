@@ -140,7 +140,7 @@ namespace BeatGame.Logic.Managers
 
             var newMaterial = new Material(LeftSaberMaterial);
             newMaterial.color = color;
-            newMaterial.SetColor("_EmissionColor", color * (intensitty + 1.5f));
+            newMaterial.SetColor("_EmissionColor", color * (intensitty));
 
             return newMaterial;
         }
