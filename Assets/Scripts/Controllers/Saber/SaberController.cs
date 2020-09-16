@@ -83,50 +83,31 @@ namespace BeatGame.Logic.Saber
         {
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
-            ECSRaycast.RaycastAll(raycastPoints[0].position, raycastPoints[0].position + raycastPoints[0].forward * 1.25f, ref raycastHits);
-
-            bool hasContact = false;
-            for (int i = 0; i < raycastHits.Length; i++)
-            {
-                Debug.Log(raycastHits[i].Entity);
-
-                if (EntityManager.HasComponent<Obstacle>(raycastHits[i].Entity))
-                {
-                    if (!isInContact)
-                    {
-                        hasContact = true;
-                        isInContact = true;
-                        hitVFX.SendEvent("Contact");
-                    }
-
-                    hitVFX.transform.position = raycastHits[i].Position;
-                }
-            }
-
-            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f))
+            var obstacleCast = ECSRaycast.Raycast(raycastPoints[0].position, raycastPoints[0].forward * 1.25f);
+            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f) || EntityManager.HasComponent<Obstacle>(obstacleCast.Entity))
             {
                 if (!isInContact)
                 {
-                    hasContact = true;
                     isInContact = true;
                     hitVFX.SendEvent("Contact");
                 }
+
                 hitVFX.transform.position = raycastHit.point;
             }
-
-            if (!hasContact)
+            else
             {
-                isInContact = false;
-                hitVFX.SendEvent("Stop");
+                if (isInContact)
+                {
+                    isInContact = false;
+                    hitVFX.SendEvent("Stop");
+                }
             }
-
-            raycastHits.Clear();
 
             if (velocity >= minCutVelocity)
             {
                 for (int i = 0; i < raycastPoints.Length; i++)
                 {
-                    ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+                    ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].forward * saberLength, ref raycastHits);
 
                     for (int j = 0; j < raycastHits.Length; j++)
                     {
