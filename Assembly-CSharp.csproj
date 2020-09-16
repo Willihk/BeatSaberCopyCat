@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Controllers\Laser\LaserControllerBase.cs" />
-    <Compile Include="Assets\Scripts\Managers\Audio\SaberHitAudioManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Saber\SaberHitAudioManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\Audio\MasterAudioBarController.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveSpeed.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Audio\AudioVisualizationData.cs" />
@@ -153,6 +153,17 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Intersector.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Slicer.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Triangle.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\TextureRegion.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Triangulator.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\SlicedHull.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Plane.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\SlicerExtensions.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Line.cs" />
+    <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\IntersectionResult.cs" />
+    <Compile Include="Assets\Scripts\Managers\Saber\SaberSliceManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
@@ -368,6 +379,9 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.5f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>Assets\Plugins\Harmony\0Harmony.dll</HintPath>
