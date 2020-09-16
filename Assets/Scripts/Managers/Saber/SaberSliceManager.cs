@@ -25,14 +25,14 @@ namespace BeatGame.Logic.Managers
                 Instance = this;
         }
 
-        public void Slice(Transform noteTransform, Vector3 direction, int noteType, Vector3 rightDirection)
+        public void Slice(Transform noteTransform, Vector3 direction, Vector3 rightDirection, int noteType, float hitVelocity)
         {
             baseNote.transform.position = noteTransform.position;
             baseNote.transform.rotation = noteTransform.rotation;
 
             baseNote.GetComponent<Renderer>().material = noteType == 1 ? RightMatMaterial : LeftMatMaterial;
 
-            Material material = noteType == 1 ? LeftCutMaterial : RightCutMaterial;
+            Material material = noteType == 1 ? RightCutMaterial : LeftCutMaterial;
 
             SlicedHull hull = baseNote.Slice(baseNote.gameObject.transform.position, direction, material);
 
@@ -40,12 +40,12 @@ namespace BeatGame.Logic.Managers
             {
                 GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, material);
                 var rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddForce(rightDirection * forceMultiplier);
+                rigidbody.AddForce(rightDirection * hitVelocity * forceMultiplier);
                 Destroy(hullObject, 10);
 
                 hullObject = hull.CreateUpperHull(baseNote.gameObject, material);
                 rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddForce(-rightDirection * forceMultiplier);
+                rigidbody.AddForce(-rightDirection * hitVelocity * forceMultiplier);
                 Destroy(hullObject, 10);
             }
         }
