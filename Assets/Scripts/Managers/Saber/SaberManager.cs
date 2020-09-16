@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using CustomSaber;
+using BeatGame.Data.Saber;
+using System.Linq;
 
 namespace BeatGame.Logic.Managers
 {
     public class SaberManager : MonoBehaviour
     {
-        public List<GameObject> SaberObjects = new List<GameObject>();
+        public List<CustomSaberInfo> LoadedSabers = new List<CustomSaberInfo>();
 
+        [SerializeField]
+        GameObject defaultSabers;
         [SerializeField]
         GameObject leftSaberHolder;
         [SerializeField]
@@ -29,11 +33,12 @@ namespace BeatGame.Logic.Managers
             if (Instance == null)
                 Instance = this;
 
+            LoadedSabers.Add(new CustomSaberInfo() { SaberObject = defaultSabers });
         }
 
         public void SetNewActiveSaber(int saberIndex)
         {
-            if (saberIndex >= SaberObjects.Count)
+            if (saberIndex >= LoadedSabers.Count)
                 return;
 
             foreach (Transform child in leftSaberHolder.transform)
@@ -46,8 +51,8 @@ namespace BeatGame.Logic.Managers
                 Destroy(child.gameObject);
             }
 
-            var newLeftSaber = Instantiate(SaberObjects[saberIndex].transform.Find("LeftSaber"), leftSaberHolder.transform);
-            var newRightSaber = Instantiate(SaberObjects[saberIndex].transform.Find("RightSaber"), rightSaberHolder.transform);
+            var newLeftSaber = Instantiate(LoadedSabers[saberIndex].SaberObject.transform.Find("LeftSaber"), leftSaberHolder.transform);
+            var newRightSaber = Instantiate(LoadedSabers[saberIndex].SaberObject.transform.Find("RightSaber"), rightSaberHolder.transform);
 
             newLeftSaber.transform.localPosition = Vector3.zero;
             newRightSaber.transform.localPosition = Vector3.zero;
@@ -134,18 +139,22 @@ namespace BeatGame.Logic.Managers
 
         Material ConvertMaterial(Material material)
         {
+            Color color = Color.white;
+            float intensity = 1;
+            if (material.HasProperty("_Color"))
+                color = material.color;
 
-            var color = material.color;
-            var intensitty = material.GetFloat("_Glow");
+            if (material.HasProperty("_Glow"))
+                intensity = material.GetFloat("_Glow");
 
             var newMaterial = new Material(LeftSaberMaterial);
             newMaterial.color = color;
-            newMaterial.SetColor("_EmissionColor", color * (intensitty));
+            newMaterial.SetColor("_EmissionColor", color * (intensity));
 
             return newMaterial;
         }
 
-        public void SetupSaber(GameObject prefab)
+        public void SetupSaber(GameObject prefab, CustomSaberInfo saberInfo)
         {
             var saber = Instantiate(prefab, transform);
 
@@ -172,7 +181,16 @@ namespace BeatGame.Logic.Managers
             }
 
             saber.SetActive(false);
-            SaberObjects.Add(saber);
+            saberInfo.SaberObject = saber;
+            LoadedSabers.Add(saberInfo);
+        }
+
+        public bool IsPathAlreadyLoaded(string path)
+        {
+            if (LoadedSabers.Any(x => x.Path == path))
+                return true;
+
+            return false;
         }
     }
 }

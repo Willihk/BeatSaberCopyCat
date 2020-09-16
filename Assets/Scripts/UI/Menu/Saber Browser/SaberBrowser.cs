@@ -27,6 +27,13 @@ namespace BeatGame.UI.Controllers
 
         void OnEnable()
         {
+            if (saberInfos == null || saberInfos.Count == 0)
+            {
+                customSaberFolderPath = SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue;
+                EnsureFolderExists();
+                StartCoroutine(LoadSabersRoutine());
+            }
+
             GameManager.Instance.ActivateSabers(false);
         }
 
@@ -39,9 +46,8 @@ namespace BeatGame.UI.Controllers
         {
             customSaberFolderPath = SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue;
 
-            EnsureSongFolderExists();
-            LoadSabers();
-            DisplaySabers();
+            //LoadSabers();
+            //DisplaySabers();
         }
 
         public void SaberSelected(int index)
@@ -49,7 +55,7 @@ namespace BeatGame.UI.Controllers
             SaberManager.Instance.SetNewActiveSaber(index);
         }
 
-        void EnsureSongFolderExists()
+        void EnsureFolderExists()
         {
             if (!Directory.Exists(customSaberFolderPath))
             {
@@ -57,31 +63,30 @@ namespace BeatGame.UI.Controllers
             }
         }
 
-        void DisplaySabers()
+        IEnumerator LoadSabersRoutine()
         {
-            for (int i = 0; i < saberInfos.Count; i++)
-            {
-                var entryObject = Instantiate(entryPrefab, entryHolder);
-                entryObject.GetComponent<SaberEntryController>().Initizalize(saberInfos[i], i);
-                entryObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(tabGroup);
-            }
-        }
-
-        void LoadSabers()
-        {
-            if (!Directory.Exists(customSaberFolderPath))
-                return;
-
             string[] allBundlePaths = Directory.GetFiles(customSaberFolderPath, "*.saber");
 
             for (int i = 0; i < allBundlePaths.Length; i++)
             {
                 LoadBundle(allBundlePaths[i]);
+
+                var entryObject = Instantiate(entryPrefab, entryHolder);
+                entryObject.GetComponent<SaberEntryController>().Initizalize(saberInfos[i], i);
+                entryObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(tabGroup);
+
+                yield return new WaitForSeconds(.2f);
             }
         }
 
         public void LoadBundle(string bundlePath)
         {
+            if (SaberManager.Instance.IsPathAlreadyLoaded(bundlePath))
+            {
+                saberInfos.Add(SaberManager.Instance.LoadedSabers.Find(x => x.Path == bundlePath));
+                return;
+            }
+
             AssetBundle bundle = AssetBundle.LoadFromFile(bundlePath);
 
             if (bundle == null)
@@ -90,15 +95,16 @@ namespace BeatGame.UI.Controllers
             var prefab = bundle.LoadAsset<GameObject>("_customsaber");
             SaberDescriptor customSaber = prefab.GetComponent<SaberDescriptor>();
 
-            SaberManager.Instance.SetupSaber(prefab);
-
-            bundle.Unload(false);
-
-            saberInfos.Add(new CustomSaberInfo
+            var saberInfo = new CustomSaberInfo
             {
                 Path = bundlePath,
-                SaberDescriptor = customSaber
-            });
+                SaberDescriptor = customSaber,
+            };
+
+            SaberManager.Instance.SetupSaber(prefab, saberInfo);
+
+            bundle.Unload(false);
+            saberInfos.Add(saberInfo);
         }
     }
 }
