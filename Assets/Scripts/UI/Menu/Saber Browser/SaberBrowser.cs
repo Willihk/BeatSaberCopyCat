@@ -44,7 +44,7 @@ namespace BeatGame.UI.Controllers
 
         IEnumerator LoadSabersRoutine()
         {
-            for (int i = 0; i < SaberManager.Instance.LoadedSabers.Count; i++)
+            for (int i = 1; i < SaberManager.Instance.LoadedSabers.Count; i++)
             {
                 var entryObject = Instantiate(entryPrefab, entryHolder);
                 entryObject.GetComponent<SaberEntryController>().Initizalize(SaberManager.Instance.LoadedSabers[i], i);

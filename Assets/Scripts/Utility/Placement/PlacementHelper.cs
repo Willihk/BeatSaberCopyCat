@@ -72,7 +72,7 @@ namespace BeatGame.Utility
             float4x4 scale = new float4x4
             {
                 c0 = new float4(rawObstacleData.Width, 0, 0, 0),
-                c1 = new float4(0, rawObstacleData.Type == 0 ? lineOffset.y * 3 : lineOffset.y * 2, 0, 0),
+                c1 = new float4(0, rawObstacleData.Type == 0 ? lineOffset.y * 4.5f : lineOffset.y * 2, 0, 0),
                 c2 = new float4(0, 0, ConvertDurationToZScale((float)rawObstacleData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2, 0),
                 c3 = new float4(0, 0, 0, 1)
             };
