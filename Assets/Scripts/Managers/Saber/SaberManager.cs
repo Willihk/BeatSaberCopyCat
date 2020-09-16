@@ -5,6 +5,7 @@ using System;
 using CustomSaber;
 using BeatGame.Data.Saber;
 using System.Linq;
+using System.IO;
 
 namespace BeatGame.Logic.Managers
 {
@@ -34,6 +35,16 @@ namespace BeatGame.Logic.Managers
                 Instance = this;
 
             LoadedSabers.Add(new CustomSaberInfo() { SaberObject = defaultSabers });
+            EnsureFolderExists();
+            StartCoroutine(LoadSabersRoutine());
+        }
+
+        void EnsureFolderExists()
+        {
+            if (!Directory.Exists(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue))
+            {
+                Directory.CreateDirectory(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue);
+            }
         }
 
         public void SetNewActiveSaber(int saberIndex)
@@ -191,6 +202,44 @@ namespace BeatGame.Logic.Managers
                 return true;
 
             return false;
+        }
+
+
+        IEnumerator LoadSabersRoutine()
+        {
+            string[] allBundlePaths = Directory.GetFiles(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue, "*.saber");
+
+            for (int i = 0; i < allBundlePaths.Length; i++)
+            {
+                LoadBundle(allBundlePaths[i]);
+                yield return new WaitForSeconds(.2f);
+            }
+        }
+
+        public void LoadBundle(string bundlePath)
+        {
+            if (IsPathAlreadyLoaded(bundlePath))
+            {
+                return;
+            }
+
+            AssetBundle bundle = AssetBundle.LoadFromFile(bundlePath);
+
+            if (bundle == null)
+                return;
+
+            var prefab = bundle.LoadAsset<GameObject>("_customsaber");
+            SaberDescriptor customSaber = prefab.GetComponent<SaberDescriptor>();
+
+            var saberInfo = new CustomSaberInfo
+            {
+                Path = bundlePath,
+                SaberDescriptor = customSaber,
+            };
+
+            SetupSaber(prefab, saberInfo);
+
+            bundle.Unload(false);
         }
     }
 }

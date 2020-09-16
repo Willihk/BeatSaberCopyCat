@@ -14,8 +14,6 @@ namespace BeatGame.UI.Controllers
 {
     public class SaberBrowser : MonoBehaviour
     {
-        List<CustomSaberInfo> saberInfos = new List<CustomSaberInfo>();
-
         [SerializeField]
         GameObject entryPrefab;
         [SerializeField]
@@ -23,14 +21,11 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         TabGroup tabGroup;
 
-        string customSaberFolderPath;
 
         void OnEnable()
         {
-            if (saberInfos == null || saberInfos.Count == 0)
+            if (entryHolder.childCount == 1)
             {
-                customSaberFolderPath = SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue;
-                EnsureFolderExists();
                 StartCoroutine(LoadSabersRoutine());
             }
 
@@ -47,56 +42,16 @@ namespace BeatGame.UI.Controllers
             SaberManager.Instance.SetNewActiveSaber(index);
         }
 
-        void EnsureFolderExists()
-        {
-            if (!Directory.Exists(customSaberFolderPath))
-            {
-                Directory.CreateDirectory(customSaberFolderPath);
-            }
-        }
-
         IEnumerator LoadSabersRoutine()
         {
-            string[] allBundlePaths = Directory.GetFiles(customSaberFolderPath, "*.saber");
-
-            for (int i = 0; i < allBundlePaths.Length; i++)
+            for (int i = 0; i < SaberManager.Instance.LoadedSabers.Count; i++)
             {
-                LoadBundle(allBundlePaths[i]);
-
                 var entryObject = Instantiate(entryPrefab, entryHolder);
-                entryObject.GetComponent<SaberEntryController>().Initizalize(saberInfos[i], i);
+                entryObject.GetComponent<SaberEntryController>().Initizalize(SaberManager.Instance.LoadedSabers[i], i);
                 entryObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(tabGroup);
 
                 yield return new WaitForSeconds(.2f);
             }
-        }
-
-        public void LoadBundle(string bundlePath)
-        {
-            if (SaberManager.Instance.IsPathAlreadyLoaded(bundlePath))
-            {
-                saberInfos.Add(SaberManager.Instance.LoadedSabers.Find(x => x.Path == bundlePath));
-                return;
-            }
-
-            AssetBundle bundle = AssetBundle.LoadFromFile(bundlePath);
-
-            if (bundle == null)
-                return;
-
-            var prefab = bundle.LoadAsset<GameObject>("_customsaber");
-            SaberDescriptor customSaber = prefab.GetComponent<SaberDescriptor>();
-
-            var saberInfo = new CustomSaberInfo
-            {
-                Path = bundlePath,
-                SaberDescriptor = customSaber,
-            };
-
-            SaberManager.Instance.SetupSaber(prefab, saberInfo);
-
-            bundle.Unload(false);
-            saberInfos.Add(saberInfo);
         }
     }
 }
