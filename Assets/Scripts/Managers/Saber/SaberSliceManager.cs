@@ -38,12 +38,12 @@ namespace BeatGame.Logic.Managers
 
             if (hull != null)
             {
-                GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, LeftCutMaterial);
+                GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, material);
                 var rigidbody = hullObject.AddComponent<Rigidbody>();
                 rigidbody.AddExplosionForce(5 * forceMultiplier, noteTransform.position, .5f);
                 Destroy(hullObject, 10);
 
-                hullObject = hull.CreateUpperHull(baseNote.gameObject, LeftCutMaterial);
+                hullObject = hull.CreateUpperHull(baseNote.gameObject, material);
                 rigidbody = hullObject.AddComponent<Rigidbody>();
                 rigidbody.AddExplosionForce(5 * forceMultiplier, noteTransform.position, .5f);
                 Destroy(hullObject, 10);
