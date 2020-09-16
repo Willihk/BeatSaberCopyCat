@@ -174,9 +174,6 @@ namespace BeatGame.Logic.Saber
                             {
                                 // Hit Bomb
                                 HealthManager.Instance.HitBomb();
-                                ScoreManager.Instance.MissedNote();
-                                ScoreManager.Instance.MissedNote();
-                                ScoreManager.Instance.MissedNote();
                             }
                         }
                     }

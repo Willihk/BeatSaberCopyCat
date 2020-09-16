@@ -58,12 +58,12 @@ namespace BeatGame.Logic.Managers
 
         public void HitNote()
         {
-            AddHealth(15);
+            AddHealth(1);
         }
 
         public void MissedNote()
         {
-            RemoveHealth(8);
+            RemoveHealth(15);
         }
 
         public void HitBomb()
