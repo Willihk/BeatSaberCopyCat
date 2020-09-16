@@ -11,8 +11,12 @@ namespace BeatGame.Logic.Managers
 
         public GameObject baseNote;
 
-        public Material LeftSaberMaterial;
-        public Material RightSaberMaterial;
+        public float forceMultiplier = 100;
+
+        public Material LeftCutMaterial;
+        public Material RightCutMaterial;
+        public Material LeftMatMaterial;
+        public Material RightMatMaterial;
 
 
         private void Awake()
@@ -26,20 +30,22 @@ namespace BeatGame.Logic.Managers
             baseNote.transform.position = noteTransform.position;
             baseNote.transform.rotation = noteTransform.rotation;
 
-            Material material = noteType == 1 ? RightSaberMaterial : LeftSaberMaterial;
+            baseNote.GetComponent<Renderer>().material = noteType == 1 ? RightMatMaterial : LeftMatMaterial;
+
+            Material material = noteType == 1 ? RightCutMaterial : LeftCutMaterial;
 
             SlicedHull hull = baseNote.Slice(baseNote.gameObject.transform.position, direction, material);
 
             if (hull != null)
             {
-                GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, LeftSaberMaterial);
+                GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, LeftCutMaterial);
                 var rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(2, noteTransform.position, .5f);
+                rigidbody.AddExplosionForce(5 * forceMultiplier, noteTransform.position, .5f);
                 Destroy(hullObject, 10);
 
-                hullObject = hull.CreateUpperHull(baseNote.gameObject, LeftSaberMaterial);
+                hullObject = hull.CreateUpperHull(baseNote.gameObject, LeftCutMaterial);
                 rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddExplosionForce(2, noteTransform.position, .5f);
+                rigidbody.AddExplosionForce(5 * forceMultiplier, noteTransform.position, .5f);
                 Destroy(hullObject, 10);
             }
         }
