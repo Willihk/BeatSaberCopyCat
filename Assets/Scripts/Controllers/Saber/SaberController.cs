@@ -189,7 +189,7 @@ namespace BeatGame.Logic.Saber
 
                 Vector3 direction = orientation * Vector3.up;
 
-                SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 8);
+                SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 9);
             }
 
             EntityManager.DestroyEntity(entity);

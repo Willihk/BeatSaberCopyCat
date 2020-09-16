@@ -36,9 +36,9 @@ namespace BeatGame.Logic.Managers
 
             SlicedHull hull = baseNote.Slice(baseNote.gameObject.transform.position, direction, material);
 
-            if (hitVelocity >= 2)
+            if (hitVelocity >= 4)
             {
-                hitVelocity = 2;
+                hitVelocity = 4;
             }
 
             if (hull != null)
