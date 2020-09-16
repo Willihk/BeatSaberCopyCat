@@ -183,17 +183,17 @@ namespace BeatGame.Logic.Saber
 
         private void DestroyNote(Entity entity)
         {
-            // Slice Mesh
+            if (SettingsManager.Instance.Settings["General"]["NoteSlicing"].IntValue == 1)
+            {
+                ThreePointsToBox(tipPoint.position, basePoint.position, previousTipPosition + previousBasePosition * 0.5f, out Vector3 center, out Vector3 halfSize, out Quaternion orientation);
 
-            ThreePointsToBox(tipPoint.position, basePoint.position, previousTipPosition + previousBasePosition * 0.5f, out Vector3 center, out Vector3 halfSize, out Quaternion orientation);
+                Vector3 direction = orientation * Vector3.up;
 
-            Vector3 direction = orientation * Vector3.up;
-
-            SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 8);
+                SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 8);
+            }
 
             EntityManager.DestroyEntity(entity);
         }
-
 
         public void ThreePointsToBox(Vector3 p0, Vector3 p1, Vector3 p2, out Vector3 center, out Vector3 halfSize, out Quaternion orientation) //https://github.com/hrincarp/GGJ2017-cart/
         {

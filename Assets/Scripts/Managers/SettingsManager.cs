@@ -50,6 +50,7 @@ namespace BeatGame.Logic.Managers
             Settings["General"]["Reflections"].IntValue = 1;
             Settings["General"]["HeightOffset"].FloatValue = 0;
             Settings["General"]["HitEffects"].IntValue = 1;
+            Settings["General"]["NoteSlicing"].IntValue = 1;
 
             Settings["Modifiers"]["NoFail"].IntValue = 0;
             Settings["Modifiers"]["DoubleSaber"].IntValue = 0;
