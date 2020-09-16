@@ -42,14 +42,6 @@ namespace BeatGame.UI.Controllers
             GameManager.Instance.ActivatePointer();
         }
 
-        private void Start()
-        {
-            customSaberFolderPath = SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue;
-
-            //LoadSabers();
-            //DisplaySabers();
-        }
-
         public void SaberSelected(int index)
         {
             SaberManager.Instance.SetNewActiveSaber(index);
