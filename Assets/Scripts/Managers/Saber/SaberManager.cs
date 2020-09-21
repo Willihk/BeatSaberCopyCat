@@ -211,35 +211,36 @@ namespace BeatGame.Logic.Managers
 
             for (int i = 0; i < allBundlePaths.Length; i++)
             {
-                LoadBundle(allBundlePaths[i]);
-                yield return new WaitForSeconds(.2f);
+                string bundlePath = allBundlePaths[i];
+                if (IsPathAlreadyLoaded(bundlePath))
+                {
+                    continue;
+                }
+                var bundleRequest = AssetBundle.LoadFromFileAsync(bundlePath);
+                yield return bundleRequest;
+
+                var bundle = bundleRequest.assetBundle;
+                if (bundle == null)
+                    continue;
+
+                var prefabRequest = bundle.LoadAssetAsync<GameObject>("_customsaber");
+                yield return prefabRequest;
+                GameObject prefab = (GameObject)prefabRequest.asset;
+
+                SaberDescriptor customSaber = prefab.GetComponent<SaberDescriptor>();
+
+                var saberInfo = new CustomSaberInfo
+                {
+                    Path = bundlePath,
+                    SaberDescriptor = customSaber,
+                };
+
+                SetupSaber(prefab, saberInfo);
+
+                bundle.Unload(false);
+
+                yield return null;
             }
-        }
-
-        public void LoadBundle(string bundlePath)
-        {
-            if (IsPathAlreadyLoaded(bundlePath))
-            {
-                return;
-            }
-
-            AssetBundle bundle = AssetBundle.LoadFromFile(bundlePath);
-
-            if (bundle == null)
-                return;
-
-            var prefab = bundle.LoadAsset<GameObject>("_customsaber");
-            SaberDescriptor customSaber = prefab.GetComponent<SaberDescriptor>();
-
-            var saberInfo = new CustomSaberInfo
-            {
-                Path = bundlePath,
-                SaberDescriptor = customSaber,
-            };
-
-            SetupSaber(prefab, saberInfo);
-
-            bundle.Unload(false);
         }
     }
 }
