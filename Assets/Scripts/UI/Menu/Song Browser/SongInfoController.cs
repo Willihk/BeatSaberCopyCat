@@ -23,7 +23,7 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         private TextMeshProUGUI ScoreText;
         [SerializeField]
-        Components.Tabs.TabGroup difficultyTabGroup;
+        TabGroup difficultyTabGroup;
         [SerializeField]
         GameObject difficultyTabPrefab;
         [SerializeField]
@@ -37,6 +37,7 @@ namespace BeatGame.UI.Controllers
         private TextMeshProUGUI NoteCountValueText;
 
         AvailableSongData songData;
+        int difficultyIndex;
 
         HighScoreData HighScoreData;
 
@@ -62,8 +63,9 @@ namespace BeatGame.UI.Controllers
             }
         }
 
-        public void DifficultyChanged(Components.Tabs.TabButton tabButton)
+        public void DifficultyChanged(int index)
         {
+            difficultyIndex = index;
             SetStats();
         }
 
@@ -71,7 +73,11 @@ namespace BeatGame.UI.Controllers
         {
             if (difficultyTabGroup.SelectedTab != null)
             {
-                HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(songData.SongInfoFileData.SongName, songData.SongInfoFileData.LevelAuthorName, difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+                HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(
+                    songData.SongInfoFileData.SongName,
+                    songData.SongInfoFileData.LevelAuthorName,
+                songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty);
+                //difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
                 if (HighScoreData.Score == 0)
                 {
                     ScoreText.text = "-";
