@@ -96,7 +96,7 @@
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\EventData.cs" />
     <Compile Include="Assets\Scripts\Utility\Placement\PlacementHelper.cs" />
     <Compile Include="Assets\Scripts\Controllers\Laser\MeshLaserController.cs" />
-    <Compile Include="Assets\Scripts\Data\AvailableSongData.cs" />
+    <Compile Include="Assets\Scripts\Data\UI\SongBrowser\AvailableSongData.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ScrollBarExtensions\ScrollButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongTimeUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float4x4Formatter.cs" />
@@ -165,6 +165,7 @@
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Detection\InsideObstacleDetectionSystem.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Detection\SaberHitDetectionSystem.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

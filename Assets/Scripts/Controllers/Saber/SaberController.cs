@@ -16,13 +16,13 @@ namespace BeatGame.Logic.Saber
     public class SaberController : MonoBehaviour
     {
         [SerializeField]
-        int affectsNoteType;
+        public int affectsNoteType;
         [SerializeField]
         float hitAngle = 130;
         [SerializeField]
         float minCutVelocity = 0.012f;
         [SerializeField]
-        float saberLength = 1;
+        public float saberLength = 1;
         [SerializeField]
         SteamVR_Action_Vibration hapticAction;
 
@@ -35,7 +35,7 @@ namespace BeatGame.Logic.Saber
         [SerializeField]
         VisualEffect hitVFX;
         [SerializeField]
-        Transform[] raycastPoints;
+        public Transform[] raycastPoints;
 
         [SerializeField]
         float velocity;
@@ -52,6 +52,9 @@ namespace BeatGame.Logic.Saber
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             raycastHits = new NativeList<RaycastHit>(4, Allocator.Persistent);
+
+            var system = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
+            system.RegisterController(this);
         }
 
         void OnDestroy()
@@ -126,7 +129,7 @@ namespace BeatGame.Logic.Saber
             {
                 for (int i = 0; i < raycastPoints.Length; i++)
                 {
-                    ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+                    //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
 
                     for (int j = 0; j < raycastHits.Length; j++)
                     {
@@ -137,38 +140,7 @@ namespace BeatGame.Logic.Saber
                             var note = EntityManager.GetComponentData<Note>(hit.Entity);
                             if (note.Type == affectsNoteType)
                             {
-                                quaternion noteRotation = EntityManager.GetComponentData<Rotation>(hit.Entity).Value;
-                                fakeNoteTransform.rotation = noteRotation;
-                                fakeNoteTransform.position = EntityManager.GetComponentData<Translation>(hit.Entity).Value;
-
-                                Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
-                                float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
-                                float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
-
-                                Vector3 tipCutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
-                                Vector3 baseCutDir = fakeNoteTransform.InverseTransformVector(basePoint.position - (Vector3)previousBasePosition);
-                                if (OkCut(tipCutDir, out _) || OkCut(baseCutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || note.CutDirection == 8)
-                                {
-                                    ScoreManager.Instance.AddScore(100);
-
-                                    if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
-                                        Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
-                                    else
-                                        Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
-
-
-                                    if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
-                                    {
-                                        hitVFX.gameObject.transform.position = hit.Position;
-                                        hitVFX.SendEvent("Burst");
-                                    }
-
-                                    SaberHitAudioManager.Instance.PlaySound();
-
-                                    HealthManager.Instance.HitNote();
-
-                                    DestroyNote(hit.Entity);
-                                }
+                                HitNote(hit.Entity, note.CutDirection);
                             }
                             else if (note.Type == 3)
                             {
@@ -185,7 +157,67 @@ namespace BeatGame.Logic.Saber
             previousBasePosition = basePoint.position;
         }
 
-        public bool OkCut(Vector3 to, out float angle)
+        public void HandleHit(Entity hit)
+        {
+            if (velocity < minCutVelocity)
+                return;
+
+
+            if (hit != Entity.Null && EntityManager.HasComponent<Note>(hit))
+            {
+                // Hit Note
+                var note = EntityManager.GetComponentData<Note>(hit);
+                if (note.Type == affectsNoteType)
+                {
+                    HitNote(hit, note.CutDirection);
+                }
+                else if (note.Type == 3)
+                {
+                    // Hit Bomb
+                    HealthManager.Instance.HitBomb();
+                }
+            }
+        }
+
+        void HitNote(Entity entity, int noteCutDirection)
+        {
+            quaternion noteRotation = EntityManager.GetComponentData<Rotation>(entity).Value;
+            fakeNoteTransform.rotation = noteRotation;
+
+            var notePosition = EntityManager.GetComponentData<Translation>(entity).Value;
+            fakeNoteTransform.position = notePosition;
+
+            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
+            float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
+            float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
+
+            Vector3 tipCutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
+            Vector3 baseCutDir = fakeNoteTransform.InverseTransformVector(basePoint.position - (Vector3)previousBasePosition);
+            if (IsValidCut(tipCutDir, out _) || IsValidCut(baseCutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || noteCutDirection == 8)
+            {
+                ScoreManager.Instance.AddScore(100);
+
+                if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
+                    Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
+                else
+                    Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
+
+
+                if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
+                {
+                    hitVFX.gameObject.transform.position = notePosition;
+                    hitVFX.SendEvent("Burst");
+                }
+
+                SaberHitAudioManager.Instance.PlaySound();
+
+                HealthManager.Instance.HitNote();
+
+                DestroyNote(entity);
+            }
+        }
+
+        public bool IsValidCut(Vector3 to, out float angle)
         {
             angle = Mathf.Atan2(to.y, to.x) * Mathf.Rad2Deg;
 
