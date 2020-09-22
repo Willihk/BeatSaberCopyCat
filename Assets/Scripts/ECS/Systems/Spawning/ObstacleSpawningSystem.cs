@@ -35,7 +35,7 @@ public class ObstacleSpawningSystem : SystemBase
             var job = new SpawnJobParallel
             {
                 CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                Entity = EntityPrefabManager.Instance.GetEntityPrefab("Wall"),
+                Entity = EntityPrefabManager.Instance.GetEntityPrefab("Obstacle"),
                 Obstacles = obstacles,
                 HeightOffset = SettingsManager.GlobalOffset.y,
                 CurrentBeat = GameManager.Instance.CurrentBeat - Time.DeltaTime,
