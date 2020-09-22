@@ -8,8 +8,8 @@ namespace BeatGame.Logic.Managers
     {
         public static HealthManager Instance;
 
-        public int MaxHealth = 50;
-        public int Health = 50;
+        public float MaxHealth = 50;
+        public float Health = 50;
 
         public Action OnDeath;
 
@@ -44,7 +44,7 @@ namespace BeatGame.Logic.Managers
             }
         }
 
-        public void RemoveHealth(int amount)
+        public void RemoveHealth(float amount)
         {
             Health -= amount;
             if (Health <= 0)
@@ -69,6 +69,12 @@ namespace BeatGame.Logic.Managers
         public void HitBomb()
         {
             RemoveHealth(15);
+        }
+
+        public void InsideObstacle()
+        {
+            RemoveHealth(60f * Time.deltaTime);
+            Debug.Log("Is inside obstacle");
         }
     }
 }
