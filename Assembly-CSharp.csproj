@@ -96,7 +96,7 @@
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\EventData.cs" />
     <Compile Include="Assets\Scripts\Utility\Placement\PlacementHelper.cs" />
     <Compile Include="Assets\Scripts\Controllers\Laser\MeshLaserController.cs" />
-    <Compile Include="Assets\Scripts\Data\AvailableSongData.cs" />
+    <Compile Include="Assets\Scripts\Data\UI\SongBrowser\AvailableSongData.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ScrollBarExtensions\ScrollButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongTimeUIController.cs" />
     <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float4x4Formatter.cs" />
