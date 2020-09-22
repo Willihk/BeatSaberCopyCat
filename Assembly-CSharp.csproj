@@ -164,6 +164,7 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Detection\InsideObstacleDetectionSystem.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

@@ -103,7 +103,9 @@ public class ObstacleSpawningSystem : SystemBase
                     CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = obstacle.TransformData.Speed });
                 }
 
-                CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
+                //CommandBuffer.AddComponent<CompositeScale>(index, entity);
+                CommandBuffer.SetComponent(index, entity, new NonUniformScale { Value = new float3(obstacle.TransformData.Scale.c0.x, obstacle.TransformData.Scale.c1.y, obstacle.TransformData.Scale.c2.z) });
+                //CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
 
                 CommandBuffer.SetComponent(index, entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
 

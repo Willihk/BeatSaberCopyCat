@@ -73,7 +73,7 @@ namespace BeatGame.Logic.Managers
 
         public void InsideObstacle()
         {
-            RemoveHealth(60f * Time.deltaTime);
+            RemoveHealth(100f * Time.deltaTime);
             Debug.Log("Is inside obstacle");
         }
     }
