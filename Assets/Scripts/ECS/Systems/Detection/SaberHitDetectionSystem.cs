@@ -7,6 +7,8 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Rendering;
+using Unity.Transforms;
+using UnityEngine;
 
 public class SaberHitDetectionSystem : SystemBase
 {
@@ -25,10 +27,11 @@ public class SaberHitDetectionSystem : SystemBase
     {
         detections = new NativeQueue<HitData>(Allocator.Persistent);
         saberDatas = new NativeList<SaberData>(Allocator.Persistent);
+        raycastOffsets = new NativeArray<float3>(5, Allocator.Persistent);
 
         noteQuery = GetEntityQuery(new EntityQueryDesc
         {
-            All = new ComponentType[] { typeof(Obstacle), typeof(WorldRenderBounds) }
+            All = new ComponentType[] { typeof(Note), typeof(WorldRenderBounds), typeof(Rotation), typeof(Translation) }
         });
     }
 
@@ -41,33 +44,44 @@ public class SaberHitDetectionSystem : SystemBase
 
     public void RegisterController(SaberController saberController)
     {
-        raycastOffsets = new NativeArray<float3>(saberController.raycastPoints.Length, Allocator.Persistent);
         for (int i = 0; i < saberController.raycastPoints.Length; i++)
         {
             raycastOffsets[i] = saberController.raycastPoints[i].localPosition;
         }
-        saberDatas.Add(new SaberData
-        {
-            Forward = saberController.transform.forward,
-            Position = saberController.transform.position,
-            Length = saberController.saberLength
-        });
+        //saberDatas.Add(new SaberData
+        //{
+        //    Forward = saberController.transform.forward,
+        //    Position = saberController.transform.position,
+        //    Length = saberController.saberLength
+        //});
+
+        registeredControllers.Add(saberController);
+        Debug.Log("Registered controller");
     }
 
     protected override void OnUpdate()
     {
         if (registeredControllers.Count == 0)
+        {
+            Debug.Log("No registered controllers");
             return;
-
+        }
+        saberDatas.Clear();
 
         for (int i = 0; i < registeredControllers.Count; i++)
         {
-            saberDatas[i] = new SaberData
+            saberDatas.Add(new SaberData
             {
                 Forward = registeredControllers[i].transform.forward,
                 Position = registeredControllers[i].transform.position,
                 Length = registeredControllers[i].saberLength
-            };
+            });
+            //saberDatas[i] = new SaberData
+            //{
+            //    Forward = registeredControllers[i].transform.forward,
+            //    Position = registeredControllers[i].transform.position,
+            //    Length = registeredControllers[i].saberLength
+            //};
         }
 
         var job = new DetectionJob
@@ -86,10 +100,12 @@ public class SaberHitDetectionSystem : SystemBase
             {
                 if (registeredControllers[i].affectsNoteType == hit.Type)
                 {
+                    Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Type);
                     registeredControllers[i].HandleHit(hit.Entity);
                 }
             }
         }
+        detections.Clear();
     }
 
 
@@ -119,9 +135,10 @@ public class SaberHitDetectionSystem : SystemBase
                 {
                     for (int saberIndex = 0; saberIndex < SaberDatas.Length; saberIndex++)
                     {
-                        if (renderBounds[i].Value.ToBounds().IntersectRay(new UnityEngine.Ray(SaberDatas[saberIndex].Position + RaycastOffsets[offsetIndex], SaberDatas[saberIndex].Forward), out float distance)
-                            && distance >= SaberDatas[saberIndex].Length)
+                        if (renderBounds[i].Value.ToBounds().IntersectRay(new Ray(SaberDatas[saberIndex].Position + RaycastOffsets[offsetIndex], SaberDatas[saberIndex].Forward), out float distance)
+                            && distance <= SaberDatas[saberIndex].Length)
                         {
+                            Debug.Log("Hit note " + distance.ToString());
                             HitDetections.Enqueue(new HitData
                             {
                                 Type = saberIndex,

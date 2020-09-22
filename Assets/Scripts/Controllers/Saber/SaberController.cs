@@ -91,7 +91,7 @@ namespace BeatGame.Logic.Saber
             bool hasContact = false;
             for (int i = 0; i < raycastHits.Length; i++)
             {
-                Debug.Log(raycastHits[i].Entity);
+                //Debug.Log(raycastHits[i].Entity);
 
                 if (EntityManager.HasComponent<Obstacle>(raycastHits[i].Entity))
                 {
@@ -159,24 +159,26 @@ namespace BeatGame.Logic.Saber
 
         public void HandleHit(Entity hit)
         {
-            if (velocity < minCutVelocity)
-                return;
+            //if (velocity < minCutVelocity)
+            //    return;
 
-
-            if (hit != Entity.Null && EntityManager.HasComponent<Note>(hit))
-            {
-                // Hit Note
-                var note = EntityManager.GetComponentData<Note>(hit);
-                if (note.Type == affectsNoteType)
-                {
-                    HitNote(hit, note.CutDirection);
-                }
-                else if (note.Type == 3)
-                {
-                    // Hit Bomb
-                    HealthManager.Instance.HitBomb();
-                }
-            }
+            // Hit Note
+                HitNote(hit, 8);
+            //var note = EntityManager.GetComponentData<Note>(hit);
+            //if (note.Type == affectsNoteType)
+            //{
+            //    Debug.Log("hit a note correctly");
+            //    HitNote(hit, note.CutDirection);
+            //}
+            //else if (note.Type == 3)
+            //{
+            //    // Hit Bomb
+            //    HealthManager.Instance.HitBomb();
+            //}
+            //else
+            //{
+            //    Debug.Log("Wrong note type");
+            //}
         }
 
         void HitNote(Entity entity, int noteCutDirection)
