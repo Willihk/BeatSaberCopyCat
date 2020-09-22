@@ -76,16 +76,12 @@ namespace BeatGame.UI.Controllers
                 HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(
                     songData.SongInfoFileData.SongName,
                     songData.SongInfoFileData.LevelAuthorName,
-                songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty);
-                //difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus"));
+                    songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty);
+
                 if (HighScoreData.Score == 0)
-                {
                     ScoreText.text = "-";
-                }
                 else
-                {
                     ScoreText.text = HighScoreData.Score.ToString();
-                }
             }
 
             BPMValueText.text = songData.SongInfoFileData.BeatsPerMinute.ToString();
@@ -169,7 +165,7 @@ namespace BeatGame.UI.Controllers
         public void PlayLevel()
         {
             CurrentSongDataManager.Instance.SelectedSongData = songData;
-            CurrentSongDataManager.Instance.Difficulity = difficultyTabGroup.SelectedTab.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Replace("+", "Plus");
+            CurrentSongDataManager.Instance.Difficulity = songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty;
 
             GameManager.Instance.PlayLevel();
         }
