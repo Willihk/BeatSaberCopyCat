@@ -214,29 +214,26 @@ namespace BeatGame.Logic.Managers
                 BPM = SelectedSongData.SongInfoFileData.BeatsPerMinute,
                 NoteJumpSpeed = SelectedDifficultyMap.NoteJumpMovementSpeed,
                 NoteJumpStartBeatOffset = (float)SelectedDifficultyMap.NoteJumpStartBeatOffset,
-                SecondEquivalentOfBeat = (double)60 / SelectedSongData.SongInfoFileData.BeatsPerMinute,
+                SecondEquivalentOfBeat = 60 / SelectedSongData.SongInfoFileData.BeatsPerMinute,
             };
-            // Taken from SpawnDistanceCalc by kyle1413
 
-            float num4 = 1f;
-            float num5 = 18f;
-            float num6 = 4f;
-            float num8 = num6;
-            while (SongSpawningInfo.NoteJumpSpeed * SongSpawningInfo.SecondEquivalentOfBeat * num8 > num5)
+            float jumpSpeedThreshold = 18f;
+            float minHalfJumpDuration = 1f;
+            float halfJumpDuration = 4f;
+
+            while (SongSpawningInfo.NoteJumpSpeed * SongSpawningInfo.SecondEquivalentOfBeat * halfJumpDuration > jumpSpeedThreshold)
             {
-                num8 /= 2f;
+                halfJumpDuration /= 2f;
             }
 
-            float HalfJumpDuration = num8 + SongSpawningInfo.NoteJumpStartBeatOffset;
+            halfJumpDuration += SongSpawningInfo.NoteJumpStartBeatOffset;
 
-            if ((double)HalfJumpDuration < num4)
-            {
-                HalfJumpDuration = num4;
-            }
+            if (halfJumpDuration < minHalfJumpDuration)
+                halfJumpDuration = minHalfJumpDuration;
 
-            SongSpawningInfo.HalfJumpDuration = HalfJumpDuration;
-            SongSpawningInfo.DistanceToMove = (float)SongSpawningInfo.SecondEquivalentOfBeat * 2.0f * 150.0f;
-            SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (((float)SongSpawningInfo.SecondEquivalentOfBeat) * (HalfJumpDuration * 2));
+            SongSpawningInfo.HalfJumpDuration = halfJumpDuration;
+            SongSpawningInfo.JumpDistance = SongSpawningInfo.NoteJumpSpeed * (SongSpawningInfo.SecondEquivalentOfBeat * (halfJumpDuration * 2));
+
             SongSpawningInfo.JumpDistance += 1.4f;
         }
 
@@ -245,7 +242,7 @@ namespace BeatGame.Logic.Managers
         {
             [ReadOnly]
             public bool UsesNoodleExtensions;
-           
+
             [ReadOnly]
             public float NoteJumpSpeed;
             [ReadOnly]

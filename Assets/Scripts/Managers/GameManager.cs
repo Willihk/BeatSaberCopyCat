@@ -1,7 +1,9 @@
 ﻿using BeatGame.Data;
+using BeatGame.Logic.Saber;
 using BeatGame.UI.Controllers;
 using System;
 using System.Collections;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -149,7 +151,8 @@ namespace BeatGame.Logic.Managers
 
                 LastBeat = CurrentBeat;
                 CurrentBeat += 1 / CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * Time.deltaTime;
-                if (CurrentBeat > (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration + audioSource.clip.length) && !audioSource.isPlaying)
+                if (CurrentBeat > ((CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat
+                                    * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration) + audioSource.clip.length) && !audioSource.isPlaying)
                 {
                     IsPlaying = false;
                     CurrentBeat = 0;
@@ -171,7 +174,7 @@ namespace BeatGame.Logic.Managers
 
                 OnSongStart?.Invoke();
                 IsPlaying = true;
-                Invoke(nameof(PlaySong), (float)(CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration));
+                Invoke(nameof(PlaySong), CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration);
             });
         }
 
