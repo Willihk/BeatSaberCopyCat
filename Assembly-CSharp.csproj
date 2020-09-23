@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\UI\Components\Tabs\TabButton.cs" />
     <Compile Include="Assets\Scripts\UI\InGame\SongCompletedUIController.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\NoteData.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Detection\InsideObstacleDetectionSystem.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\SongInfoFileData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\CustomData\CustomEventData.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Modified\TransformData.cs" />
@@ -164,7 +165,8 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
-    <Compile Include="Assets\Scripts\ECS\Systems\Detection\InsideObstacleDetectionSystem.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Detection\SaberHitDetectionSystem.cs" />
+    <Compile Include="Assets\Scripts\Data\Saber\SaberNoteHitData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
