@@ -134,14 +134,17 @@ public class SaberHitDetectionSystem : SystemBase
             NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
             NativeArray<Rotation> rotations = chunk.GetNativeArray(RotationType);
 
+            bool hitNote = false;
             for (int i = 0; i < chunk.Count; i++)
             {
+                hitNote = false;
                 for (int offsetIndex = 0; offsetIndex < RaycastOffsets.Length; offsetIndex++)
                 {
                     for (int saberIndex = 0; saberIndex < SaberDatas.Length; saberIndex++)
                     {
                         if (renderBounds[i].Value.ToBounds().IntersectRay(new Ray(SaberDatas[saberIndex].Position + RaycastOffsets[offsetIndex], SaberDatas[saberIndex].Forward), out float distance)
-                            && distance <= SaberDatas[saberIndex].Length)
+                            && distance <= SaberDatas[saberIndex].Length
+                            && notes[i].Type == SaberDatas[saberIndex].AffectsNoteType)
                         {
                             Debug.Log("Hit note " + distance.ToString());
                             HitDetections.Enqueue(new HitData
@@ -151,8 +154,12 @@ public class SaberHitDetectionSystem : SystemBase
                                 Position = translations[i].Value,
                                 Rotation = rotations[i].Value
                             });
+                            hitNote = true;
+                            break;
                         }
                     }
+                    if (hitNote)
+                        break;
                 }
             }
         }
@@ -169,6 +176,7 @@ public class SaberHitDetectionSystem : SystemBase
     struct SaberData
     {
         public float Length;
+        public float AffectsNoteType;
         public float3 Position;
         public float3 Forward;
     }
