@@ -215,6 +215,10 @@ namespace BeatGame.Logic.Saber
 
                 //DestroyNote(entity);
             }
+            else
+            {
+                Debug.Log("Invalid cut");
+            }
         }
 
         public bool IsValidCut(Vector3 to, out float angle)
