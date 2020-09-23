@@ -141,7 +141,7 @@ namespace BeatGame.Logic.Saber
                             var note = EntityManager.GetComponentData<Note>(hit.Entity);
                             if (note.Type == affectsNoteType)
                             {
-                                HitNote(hit.Entity, note.CutDirection);
+                                //HitNote(hit.Entity, note.CutDirection);
                             }
                             else if (note.Type == 3)
                             {
@@ -164,7 +164,7 @@ namespace BeatGame.Logic.Saber
             //    return;
 
             // Hit Note
-            HitNote(hitData, note.CutDirection);
+            HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
             //    Debug.Log("hit a note correctly");
