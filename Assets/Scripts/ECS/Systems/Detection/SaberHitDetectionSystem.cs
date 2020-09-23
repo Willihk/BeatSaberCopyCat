@@ -48,12 +48,6 @@ public class SaberHitDetectionSystem : SystemBase
         {
             raycastOffsets[i] = saberController.raycastPoints[i].localPosition;
         }
-        //saberDatas.Add(new SaberData
-        //{
-        //    Forward = saberController.transform.forward,
-        //    Position = saberController.transform.position,
-        //    Length = saberController.saberLength
-        //});
 
         registeredControllers.Add(saberController);
         Debug.Log("Registered controller");
@@ -66,6 +60,7 @@ public class SaberHitDetectionSystem : SystemBase
             Debug.Log("No registered controllers");
             return;
         }
+
         saberDatas.Clear();
 
         for (int i = 0; i < registeredControllers.Count; i++)
@@ -76,12 +71,6 @@ public class SaberHitDetectionSystem : SystemBase
                 Position = registeredControllers[i].transform.position,
                 Length = registeredControllers[i].saberLength
             });
-            //saberDatas[i] = new SaberData
-            //{
-            //    Forward = registeredControllers[i].transform.forward,
-            //    Position = registeredControllers[i].transform.position,
-            //    Length = registeredControllers[i].saberLength
-            //};
         }
 
         var job = new DetectionJob
@@ -119,6 +108,9 @@ public class SaberHitDetectionSystem : SystemBase
 
         [ReadOnly]
         public ComponentTypeHandle<WorldRenderBounds> WorldRenderBoundsType;
+
+        [ReadOnly]
+        public ComponentTypeHandle<Note> NoteType;
         [ReadOnly]
         public EntityTypeHandle EntityType;
 
@@ -128,6 +120,7 @@ public class SaberHitDetectionSystem : SystemBase
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityType);
             NativeArray<WorldRenderBounds> renderBounds = chunk.GetNativeArray(WorldRenderBoundsType);
+            NativeArray<Note> notes = chunk.GetNativeArray(NoteType);
 
             for (int i = 0; i < chunk.Count; i++)
             {
@@ -141,7 +134,7 @@ public class SaberHitDetectionSystem : SystemBase
                             Debug.Log("Hit note " + distance.ToString());
                             HitDetections.Enqueue(new HitData
                             {
-                                Type = saberIndex,
+                                Type = notes[i].Type,
                                 Entity = entities[i]
                             });
                         }

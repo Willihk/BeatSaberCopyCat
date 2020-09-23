@@ -163,8 +163,8 @@ namespace BeatGame.Logic.Saber
             //    return;
 
             // Hit Note
-                HitNote(hit, 8);
-            //var note = EntityManager.GetComponentData<Note>(hit);
+            var note = EntityManager.GetComponentData<Note>(hit);
+            HitNote(hit, note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
             //    Debug.Log("hit a note correctly");
