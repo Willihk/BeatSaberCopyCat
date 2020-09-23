@@ -125,8 +125,8 @@ namespace BeatGame.Logic.Saber
                         EntityManager.DestroyEntity(hit.Entity);
                     }
                 }
-                hits.Clear();
             }
+            hits.Clear();
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
