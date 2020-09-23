@@ -10,6 +10,7 @@ using UnityEngine.VFX;
 using Unity.Collections;
 using RaycastHit = Unity.Physics.RaycastHit;
 using Unity.Physics;
+using static SaberHitDetectionSystem;
 
 namespace BeatGame.Logic.Saber
 {
@@ -157,13 +158,13 @@ namespace BeatGame.Logic.Saber
             previousBasePosition = basePoint.position;
         }
 
-        public void HandleHit(Entity hit, Note note)
+        public void HandleHit(HitData hitData)
         {
             //if (velocity < minCutVelocity)
             //    return;
 
             // Hit Note
-            HitNote(hit, note.CutDirection);
+            HitNote(hitData, note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
             //    Debug.Log("hit a note correctly");
@@ -180,12 +181,10 @@ namespace BeatGame.Logic.Saber
             //}
         }
 
-        void HitNote(Entity entity, int noteCutDirection)
+        void HitNote(float3 notePosition, quaternion noteRotation, int noteCutDirection)
         {
-            quaternion noteRotation = EntityManager.GetComponentData<Rotation>(entity).Value;
             fakeNoteTransform.rotation = noteRotation;
 
-            var notePosition = EntityManager.GetComponentData<Translation>(entity).Value;
             fakeNoteTransform.position = notePosition;
 
             Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
@@ -214,7 +213,7 @@ namespace BeatGame.Logic.Saber
 
                 HealthManager.Instance.HitNote();
 
-                DestroyNote(entity);
+                //DestroyNote(entity);
             }
         }
 

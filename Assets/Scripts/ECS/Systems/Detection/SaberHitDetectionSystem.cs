@@ -78,6 +78,9 @@ public class SaberHitDetectionSystem : SystemBase
             SaberDatas = saberDatas,
             RaycastOffsets = raycastOffsets,
             HitDetections = detections.AsParallelWriter(),
+            NoteType = GetComponentTypeHandle<Note>(true),
+            TranslationType = GetComponentTypeHandle<Translation>(true),
+            RotationType = GetComponentTypeHandle<Rotation>(true),
             WorldRenderBoundsType = GetComponentTypeHandle<WorldRenderBounds>(true),
             EntityType = GetEntityTypeHandle(),
         };
@@ -90,7 +93,8 @@ public class SaberHitDetectionSystem : SystemBase
                 if (registeredControllers[i].affectsNoteType == hit.Note.Type)
                 {
                     Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Note.Type);
-                    registeredControllers[i].HandleHit(hit.Entity, hit.Note);
+                    registeredControllers[i].HandleHit(hit);
+                    EntityManager.DestroyEntity(hit.Entity);
                 }
             }
         }
@@ -112,6 +116,10 @@ public class SaberHitDetectionSystem : SystemBase
         [ReadOnly]
         public ComponentTypeHandle<Note> NoteType;
         [ReadOnly]
+        public ComponentTypeHandle<Translation> TranslationType;
+        [ReadOnly]
+        public ComponentTypeHandle<Rotation> RotationType;
+        [ReadOnly]
         public EntityTypeHandle EntityType;
 
         public NativeQueue<HitData>.ParallelWriter HitDetections;
@@ -121,6 +129,9 @@ public class SaberHitDetectionSystem : SystemBase
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityType);
             NativeArray<WorldRenderBounds> renderBounds = chunk.GetNativeArray(WorldRenderBoundsType);
             NativeArray<Note> notes = chunk.GetNativeArray(NoteType);
+
+            NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
+            NativeArray<Rotation> rotations = chunk.GetNativeArray(RotationType);
 
             for (int i = 0; i < chunk.Count; i++)
             {
@@ -135,7 +146,9 @@ public class SaberHitDetectionSystem : SystemBase
                             HitDetections.Enqueue(new HitData
                             {
                                 Note = notes[i],
-                                Entity = entities[i]
+                                Entity = entities[i],
+                                Position = translations[i].Value,
+                                Rotation = rotations[i].Value
                             });
                         }
                     }
@@ -144,10 +157,12 @@ public class SaberHitDetectionSystem : SystemBase
         }
     }
 
-    struct HitData
+   public struct HitData
     {
         public Entity Entity;
         public Note Note;
+        public float3 Position;
+        public quaternion Rotation;
     }
 
     struct SaberData
