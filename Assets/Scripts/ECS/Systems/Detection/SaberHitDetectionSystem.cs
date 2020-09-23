@@ -79,6 +79,7 @@ public class SaberHitDetectionSystem : SystemBase
             RaycastOffsets = raycastOffsets,
             HitDetections = detections.AsParallelWriter(),
             WorldRenderBoundsType = GetComponentTypeHandle<WorldRenderBounds>(true),
+            NoteType = GetComponentTypeHandle<Note>(true),
             EntityType = GetEntityTypeHandle(),
         };
         job.Schedule(noteQuery).Complete();
