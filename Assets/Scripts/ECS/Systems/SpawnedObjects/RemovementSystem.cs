@@ -78,6 +78,16 @@ public class RemovementSystem : SystemBase
         }).Schedule(Dependency).Complete();
     }
 
+    public void RemoveAllSpawnedObjects()
+    {
+        EntityCommandBuffer commandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
+
+        Entities.ForEach((Entity entity, ref DestroyOnBeat destroyOnBeat) =>
+        {
+            commandBuffer.DestroyEntity(entity);
+        }).Schedule(Dependency).Complete();
+    }
+
 
     [BurstCompile]
     struct MoveOutJob : IJobChunk

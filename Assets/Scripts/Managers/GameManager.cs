@@ -45,6 +45,8 @@ namespace BeatGame.Logic.Managers
 
         AudioClip songClip;
 
+        RemovementSystem removementSystem;
+
         private void Awake()
         {
             if (Instance == null)
@@ -55,6 +57,7 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
+            removementSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RemovementSystem>();
             HealthManager.Instance.OnDeath += GameOver;
             LoadMenu();
             SceneFader.Instance.FadeOut(1);
@@ -68,6 +71,7 @@ namespace BeatGame.Logic.Managers
 
             SceneFader.Instance.FadeIn(.3f, () =>
             {
+                removementSystem.RemoveAllSpawnedObjects();
                 ActivatePointer();
 
                 SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
@@ -166,6 +170,7 @@ namespace BeatGame.Logic.Managers
         {
             SceneFader.Instance.FadeIn(1, () =>
             {
+                removementSystem.RemoveAllSpawnedObjects();
                 SceneFader.Instance.FadeOut(.5f);
 
                 CurrentBeat = 0;
@@ -181,6 +186,7 @@ namespace BeatGame.Logic.Managers
         public void DisplayEndScreen()
         {
             ActivatePointer();
+            removementSystem.RemoveAllSpawnedObjects();
 
             SongCompletedUIController.Instance.canvas.worldCamera = pointerCamera;
             SongCompletedUIController.Instance.Display();
@@ -190,6 +196,7 @@ namespace BeatGame.Logic.Managers
         {
             SceneFader.Instance.FadeIn(1.5f, () =>
             {
+                removementSystem.RemoveAllSpawnedObjects();
                 SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
                 SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
                 SceneFader.Instance.FadeOut(.5f);
