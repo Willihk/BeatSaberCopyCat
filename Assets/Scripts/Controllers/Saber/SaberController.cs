@@ -126,33 +126,33 @@ namespace BeatGame.Logic.Saber
 
             raycastHits.Clear();
 
-            if (velocity >= minCutVelocity)
-            {
-                for (int i = 0; i < raycastPoints.Length; i++)
-                {
-                    //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+            //if (velocity >= minCutVelocity)
+            //{
+            //    for (int i = 0; i < raycastPoints.Length; i++)
+            //    {
+            //        //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
 
-                    for (int j = 0; j < raycastHits.Length; j++)
-                    {
-                        var hit = raycastHits[j];
-                        if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
-                        {
-                            // Hit Note
-                            var note = EntityManager.GetComponentData<Note>(hit.Entity);
-                            if (note.Type == affectsNoteType)
-                            {
-                                //HitNote(hit.Entity, note.CutDirection);
-                            }
-                            else if (note.Type == 3)
-                            {
-                                // Hit Bomb
-                                HealthManager.Instance.HitBomb();
-                            }
-                        }
-                    }
-                    raycastHits.Clear();
-                }
-            }
+            //        for (int j = 0; j < raycastHits.Length; j++)
+            //        {
+            //            var hit = raycastHits[j];
+            //            if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
+            //            {
+            //                // Hit Note
+            //                var note = EntityManager.GetComponentData<Note>(hit.Entity);
+            //                if (note.Type == affectsNoteType)
+            //                {
+            //                    //HitNote(hit.Entity, note.CutDirection);
+            //                }
+            //                else if (note.Type == 3)
+            //                {
+            //                    // Hit Bomb
+            //                    HealthManager.Instance.HitBomb();
+            //                }
+            //            }
+            //        }
+            //        raycastHits.Clear();
+            //    }
+            //}
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
@@ -190,7 +190,7 @@ namespace BeatGame.Logic.Saber
             Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
             float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
             float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
-
+            Debug.Log(tipAngle);
             Vector3 tipCutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
             Vector3 baseCutDir = fakeNoteTransform.InverseTransformVector(basePoint.position - (Vector3)previousBasePosition);
             if (IsValidCut(tipCutDir, out _) || IsValidCut(baseCutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || noteCutDirection == 8)
