@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6242571814131689536}
   - component: {fileID: 1611799487154180398}
   - component: {fileID: 9000027709089883453}
-  - component: {fileID: -8925921344216490416}
   m_Layer: 8
   m_Name: Note Blue
   m_TagString: Untagged
@@ -112,19 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Beat: 0
---- !u!65 &-8925921344216490416
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6242571814131689567}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.3647788, y: 2, z: 4.8564196}
-  m_Center: {x: 0, y: 0, z: -0.24789102}
 --- !u!1 &6242571814475582116
 GameObject:
   m_ObjectHideFlags: 0

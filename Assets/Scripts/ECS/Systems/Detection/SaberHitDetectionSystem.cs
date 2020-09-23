@@ -55,6 +55,12 @@ public class SaberHitDetectionSystem : SystemBase
         Debug.Log("Registered controller");
     }
 
+    public void UnregisterController(SaberController saberController)
+    {
+        registeredControllers.Remove(saberController);
+        Debug.Log("Unregistered controller");
+    }
+
     protected override void OnUpdate()
     {
         if (registeredControllers.Count == 0)

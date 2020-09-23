@@ -44,12 +44,14 @@ namespace BeatGame.Logic.Saber
 
         NativeList<SaberNoteHitData> hits;
 
+        SaberHitDetectionSystem detectionSystem;
+
         private void Start()
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             hits = new NativeList<SaberNoteHitData>(4, Allocator.Persistent);
 
-            SaberHitDetectionSystem detectionSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
+            World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
             detectionSystem.RegisterController(this);
         }
 
@@ -57,11 +59,16 @@ namespace BeatGame.Logic.Saber
         {
             hits.Dispose();
         }
+        private void OnEnable()
+        {
+            detectionSystem.RegisterController(this);
+        }
 
         private void OnDisable()
         {
             isInContact = false;
             hitVFX.SendEvent("Stop");
+            detectionSystem.UnregisterController(this);
         }
 
         private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
