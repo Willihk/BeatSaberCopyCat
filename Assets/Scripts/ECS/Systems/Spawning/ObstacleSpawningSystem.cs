@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -103,13 +104,14 @@ public class ObstacleSpawningSystem : SystemBase
                     CommandBuffer.AddComponent(index, entity, new CustomSpeed { Value = obstacle.TransformData.Speed });
                 }
 
-                //CommandBuffer.AddComponent<CompositeScale>(index, entity);
                 CommandBuffer.SetComponent(index, entity, new NonUniformScale { Value = new float3(obstacle.TransformData.Scale.c0.x, obstacle.TransformData.Scale.c1.y, obstacle.TransformData.Scale.c2.z) });
-                //CommandBuffer.SetComponent(index, entity, new CompositeScale { Value = obstacle.TransformData.Scale });
 
                 CommandBuffer.SetComponent(index, entity, new Rotation { Value = obstacle.TransformData.LocalRotation });
 
                 CommandBuffer.SetComponent(index, entity, new DestroyOnBeat { Beat = (float)CurrentBeat + spawnOffset + (obstacle.TransformData.Scale.c2.z * 2 / Speed) });
+
+                CommandBuffer.SetComponent(index, entity, new WorldRenderBounds { Value = new AABB { Extents = new float3(obstacle.TransformData.Scale.c0.x, obstacle.TransformData.Scale.c1.y, obstacle.TransformData.Scale.c2.z) / 2 } });
+
 
                 if (obstacle.TransformData.WorldRotation != 0)
                 {
