@@ -48,11 +48,13 @@ namespace BeatGame.Logic.Saber
         EntityManager EntityManager;
 
         NativeList<RaycastHit> raycastHits;
+        NativeList<HitData> hits;
 
         private void Start()
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             raycastHits = new NativeList<RaycastHit>(4, Allocator.Persistent);
+            hits = new NativeList<HitData>(4, Allocator.Persistent);
 
             var system = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
             system.RegisterController(this);
@@ -60,6 +62,7 @@ namespace BeatGame.Logic.Saber
 
         void OnDestroy()
         {
+            hits.Dispose();
             raycastHits.Dispose();
         }
 
@@ -126,33 +129,27 @@ namespace BeatGame.Logic.Saber
 
             raycastHits.Clear();
 
-            //if (velocity >= minCutVelocity)
-            //{
-            //    for (int i = 0; i < raycastPoints.Length; i++)
-            //    {
-            //        //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
+            if (velocity >= minCutVelocity)
+            {
+                //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
 
-            //        for (int j = 0; j < raycastHits.Length; j++)
-            //        {
-            //            var hit = raycastHits[j];
-            //            if (hit.Entity != Entity.Null && EntityManager.HasComponent<Note>(hit.Entity))
-            //            {
-            //                // Hit Note
-            //                var note = EntityManager.GetComponentData<Note>(hit.Entity);
-            //                if (note.Type == affectsNoteType)
-            //                {
-            //                    //HitNote(hit.Entity, note.CutDirection);
-            //                }
-            //                else if (note.Type == 3)
-            //                {
-            //                    // Hit Bomb
-            //                    HealthManager.Instance.HitBomb();
-            //                }
-            //            }
-            //        }
-            //        raycastHits.Clear();
-            //    }
-            //}
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    var hit = hits[i];
+                    // Hit Note
+                    if (hit.Note.Type == affectsNoteType && HitNote(hit.Position, hit.Rotation, hit.Note.CutDirection))
+                    {
+                        EntityManager.DestroyEntity(hit.Entity);
+                    }
+                    else if (hit.Note.Type == 3)
+                    {
+                        // Hit Bomb
+                        HealthManager.Instance.HitBomb();
+                        EntityManager.DestroyEntity(hit.Entity);
+                    }
+                }
+                hits.Clear();
+            }
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
@@ -162,9 +159,10 @@ namespace BeatGame.Logic.Saber
         {
             //if (velocity < minCutVelocity)
             //    return;
-
+            hits.Add(hitData);
+            return false;
             // Hit Note
-            return HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
+            //return HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
             //    Debug.Log("hit a note correctly");
