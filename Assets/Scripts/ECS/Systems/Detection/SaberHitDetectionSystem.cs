@@ -79,17 +79,6 @@ public class SaberHitDetectionSystem : SystemBase
             });
         }
 
-        job.Complete();
-        while (detections.TryDequeue(out SaberNoteHitData hit))
-        {
-            for (int i = 0; i < registeredControllers.Count; i++)
-            {
-                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
-                {
-                    registeredControllers[i].RegisterHit(hit);
-                }
-            }
-        }
 
         var newJob = new DetectionJob
         {
@@ -104,6 +93,18 @@ public class SaberHitDetectionSystem : SystemBase
         };
         job = newJob.ScheduleParallel(noteQuery, Dependency);
         Dependency = JobHandle.CombineDependencies(Dependency, job);
+
+        job.Complete();
+        while (detections.TryDequeue(out SaberNoteHitData hit))
+        {
+            for (int i = 0; i < registeredControllers.Count; i++)
+            {
+                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
+                {
+                    registeredControllers[i].RegisterHit(hit);
+                }
+            }
+        }
     }
 
     [BurstCompile]
