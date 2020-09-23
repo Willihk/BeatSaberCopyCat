@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
-using BeatGame.Utility.Physics;
 using Valve.VR;
 using BeatGame.Logic.Managers;
 using UnityEngine.VFX;
 using Unity.Collections;
-using RaycastHit = Unity.Physics.RaycastHit;
-using Unity.Physics;
-using static SaberHitDetectionSystem;
+using BeatGame.Data.Saber;
 
 namespace BeatGame.Logic.Saber
 {
@@ -47,23 +42,20 @@ namespace BeatGame.Logic.Saber
         float3 previousBasePosition;
         EntityManager EntityManager;
 
-        NativeList<RaycastHit> raycastHits;
-        NativeList<HitData> hits;
+        NativeList<SaberNoteHitData> hits;
 
         private void Start()
         {
             EntityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            raycastHits = new NativeList<RaycastHit>(4, Allocator.Persistent);
-            hits = new NativeList<HitData>(4, Allocator.Persistent);
+            hits = new NativeList<SaberNoteHitData>(4, Allocator.Persistent);
 
-            var system = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
-            system.RegisterController(this);
+            SaberHitDetectionSystem detectionSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<SaberHitDetectionSystem>();
+            detectionSystem.RegisterController(this);
         }
 
         void OnDestroy()
         {
             hits.Dispose();
-            raycastHits.Dispose();
         }
 
         private void OnDisable()
@@ -90,54 +82,29 @@ namespace BeatGame.Logic.Saber
         {
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
-            ECSRaycast.RaycastAll(raycastPoints[0].position, raycastPoints[0].position + raycastPoints[0].forward * 1.25f, ref raycastHits);
-
-            bool hasContact = false;
-            for (int i = 0; i < raycastHits.Length; i++)
-            {
-                //Debug.Log(raycastHits[i].Entity);
-
-                if (EntityManager.HasComponent<Obstacle>(raycastHits[i].Entity))
-                {
-                    if (!isInContact)
-                    {
-                        hasContact = true;
-                        isInContact = true;
-                        hitVFX.SendEvent("Contact");
-                    }
-
-                    hitVFX.transform.position = raycastHits[i].Position;
-                }
-            }
 
             if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f))
             {
                 if (!isInContact)
                 {
-                    hasContact = true;
                     isInContact = true;
                     hitVFX.SendEvent("Contact");
                 }
                 hitVFX.transform.position = raycastHit.point;
             }
-
-            if (!hasContact)
+            else
             {
                 isInContact = false;
                 hitVFX.SendEvent("Stop");
             }
 
-            raycastHits.Clear();
-
             if (velocity >= minCutVelocity)
             {
-                //ECSRaycast.RaycastAll(raycastPoints[i].position, raycastPoints[i].position + raycastPoints[i].forward * saberLength, ref raycastHits);
-
                 for (int i = 0; i < hits.Length; i++)
                 {
                     var hit = hits[i];
                     // Hit Note
-                    if (hit.Note.Type == affectsNoteType && HitNote(hit.Position, hit.Rotation, hit.Note.CutDirection))
+                    if (hit.Note.Type == affectsNoteType && HandleHit(hit.Position, hit.Rotation, hit.Note.CutDirection))
                     {
                         EntityManager.DestroyEntity(hit.Entity);
                     }
@@ -155,42 +122,22 @@ namespace BeatGame.Logic.Saber
             previousBasePosition = basePoint.position;
         }
 
-        public bool HandleHit(HitData hitData)
+        public void RegisterHit(SaberNoteHitData hitData)
         {
-            //if (velocity < minCutVelocity)
-            //    return;
             hits.Add(hitData);
-            return false;
-            // Hit Note
-            //return HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
-            //if (note.Type == affectsNoteType)
-            //{
-            //    Debug.Log("hit a note correctly");
-            //    HitNote(hit, note.CutDirection);
-            //}
-            //else if (note.Type == 3)
-            //{
-            //    // Hit Bomb
-            //    HealthManager.Instance.HitBomb();
-            //}
-            //else
-            //{
-            //    Debug.Log("Wrong note type");
-            //}
         }
 
-        bool HitNote(float3 notePosition, quaternion noteRotation, int noteCutDirection)
+        bool HandleHit(float3 notePosition, quaternion noteRotation, int noteCutDirection)
         {
-            fakeNoteTransform.rotation = noteRotation;
-
-            fakeNoteTransform.position = notePosition;
-
             Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, noteRotation, Vector3.one);
             float tipAngle = Vector3.Angle((float3)tipPoint.position - previousTipPosition, matrix.MultiplyPoint(Vector3.up));
             float baseAngle = Vector3.Angle((float3)basePoint.position - previousBasePosition, matrix.MultiplyPoint(Vector3.up));
-            Debug.Log(tipAngle);
+
+            fakeNoteTransform.rotation = noteRotation;
+            fakeNoteTransform.position = notePosition;
             Vector3 tipCutDir = fakeNoteTransform.InverseTransformVector(tipPoint.position - (Vector3)previousTipPosition);
             Vector3 baseCutDir = fakeNoteTransform.InverseTransformVector(basePoint.position - (Vector3)previousBasePosition);
+
             if (IsValidCut(tipCutDir, out _) || IsValidCut(baseCutDir, out _) || baseAngle > hitAngle || tipAngle > hitAngle || noteCutDirection == 8)
             {
                 ScoreManager.Instance.AddScore(100);
@@ -199,7 +146,6 @@ namespace BeatGame.Logic.Saber
                     Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
                 else
                     Pulse(.03f, 160, 1, SteamVR_Input_Sources.LeftHand);
-
 
                 if (SettingsManager.Instance.Settings["General"]["HitEffects"].IntValue == 1)
                 {
@@ -213,12 +159,9 @@ namespace BeatGame.Logic.Saber
 
                 SliceNote();
                 return true;
+
             }
-            else
-            {
-                Debug.Log("Invalid cut");
-                return false;
-            }
+            return false;
         }
 
         public bool IsValidCut(Vector3 to, out float angle)

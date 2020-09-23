@@ -1,7 +1,9 @@
-﻿using BeatGame.Logic.Saber;
+﻿using BeatGame.Data.Saber;
+using BeatGame.Logic.Saber;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -17,7 +19,7 @@ public class SaberHitDetectionSystem : SystemBase
     NativeArray<float3> raycastOffsets;
     NativeList<SaberData> saberDatas;
 
-    NativeQueue<HitData> detections;
+    NativeQueue<SaberNoteHitData> detections;
 
     EntityQuery noteQuery;
 
@@ -25,7 +27,7 @@ public class SaberHitDetectionSystem : SystemBase
 
     protected override void OnCreate()
     {
-        detections = new NativeQueue<HitData>(Allocator.Persistent);
+        detections = new NativeQueue<SaberNoteHitData>(Allocator.Persistent);
         saberDatas = new NativeList<SaberData>(Allocator.Persistent);
         raycastOffsets = new NativeArray<float3>(5, Allocator.Persistent);
 
@@ -56,10 +58,7 @@ public class SaberHitDetectionSystem : SystemBase
     protected override void OnUpdate()
     {
         if (registeredControllers.Count == 0)
-        {
-            Debug.Log("No registered controllers");
             return;
-        }
 
         saberDatas.Clear();
 
@@ -67,13 +66,26 @@ public class SaberHitDetectionSystem : SystemBase
         {
             saberDatas.Add(new SaberData
             {
+                AffectsNoteType = registeredControllers[i].affectsNoteType,
                 Forward = registeredControllers[i].transform.forward,
                 Position = registeredControllers[i].transform.position,
                 Length = registeredControllers[i].saberLength
             });
         }
 
-        var job = new DetectionJob
+        job.Complete();
+        while (detections.TryDequeue(out SaberNoteHitData hit))
+        {
+            for (int i = 0; i < registeredControllers.Count; i++)
+            {
+                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
+                {
+                    registeredControllers[i].RegisterHit(hit);
+                }
+            }
+        }
+
+        var newJob = new DetectionJob
         {
             SaberDatas = saberDatas,
             RaycastOffsets = raycastOffsets,
@@ -84,25 +96,11 @@ public class SaberHitDetectionSystem : SystemBase
             WorldRenderBoundsType = GetComponentTypeHandle<WorldRenderBounds>(true),
             EntityType = GetEntityTypeHandle(),
         };
-        job.Schedule(noteQuery).Complete();
-
-        while (detections.TryDequeue(out HitData hit))
-        {
-            for (int i = 0; i < registeredControllers.Count; i++)
-            {
-                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
-                {
-                    Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Note.Type);
-
-                    if (registeredControllers[i].HandleHit(hit))
-                        EntityManager.DestroyEntity(hit.Entity);
-                }
-            }
-        }
-        detections.Clear();
+        job = newJob.ScheduleParallel(noteQuery, Dependency);
+        Dependency = JobHandle.CombineDependencies(Dependency, job);
     }
 
-
+    [BurstCompile]
     struct DetectionJob : IJobChunk
     {
         [ReadOnly]
@@ -113,7 +111,6 @@ public class SaberHitDetectionSystem : SystemBase
 
         [ReadOnly]
         public ComponentTypeHandle<WorldRenderBounds> WorldRenderBoundsType;
-
         [ReadOnly]
         public ComponentTypeHandle<Note> NoteType;
         [ReadOnly]
@@ -123,7 +120,7 @@ public class SaberHitDetectionSystem : SystemBase
         [ReadOnly]
         public EntityTypeHandle EntityType;
 
-        public NativeQueue<HitData>.ParallelWriter HitDetections;
+        public NativeQueue<SaberNoteHitData>.ParallelWriter HitDetections;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -134,10 +131,9 @@ public class SaberHitDetectionSystem : SystemBase
             NativeArray<Translation> translations = chunk.GetNativeArray(TranslationType);
             NativeArray<Rotation> rotations = chunk.GetNativeArray(RotationType);
 
-            bool hitNote = false;
             for (int i = 0; i < chunk.Count; i++)
             {
-                hitNote = false;
+                bool hitNote = false;
                 for (int offsetIndex = 0; offsetIndex < RaycastOffsets.Length; offsetIndex++)
                 {
                     for (int saberIndex = 0; saberIndex < SaberDatas.Length; saberIndex++)
@@ -146,8 +142,7 @@ public class SaberHitDetectionSystem : SystemBase
                             && distance <= SaberDatas[saberIndex].Length
                             && notes[i].Type == SaberDatas[saberIndex].AffectsNoteType)
                         {
-                            Debug.Log("Hit note " + distance.ToString());
-                            HitDetections.Enqueue(new HitData
+                            HitDetections.Enqueue(new SaberNoteHitData
                             {
                                 Note = notes[i],
                                 Entity = entities[i],
@@ -163,14 +158,6 @@ public class SaberHitDetectionSystem : SystemBase
                 }
             }
         }
-    }
-
-    public struct HitData
-    {
-        public Entity Entity;
-        public Note Note;
-        public float3 Position;
-        public quaternion Rotation;
     }
 
     struct SaberData
