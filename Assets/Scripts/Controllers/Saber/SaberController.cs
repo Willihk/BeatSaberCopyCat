@@ -157,13 +157,12 @@ namespace BeatGame.Logic.Saber
             previousBasePosition = basePoint.position;
         }
 
-        public void HandleHit(Entity hit)
+        public void HandleHit(Entity hit, Note note)
         {
             //if (velocity < minCutVelocity)
             //    return;
 
             // Hit Note
-            var note = EntityManager.GetComponentData<Note>(hit);
             HitNote(hit, note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
