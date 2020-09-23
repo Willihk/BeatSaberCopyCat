@@ -88,10 +88,10 @@ public class SaberHitDetectionSystem : SystemBase
         {
             for (int i = 0; i < registeredControllers.Count; i++)
             {
-                if (registeredControllers[i].affectsNoteType == hit.Type)
+                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
                 {
-                    Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Type);
-                    registeredControllers[i].HandleHit(hit.Entity);
+                    Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Note.Type);
+                    registeredControllers[i].HandleHit(hit.Entity, hit.Note);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class SaberHitDetectionSystem : SystemBase
                             Debug.Log("Hit note " + distance.ToString());
                             HitDetections.Enqueue(new HitData
                             {
-                                Type = notes[i].Type,
+                                Note = notes[i],
                                 Entity = entities[i]
                             });
                         }
@@ -148,7 +148,7 @@ public class SaberHitDetectionSystem : SystemBase
     struct HitData
     {
         public Entity Entity;
-        public int Type;
+        public Note Note;
     }
 
     struct SaberData
