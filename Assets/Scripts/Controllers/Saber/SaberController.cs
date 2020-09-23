@@ -134,6 +134,12 @@ namespace BeatGame.Logic.Saber
 
         public void RegisterHit(SaberNoteHitData hitData)
         {
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].Entity == hitData.Entity)
+                    return;
+            }
+
             hits.Add(hitData);
         }
 
