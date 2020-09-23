@@ -162,6 +162,8 @@ public class NoteSpawningSystem : SystemBase
 
                 CommandBuffer.SetComponent(index, entity, new Note { Type = Notes[index].Type, CutDirection = Notes[index].CutDirection });
 
+                CommandBuffer.SetComponent(index, entity, new RenderBounds { Value = new AABB { Extents = new float3(1.5f, 1.2f, 2) } });
+
             }
         }
 
