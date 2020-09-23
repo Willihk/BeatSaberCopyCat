@@ -158,13 +158,13 @@ namespace BeatGame.Logic.Saber
             previousBasePosition = basePoint.position;
         }
 
-        public void HandleHit(HitData hitData)
+        public bool HandleHit(HitData hitData)
         {
             //if (velocity < minCutVelocity)
             //    return;
 
             // Hit Note
-            HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
+            return HitNote(hitData.Position, hitData.Rotation, hitData.Note.CutDirection);
             //if (note.Type == affectsNoteType)
             //{
             //    Debug.Log("hit a note correctly");
@@ -181,7 +181,7 @@ namespace BeatGame.Logic.Saber
             //}
         }
 
-        void HitNote(float3 notePosition, quaternion noteRotation, int noteCutDirection)
+        bool HitNote(float3 notePosition, quaternion noteRotation, int noteCutDirection)
         {
             fakeNoteTransform.rotation = noteRotation;
 
@@ -213,11 +213,13 @@ namespace BeatGame.Logic.Saber
 
                 HealthManager.Instance.HitNote();
 
-                //DestroyNote(entity);
+                SliceNote();
+                return true;
             }
             else
             {
                 Debug.Log("Invalid cut");
+                return false;
             }
         }
 
@@ -233,7 +235,7 @@ namespace BeatGame.Logic.Saber
             return false;
         }
 
-        private void DestroyNote(Entity entity)
+        private void SliceNote()
         {
             if (SettingsManager.Instance.Settings["General"]["NoteSlicing"].IntValue == 1)
             {
@@ -243,8 +245,6 @@ namespace BeatGame.Logic.Saber
 
                 SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 9);
             }
-
-            EntityManager.DestroyEntity(entity);
         }
 
         public void ThreePointsToBox(Vector3 p0, Vector3 p1, Vector3 p2, out Vector3 center, out Vector3 halfSize, out Quaternion orientation) //https://github.com/hrincarp/GGJ2017-cart/

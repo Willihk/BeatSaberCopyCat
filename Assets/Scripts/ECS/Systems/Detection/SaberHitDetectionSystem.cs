@@ -93,8 +93,9 @@ public class SaberHitDetectionSystem : SystemBase
                 if (registeredControllers[i].affectsNoteType == hit.Note.Type)
                 {
                     Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Note.Type);
-                    registeredControllers[i].HandleHit(hit);
-                    EntityManager.DestroyEntity(hit.Entity);
+
+                    if (registeredControllers[i].HandleHit(hit))
+                        EntityManager.DestroyEntity(hit.Entity);
                 }
             }
         }
@@ -157,7 +158,7 @@ public class SaberHitDetectionSystem : SystemBase
         }
     }
 
-   public struct HitData
+    public struct HitData
     {
         public Entity Entity;
         public Note Note;
