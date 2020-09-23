@@ -6,13 +6,13 @@ namespace BeatGame.Data
     public struct SongSpawningInfo
     {
         public float BPM;
+     
         public float NoteJumpSpeed;
         public float NoteJumpStartBeatOffset;
 
-        public double SecondEquivalentOfBeat;
-        public double HalfJumpDuration;
+        public float SecondEquivalentOfBeat;
+        public float HalfJumpDuration;
 
         public float JumpDistance;
-        public float DistanceToMove;
     }
 }
