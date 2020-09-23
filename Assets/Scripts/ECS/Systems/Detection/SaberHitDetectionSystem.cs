@@ -82,7 +82,7 @@ public class SaberHitDetectionSystem : SystemBase
             NoteType = GetComponentTypeHandle<Note>(true),
             EntityType = GetEntityTypeHandle(),
         };
-        job.Schedule(noteQuery).Complete();
+        job.Run(noteQuery);
 
         while (detections.TryDequeue(out HitData hit))
         {
@@ -90,7 +90,6 @@ public class SaberHitDetectionSystem : SystemBase
             {
                 if (registeredControllers[i].affectsNoteType == hit.Note.Type)
                 {
-                    Debug.Log(registeredControllers[i].affectsNoteType + " hit note type: " + hit.Note.Type);
                     registeredControllers[i].HandleHit(hit.Entity, hit.Note);
                 }
             }
