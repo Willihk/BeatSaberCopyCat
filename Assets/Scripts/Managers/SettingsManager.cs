@@ -47,7 +47,6 @@ namespace BeatGame.Logic.Managers
             Settings = new Configuration();
 
             Settings["General"]["FastLoad"].IntValue = 1;
-            Settings["General"]["Reflections"].IntValue = 1;
             Settings["General"]["HeightOffset"].FloatValue = 0;
             Settings["General"]["HitEffects"].IntValue = 1;
             Settings["General"]["NoteSlicing"].IntValue = 1;
