@@ -65,9 +65,6 @@ namespace BeatGame.Logic.Managers
             var newLeftSaber = Instantiate(LoadedSabers[saberIndex].SaberObject.transform.Find("LeftSaber"), leftSaberHolder.transform);
             var newRightSaber = Instantiate(LoadedSabers[saberIndex].SaberObject.transform.Find("RightSaber"), rightSaberHolder.transform);
 
-            newLeftSaber.transform.localPosition = Vector3.zero;
-            newRightSaber.transform.localPosition = Vector3.zero;
-
             CreateTrail(newLeftSaber.gameObject);
             CreateTrail(newRightSaber.gameObject, false);
 
