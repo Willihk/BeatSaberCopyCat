@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using BeatGame.Logic.VR;
 using UnityEngine.EventSystems;
 
 namespace  BeatGame.Logic.VR
@@ -17,7 +15,6 @@ namespace  BeatGame.Logic.VR
         LineRenderer lineRenderer;
         VRInputModule inputModule;
 
-        // Use this for initialization
         void Start()
         {
             if (lineRenderer == null)
@@ -29,7 +26,6 @@ namespace  BeatGame.Logic.VR
             inputModule = EventSystem.current.gameObject.GetComponent<VRInputModule>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             // Use default or distance
