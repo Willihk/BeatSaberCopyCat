@@ -35,6 +35,7 @@ namespace BeatGame.Logic.Managers
             Material material = noteType == 1 ? RightCutMaterial : LeftCutMaterial;
 
             SlicedHull hull = baseNote.Slice(baseNote.gameObject.transform.position, direction, material);
+            rightDirection += -baseNote.transform.forward;
 
             if (hitVelocity >= 4)
             {

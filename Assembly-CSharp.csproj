@@ -138,6 +138,7 @@
     <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\Line.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Movement\MoveOverTime.cs" />
     <Compile Include="Assets\Scripts\Utility\MessagePack\Formatters\Float4Formatter.cs" />
+    <Compile Include="Assets\Scripts\Data\Saber\SaberNoteHitData.cs" />
     <Compile Include="Assets\Scripts\Utility\UseGlobalOffset.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tabs\TabGroup.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Song Browser\SongBrowser.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawObstacleData.cs" />
     <Compile Include="Assets\Scripts\Utility\Other\BetterBloomController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Saber\TrailHandler.cs" />
+    <Compile Include="Assets\Scripts\ECS\Systems\Detection\SaberHitDetectionSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\CheckBoxSettingController.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ScrollBarExtensions\ScrollElementsContainer.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\SceneIndexes.cs" />
@@ -165,8 +167,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
-    <Compile Include="Assets\Scripts\ECS\Systems\Detection\SaberHitDetectionSystem.cs" />
-    <Compile Include="Assets\Scripts\Data\Saber\SaberNoteHitData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
