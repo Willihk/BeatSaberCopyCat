@@ -35,7 +35,7 @@ namespace BeatGame.Logic.Managers
             Material material = noteType == 1 ? RightCutMaterial : LeftCutMaterial;
 
             SlicedHull hull = baseNote.Slice(baseNote.gameObject.transform.position, direction, material);
-            rightDirection += -baseNote.transform.forward;
+            var forwardForce = baseNote.transform.forward;
 
             if (hitVelocity >= 4)
             {
@@ -46,12 +46,12 @@ namespace BeatGame.Logic.Managers
             {
                 GameObject hullObject = hull.CreateLowerHull(baseNote.gameObject, material);
                 var rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddForce(rightDirection * hitVelocity * forceMultiplier);
+                rigidbody.AddForce((rightDirection + forwardForce) * hitVelocity * forceMultiplier);
                 Destroy(hullObject, 10);
 
                 hullObject = hull.CreateUpperHull(baseNote.gameObject, material);
                 rigidbody = hullObject.AddComponent<Rigidbody>();
-                rigidbody.AddForce(-rightDirection * hitVelocity * forceMultiplier);
+                rigidbody.AddForce((-rightDirection + forwardForce) * hitVelocity * forceMultiplier);
                 Destroy(hullObject, 10);
             }
         }

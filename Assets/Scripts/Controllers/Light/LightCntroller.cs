@@ -80,8 +80,7 @@ namespace BeatGame.Logic.Lighting
 
         public virtual void TurnOff()
         {
-            light.intensity = 0;
-            light.color = Color.grey;
+            light.intensity = 1;
         }
 
         public virtual void TurnOn()
@@ -143,6 +142,7 @@ namespace BeatGame.Logic.Lighting
 
                 yield return null;
             }
+            TurnOff();
         }
     }
 }
