@@ -53,12 +53,13 @@ namespace BeatGame.UI.Controllers
             }
 
             songNameText.text = CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName;
-            difficultyText.text = CurrentSongDataManager.Instance.Difficulity;
+            difficultyText.text = CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty.Replace("Plus", "+");
             scoreText.text = ScoreManager.Instance.CurrentScore.ToString();
 
             highScore = HighScoreManager.Instance.GetHighScoreForSong(
                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName,
                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.LevelAuthorName,
+               CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[CurrentSongDataManager.Instance.DifficultySetIndex].BeatmapCharacteristicName,
                CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty);
 
             if (ScoreManager.Instance.CurrentScore > highScore.Score && !failed)

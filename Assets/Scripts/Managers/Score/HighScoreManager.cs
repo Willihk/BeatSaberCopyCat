@@ -30,12 +30,13 @@ namespace BeatGame.Logic.Managers
             }
         }
 
-        public HighScoreData GetHighScoreForSong(string songName, string levelAuthor, string Difficulty)
+        public HighScoreData GetHighScoreForSong(string songName, string levelAuthor, string difficultySet, string Difficulty)
         {
             var songData = new HighScoreData
             {
                 SongName = songName,
                 LevelAuthor = levelAuthor,
+                DifficultySet = difficultySet,
                 Difficulty = Difficulty,
                 Score = 0
             };

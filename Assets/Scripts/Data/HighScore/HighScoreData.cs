@@ -10,6 +10,8 @@ namespace BeatGame.Data.Score
         public string SongName;
         [Key("LevelAuthor")]
         public string LevelAuthor;
+        [Key("DifficultySet")]
+        public string DifficultySet;
         [Key("Difficulty")]
         public string Difficulty;
         [Key("Score")]
@@ -17,7 +19,7 @@ namespace BeatGame.Data.Score
 
         public bool Equals(HighScoreData other)
         {
-            return SongName.Equals(other.SongName) && LevelAuthor.Equals(other.LevelAuthor) && Difficulty.Equals(other.Difficulty);
+            return SongName.Equals(other.SongName) && LevelAuthor.Equals(other.LevelAuthor) && Difficulty.Equals(other.Difficulty) && DifficultySet.Equals(other.DifficultySet);
         }
 
         public override string ToString()

@@ -23,6 +23,8 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         private TextMeshProUGUI ScoreText;
         [SerializeField]
+        TabGroup difficultySetTabGroup;
+        [SerializeField]
         TabGroup difficultyTabGroup;
         [SerializeField]
         GameObject difficultyTabPrefab;
@@ -37,6 +39,8 @@ namespace BeatGame.UI.Controllers
         private TextMeshProUGUI NoteCountValueText;
 
         AvailableSongData songData;
+
+        int difficultySetIndex;
         int difficultyIndex;
 
         HighScoreData HighScoreData;
@@ -48,8 +52,9 @@ namespace BeatGame.UI.Controllers
             songBackgroundImage.sprite = selectedSongObject.GetComponent<SongEntryController>().CoverImage.sprite;
             songNameText.text = songData.SongInfoFileData.SongName;
 
+            SetupDifficultySets(songData.SongInfoFileData.DifficultyBeatmapSets.Select(x => x.BeatmapCharacteristicName).ToArray());
+            SetupDifficulties(songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
 
-            SetupDifficulty(songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
             StartCoroutine(PreviewSong());
             SetStats();
         }
@@ -61,6 +66,12 @@ namespace BeatGame.UI.Controllers
                 if (songData.SongInfoFileData.SongFilename != string.Empty)
                     PlayLevel();
             }
+        }
+
+        public void DifficultySetChanged(int index)
+        {
+            difficultySetIndex = index;
+            SetupDifficulties(songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
         }
 
         public void DifficultyChanged(int index)
@@ -76,7 +87,8 @@ namespace BeatGame.UI.Controllers
                 HighScoreData = HighScoreManager.Instance.GetHighScoreForSong(
                     songData.SongInfoFileData.SongName,
                     songData.SongInfoFileData.LevelAuthorName,
-                    songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty);
+                    songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].BeatmapCharacteristicName,
+                    songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps[difficultyIndex].Difficulty);
 
                 if (HighScoreData.Score == 0)
                     ScoreText.text = "-";
@@ -90,7 +102,7 @@ namespace BeatGame.UI.Controllers
                 timeValueText.text = $"{math.floor(songData.AudioClip.length / 60)}:{math.floor(songData.AudioClip.length % 60).ToString("00")}";
         }
 
-        void SetupDifficulty(string[] availableDifficulties)
+        void SetupDifficulties(string[] availableDifficulties)
         {
             for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length; i++)
             {
@@ -110,6 +122,28 @@ namespace BeatGame.UI.Controllers
             }
 
             difficultyTabGroup.OnTabSelected(difficultyTabGroup.TabButtons[0]);
+        }
+
+        void SetupDifficultySets(string[] availableDifficultySets)
+        {
+            for (int i = difficultySetTabGroup.transform.childCount; i < availableDifficultySets.Length; i++)
+            {
+                var tabButtonObject = Instantiate(difficultyTabPrefab, difficultySetTabGroup.transform);
+                tabButtonObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(difficultySetTabGroup);
+            }
+
+            for (int i = 0; i < availableDifficultySets.Length; i++)
+            {
+                var buttonObject = difficultySetTabGroup.TabButtons[i].transform;
+                buttonObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = availableDifficultySets[i].Replace("Plus", "+");
+            }
+
+            for (int i = availableDifficultySets.Length; i < difficultySetTabGroup.transform.childCount; i++)
+            {
+                Destroy(difficultySetTabGroup.TabButtons[i].gameObject);
+            }
+
+            difficultySetTabGroup.OnTabSelected(difficultySetTabGroup.TabButtons[0]);
         }
 
         public IEnumerator PreviewSong()
@@ -165,7 +199,7 @@ namespace BeatGame.UI.Controllers
         public void PlayLevel()
         {
             CurrentSongDataManager.Instance.SelectedSongData = songData;
-            CurrentSongDataManager.Instance.Difficulity = songData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps[difficultyIndex].Difficulty;
+            CurrentSongDataManager.Instance.SelectMap(songData, difficultySetIndex, difficultyIndex);
 
             GameManager.Instance.PlayLevel();
         }

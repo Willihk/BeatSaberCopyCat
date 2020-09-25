@@ -28,13 +28,14 @@ namespace BeatGame.Logic.Managers
 
         public AvailableSongData SelectedSongData;
         public DifficultyBeatmap SelectedDifficultyMap;
-        public string Difficulity;
-
         public MapData MapData;
 
         public SongSpawningInfo SongSpawningInfo;
 
         public bool HasLoadedData;
+
+        public int DifficultySetIndex;
+        int difficultyIndex;
 
         private void Awake()
         {
@@ -171,6 +172,14 @@ namespace BeatGame.Logic.Managers
             return true;
         }
 
+        public void SelectMap(AvailableSongData songData, int difficultySetIndex, int difficultyIndex)
+        {
+            SelectedSongData = songData;
+
+            this.DifficultySetIndex = difficultySetIndex;
+            this.difficultyIndex = difficultyIndex;
+        }
+
         void AssignDataToSystems()
         {
             // Assign Notes
@@ -200,14 +209,7 @@ namespace BeatGame.Logic.Managers
 
         public void SetSpawningData()
         {
-            foreach (var item in SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[0].DifficultyBeatmaps)
-            {
-                if (item.Difficulty == Difficulity)
-                {
-                    SelectedDifficultyMap = item;
-                    break;
-                }
-            }
+            SelectedDifficultyMap = SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[DifficultySetIndex].DifficultyBeatmaps[difficultyIndex];
 
             SongSpawningInfo = new SongSpawningInfo
             {
