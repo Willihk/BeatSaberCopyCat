@@ -19,7 +19,11 @@ namespace BeatGame.Data.Score
 
         public bool Equals(HighScoreData other)
         {
-            return SongName.Equals(other.SongName) && LevelAuthor.Equals(other.LevelAuthor) && Difficulty.Equals(other.Difficulty) && DifficultySet.Equals(other.DifficultySet);
+            return SongName.Equals(other.SongName)
+                && LevelAuthor.Equals(other.LevelAuthor)
+                && Difficulty.Equals(other.Difficulty)
+                && other.DifficultySet != null
+                && DifficultySet.Equals(other.DifficultySet);
         }
 
         public override string ToString()
