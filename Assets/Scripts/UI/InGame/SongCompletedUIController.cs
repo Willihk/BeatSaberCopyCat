@@ -26,8 +26,6 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         FireworkController fireworkController;
 
-        bool failed;
-
         private void OnEnable()
         {
             canvas.worldCamera = Camera.main;
@@ -35,11 +33,8 @@ namespace BeatGame.UI.Controllers
             Instance = this;
         }
 
-        HighScoreData highScore;
-
         public void Display(bool failed = false)
         {
-            this.failed = failed;
             canvas.enabled = true;
             if (failed)
             {
@@ -56,7 +51,7 @@ namespace BeatGame.UI.Controllers
             difficultyText.text = CurrentSongDataManager.Instance.SelectedDifficultyMap.Difficulty.Replace("Plus", "+");
             scoreText.text = ScoreManager.Instance.CurrentScore.ToString();
 
-            highScore = HighScoreManager.Instance.GetHighScoreForSong(
+            HighScoreData highScore = HighScoreManager.Instance.GetHighScoreForSong(
                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.SongName,
                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.LevelAuthorName,
                CurrentSongDataManager.Instance.SelectedSongData.SongInfoFileData.DifficultyBeatmapSets[CurrentSongDataManager.Instance.DifficultySetIndex].BeatmapCharacteristicName,
