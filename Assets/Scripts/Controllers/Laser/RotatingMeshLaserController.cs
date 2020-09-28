@@ -28,12 +28,14 @@ namespace BeatGame.Logic.Lasers
 
         public override void TurnOff()
         {
+            base.TurnOff();
             if (rotationSpeed != 0)
                 transform.rotation = startRotation;
         }
 
         public override void SetMaterial(Material material)
         {
+            base.SetMaterial(material);
             if (renderer != null || TryGetComponent(out renderer))
                 renderer.sharedMaterial = material;
         }

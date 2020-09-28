@@ -14,6 +14,7 @@ namespace BeatGame.Logic.Lasers
 
         public override void SetMaterial(Material material)
         {
+            base.SetMaterial(material);
             if (renderer != null || TryGetComponent(out renderer))
                 renderer.sharedMaterial = material;
         }

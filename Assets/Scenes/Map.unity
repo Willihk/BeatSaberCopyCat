@@ -2994,6 +2994,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
+  laserGroupSize: 1
   laserIntensity: 9
   laserFlashIntensity: 13
 --- !u!1 &374234362
@@ -3048,6 +3049,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
+  laserGroupSize: 1
   laserIntensity: 9
   laserFlashIntensity: 12
 --- !u!114 &374234365
@@ -3196,6 +3198,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 04000000
+  laserGroupSize: 1
   laserIntensity: 9
   laserFlashIntensity: 13
 --- !u!1 &399987298
@@ -4974,6 +4977,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
+  laserGroupSize: 1
   laserIntensity: 9
   laserFlashIntensity: 13
 --- !u!1 &701038740
@@ -5361,6 +5365,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 0300000003000000
+  laserGroupSize: 1
   laserIntensity: 8
   laserFlashIntensity: 10
 --- !u!114 &763970824
@@ -5671,6 +5676,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 020000000c000000
+  laserGroupSize: 1
   laserIntensity: 8
   laserFlashIntensity: 10
 --- !u!114 &805946939
@@ -8603,6 +8609,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 01000000
+  laserGroupSize: 4
   laserIntensity: 9
   laserFlashIntensity: 11
 --- !u!114 &1170679209
@@ -11117,6 +11124,7 @@ MonoBehaviour:
   findLaserControllersInChildren: 1
   controllers: []
   supportedEventTypes: 00000000
+  laserGroupSize: 1
   laserIntensity: 9
   laserFlashIntensity: 12
 --- !u!114 &1742850298

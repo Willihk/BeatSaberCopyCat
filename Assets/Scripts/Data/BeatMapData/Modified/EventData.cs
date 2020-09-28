@@ -19,6 +19,6 @@ namespace BeatGame.Data.Map.Modified
         public float4 Color;
 
         [Key(4)]
-        public float4 PropID;
+        public int PropID;
     }
 }

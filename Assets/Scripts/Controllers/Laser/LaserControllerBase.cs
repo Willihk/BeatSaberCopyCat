@@ -1,14 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace BeatGame.Logic.Lasers
 {
     public class LaserControllerBase : MonoBehaviour
     {
-        public virtual void TurnOff() { }
+        Material material;
 
-        public virtual void TurnOn() { }
+        public virtual void TurnOff()
+        {
+        }
 
-        public virtual void SetMaterial(Material material) { }
+        public virtual void TurnOn()
+        {
+        }
+
+        public virtual void SetMaterial(Material material)
+        {
+            this.material = material;
+        }
+
+        public virtual void SetColor(Color color)
+        {
+            material.SetColor("_Color", color);
+        }
 
         public virtual void SetRotation(float value) { }
     }
