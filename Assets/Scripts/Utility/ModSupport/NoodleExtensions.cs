@@ -11,7 +11,7 @@ namespace BeatGame.Utility.ModSupport
 {
     public static class NoodleExtensions
     {
-        public static TransformData ApplyNoodleExtensionsToTransform(TransformData transformData, CustomSpawnedObjectData customData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
+        public static TransformData ConvertTransform(TransformData transformData, CustomSpawnedObjectData customData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
         {
             if (customData.NoteJumpSpeed == null)
             {
@@ -48,17 +48,17 @@ namespace BeatGame.Utility.ModSupport
             return transformData;
         }
 
-        public static NoteData ConvertNoteDataToNoodleExtensions(NoteData note, RawNoteData rawNoteData, float3 lineOffset)
+        public static NoteData ConvertNoteData(NoteData note, RawNoteData rawNoteData, float3 lineOffset)
         {
-            note.TransformData = ApplyNoodleExtensionsToTransform(note.TransformData, rawNoteData.CustomData, 0, 0, lineOffset);
+            note.TransformData = ConvertTransform(note.TransformData, rawNoteData.CustomData, 0, 0, lineOffset);
 
             return note;
         }
 
 
-        public static ObstacleData ConvertObstacleDataToNoodleExtensions(ObstacleData obstacle, RawObstacleData rawData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
+        public static ObstacleData ConvertObstacle(ObstacleData obstacle, RawObstacleData rawData, float jumpSpeed, float secondEquivalentOfBeat, float3 lineOffset)
         {
-            obstacle.TransformData = ApplyNoodleExtensionsToTransform(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat, lineOffset);
+            obstacle.TransformData = ConvertTransform(obstacle.TransformData, rawData.CustomData, jumpSpeed, secondEquivalentOfBeat, lineOffset);
 
             obstacle.TransformData.Scale.c2.z = PlacementHelper.ConvertDurationToZScale((float)rawData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2;
             obstacle.TransformData.Position += new float3(obstacle.TransformData.Scale.c0.x / 2 + lineOffset.x * 1.6f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);

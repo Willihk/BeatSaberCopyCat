@@ -114,6 +114,10 @@ namespace BeatGame.Logic.Managers
             if (SelectedDifficultyMap.CustomData.Requirements != null)
                 usesNoodleExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Noodle Extensions");
 
+            bool usesMappingExtensions = false;
+            if (SelectedDifficultyMap.CustomData.Requirements != null)
+                usesMappingExtensions = SelectedDifficultyMap.CustomData.Requirements.Any(x => x == "Mapping Extensions");
+
 
             NativeArray<RawEventData> rawEventDatas = new NativeArray<RawEventData>(mapJsonObject["_events"].ToObject<RawEventData[]>(), Allocator.TempJob);
             NativeArray<EventData> eventDatas = new NativeArray<EventData>(rawEventDatas.Length, Allocator.TempJob);
@@ -133,6 +137,7 @@ namespace BeatGame.Logic.Managers
                 RawData = rawNoteDatas,
                 NoteJumpSpeed = SongSpawningInfo.NoteJumpSpeed,
                 UsesNoodleExtensions = usesNoodleExtensions,
+                UsesMappingExtensions = usesMappingExtensions,
                 LineOffset = SettingsManager.LineOffset,
                 ConvertedData = noteDatas,
             };
@@ -146,6 +151,7 @@ namespace BeatGame.Logic.Managers
             {
                 RawData = rawObstacleDatas,
                 UsesNoodleExtensions = usesNoodleExtensions,
+                UsesMappingExtensions = usesMappingExtensions,
                 LineOffset = SettingsManager.LineOffset,
                 NoteJumpSpeed = SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)SongSpawningInfo.SecondEquivalentOfBeat,
@@ -244,6 +250,8 @@ namespace BeatGame.Logic.Managers
         {
             [ReadOnly]
             public bool UsesNoodleExtensions;
+            [ReadOnly]
+            public bool UsesMappingExtensions;
 
             [ReadOnly]
             public float NoteJumpSpeed;
@@ -263,7 +271,9 @@ namespace BeatGame.Logic.Managers
                     note.TransformData.Speed = NoteJumpSpeed;
 
                     if (UsesNoodleExtensions)
-                        note = NoodleExtensions.ConvertNoteDataToNoodleExtensions(note, RawData[i], LineOffset);
+                        note = NoodleExtensions.ConvertNoteData(note, RawData[i], LineOffset);
+                    else if (UsesMappingExtensions)
+                        note = MappingExtensions.ConvertNoteData(note, RawData[i], LineOffset);
 
                     ConvertedData[i] = note;
                 }
@@ -275,6 +285,8 @@ namespace BeatGame.Logic.Managers
         {
             [ReadOnly]
             public bool UsesNoodleExtensions;
+            [ReadOnly]
+            public bool UsesMappingExtensions;
             [ReadOnly]
             public NativeArray<RawObstacleData> RawData;
             [ReadOnly]
@@ -296,9 +308,11 @@ namespace BeatGame.Logic.Managers
                     obstacle.TransformData.Speed = NoteJumpSpeed;
 
                     if (UsesNoodleExtensions)
-                        obstacle = NoodleExtensions.ConvertObstacleDataToNoodleExtensions(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
+                        obstacle = NoodleExtensions.ConvertObstacle(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
+                    else if (UsesMappingExtensions)
+                        obstacle = MappingExtensions.ConvertObstacleData(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
-                    ConvertedData[i] = obstacle;
+                        ConvertedData[i] = obstacle;
                 }
             }
         }
