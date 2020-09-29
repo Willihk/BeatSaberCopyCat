@@ -18,14 +18,15 @@ namespace BeatGame.Logic.Lasers
         SongEventType[] supportedEventTypes;
 
         [SerializeField]
-        float laserGroupSize = 1;
+        int laserGroupSize = 1;
         [SerializeField]
         protected float laserIntensity = 3;
         [SerializeField]
         protected float laserFlashIntensity = 6;
 
-
         Material[] materials;
+        Coroutine[] fadeRoutines;
+        Coroutine[] FlashRoutines;
 
         private void OnEnable()
         {
@@ -38,11 +39,12 @@ namespace BeatGame.Logic.Lasers
 
             EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
 
-
             if (findLaserControllersInChildren)
                 GetControllersInChildReqursive(transform);
 
             materials = new Material[controllers.Count];
+            fadeRoutines = new Coroutine[controllers.Count];
+            FlashRoutines = new Coroutine[controllers.Count];
 
             for (int i = 0; i < materials.Length; i++)
             {
@@ -51,7 +53,7 @@ namespace BeatGame.Logic.Lasers
                 controllers[i].SetMaterial(materials[i]);
             }
 
-            TurnOff(0);
+            TurnOff(-1);
         }
 
         private void OnDisable()
@@ -75,6 +77,17 @@ namespace BeatGame.Logic.Lasers
             }
         }
 
+        private (int startIndex, int endIndex) GetRangeByPropID(int propID)
+        {
+            if (propID == -1)
+                return (0, materials.Length);
+
+            if (propID * laserGroupSize + laserGroupSize < materials.Length)
+                return (propID * laserGroupSize, propID * laserGroupSize + laserGroupSize);
+
+            return (propID * laserGroupSize, materials.Length);
+        }
+
         private void PlayEvent(int type, EventData eventData)
         {
             if (supportedEventTypes.Any(x => (int)x == type))
@@ -87,10 +100,11 @@ namespace BeatGame.Logic.Lasers
                     case 3:
                     case 4:
                         Color color = new Color(eventData.Color.x, eventData.Color.y, eventData.Color.z, eventData.Color.w);
-                        for (int i = 0; i < laserGroupSize; i++)
+                        var range = GetRangeByPropID(eventData.PropID);
+
+                        for (int i = range.startIndex; i < range.endIndex; i++)
                         {
-                            if (eventData.PropID + i < materials.Length)
-                                materials[eventData.PropID + i].SetColor("_Color", color);
+                            materials[i].SetColor("_Color", color);
                         }
 
                         // Easier value switch
@@ -133,46 +147,68 @@ namespace BeatGame.Logic.Lasers
 
         public virtual void TurnOff(int propID)
         {
-            for (int i = 0; i < laserGroupSize; i++)
+            var range = GetRangeByPropID(propID);
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
             {
-                if (propID + i < materials.Length)
-                    materials[propID + i].SetFloat("_FadeAmount", 0);
+                materials[i].SetFloat("_FadeAmount", 0);
             }
         }
 
         public virtual void TurnOn(int propID)
         {
-            for (int i = 0; i < laserGroupSize; i++)
+            var range = GetRangeByPropID(propID);
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
             {
-                if (propID + i < materials.Length)
-                    materials[propID + i].SetFloat("_FadeAmount", 1);
+                materials[i].SetFloat("_FadeAmount", 1);
             }
         }
 
         public virtual void Flash(int propID)
         {
+            var range = GetRangeByPropID(propID);
+
             TurnOn(propID);
-            StopAllCoroutines();
-            StartCoroutine(FlashMaterial());
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
+            {
+                if (FlashRoutines[i] != null)
+                    StopCoroutine(FlashRoutines[i]);
+
+                if (fadeRoutines[i] != null)
+                    StopCoroutine(fadeRoutines[i]);
+
+
+                FlashRoutines[i] = StartCoroutine(FlashLaser(i));
+            }
         }
 
         public virtual void Fade(int propID)
         {
+            var range = GetRangeByPropID(propID);
+
             TurnOn(propID);
-            StopAllCoroutines();
-            StartCoroutine(FadeLaser());
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
+            {
+                if (fadeRoutines[i] != null)
+                    StopCoroutine(fadeRoutines[i]);
+
+                if (FlashRoutines[i] != null)
+                    StopCoroutine(FlashRoutines[i]);
+
+                fadeRoutines[i] = StartCoroutine(FadeLaser(i));
+            }
         }
 
-        protected IEnumerator FlashMaterial()
+        protected IEnumerator FlashLaser(int index)
         {
             float intensity = laserIntensity;
             while (intensity < laserFlashIntensity)
             {
                 intensity += (laserFlashIntensity - laserIntensity) / .1f * Time.deltaTime;
-                for (int i = 0; i < materials.Length; i++)
-                {
-                    materials[i].SetFloat("_EmissionIntensity", intensity);
-                }
+                materials[index].SetFloat("_EmissionIntensity", intensity);
 
                 yield return null;
             }
@@ -180,31 +216,23 @@ namespace BeatGame.Logic.Lasers
             while (intensity > laserIntensity)
             {
                 intensity -= (laserFlashIntensity - laserIntensity) / .2f * Time.deltaTime;
-                for (int i = 0; i < materials.Length; i++)
-                {
-                    materials[i].SetFloat("_EmissionIntensity", intensity);
-                }
+                materials[index].SetFloat("_EmissionIntensity", intensity);
 
                 yield return null;
             }
-
         }
 
-        protected IEnumerator FadeLaser()
+        protected IEnumerator FadeLaser(int index)
         {
             float fadeAmount = .7f;
             while (fadeAmount > 0)
             {
                 fadeAmount -= .7f / .6f * Time.deltaTime;
-                for (int i = 0; i < materials.Length; i++)
-                {
-                    materials[i].SetFloat("_FadeAmount", fadeAmount);
-                }
+
+                materials[index].SetFloat("_FadeAmount", fadeAmount);
 
                 yield return null;
             }
-
-            TurnOff(0);
         }
     }
 }

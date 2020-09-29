@@ -322,7 +322,7 @@ namespace BeatGame.Logic.Managers
                         Time = RawData[i].Time,
                         Type = RawData[i].Type,
                         Value = RawData[i].Value,
-                        PropID = RawData[i].CustomData.PropID,
+                        PropID = (int)(RawData[i].CustomData.PropID == null ? -1 : RawData[i].CustomData.PropID),
                         Color = new float4
                         {
                             xyz = ChromaSupport.GetColorForEvent(RawData[i]),

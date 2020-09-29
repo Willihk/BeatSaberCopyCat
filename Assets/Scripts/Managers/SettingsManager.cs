@@ -1,4 +1,5 @@
-﻿using SharpConfig;
+﻿using MessagePack;
+using SharpConfig;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,6 +40,12 @@ namespace BeatGame.Logic.Managers
                 CreateNewConfig();
             }
 
+            File.WriteAllText(Settings["Other"]["RootFolderPath"].StringValue + "ModSupport.json", MessagePackSerializer.SerializeToJson(new string[]
+            {
+                    "Noodle Extensions",
+                    "Chroma"
+            }));
+
             GlobalOffset.y = Settings["General"]["HeightOffset"].FloatValue;
         }
 
@@ -59,7 +66,7 @@ namespace BeatGame.Logic.Managers
             Settings["Audio"]["MusicVolume"].FloatValue = .7f;
             Settings["Audio"]["EffectsVolume"].FloatValue = .7f;
 
-            Settings["Other"]["DataFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\";
+            Settings["Other"]["RootFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\";
             Settings["Other"]["SaberFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomSabers\";
             Settings["Other"]["SongFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomLevels\";
 

@@ -19,8 +19,11 @@ namespace BeatGame.Data.Score
 
         public bool Equals(HighScoreData other)
         {
-            return SongName.Equals(other.SongName)
+            return other.SongName != null
+                && SongName.Equals(other.SongName)
+                && other.LevelAuthor != null
                 && LevelAuthor.Equals(other.LevelAuthor)
+                && other.Difficulty != null
                 && Difficulty.Equals(other.Difficulty)
                 && other.DifficultySet != null
                 && DifficultySet.Equals(other.DifficultySet);

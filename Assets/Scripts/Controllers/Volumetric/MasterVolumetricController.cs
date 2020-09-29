@@ -14,13 +14,20 @@ namespace BeatGame.Logic.Volumetrics
         [SerializeField]
         bool findLaserControllersInChildren = false;
         [SerializeField]
-        List<VolumetricControllerBase> controllers;
+        int groupSize = 1;
 
+        [SerializeField]
+        List<VolumetricControllerBase> controllers;
         [SerializeField]
         SongEventType[] supportedEventTypes;
 
         [SerializeField]
         Material material;
+
+        Material[] materials;
+        Coroutine[] fadeRoutines;
+        Coroutine[] FlashRoutines;
+        Color[] currentColors;
 
         Color currentColor;
         float maxAlpha = 0.77f;
@@ -37,9 +44,21 @@ namespace BeatGame.Logic.Volumetrics
 
             EventPlayingSystem.Instance.OnPlayEvent += PlayEvent;
 
-            controllers.ForEach(x => x.SetMaterial(material));
 
-            TurnOff();
+            materials = new Material[controllers.Count];
+            fadeRoutines = new Coroutine[controllers.Count];
+            FlashRoutines = new Coroutine[controllers.Count];
+
+            currentColors = new Color[controllers.Count];
+
+            for (int i = 0; i < materials.Length; i++)
+            {
+                materials[i] = new Material(material);
+
+                controllers[i].SetMaterial(materials[i]);
+            }
+
+            TurnOff(-1);
         }
 
         private void OnDisable()
@@ -63,6 +82,17 @@ namespace BeatGame.Logic.Volumetrics
             }
         }
 
+        private (int startIndex, int endIndex) GetRangeByPropID(int propID)
+        {
+            if (propID == -1)
+                return (0, materials.Length);
+
+            if (propID * groupSize + groupSize < materials.Length)
+                return (propID * groupSize, propID * groupSize + groupSize);
+
+            return (propID * groupSize, materials.Length);
+        }
+
         private void PlayEvent(int type, EventData eventData)
         {
             if (supportedEventTypes.Any(x => (int)x == type))
@@ -74,11 +104,16 @@ namespace BeatGame.Logic.Volumetrics
                     case 2:
                     case 3:
                     case 4:
-                        currentColor.r = eventData.Color.x;
-                        currentColor.g = eventData.Color.y;
-                        currentColor.b = eventData.Color.z;
-                        currentColor.a = maxAlpha;
-                        material.SetColor("_Color", currentColor);
+                        var range = GetRangeByPropID(eventData.PropID);
+
+                        for (int i = range.startIndex; i < range.endIndex; i++)
+                        {
+                            currentColors[i].r = eventData.Color.x;
+                            currentColors[i].g = eventData.Color.y;
+                            currentColors[i].b = eventData.Color.z;
+                            currentColors[i].a = maxAlpha;
+                            materials[i].SetColor("_Color", currentColors[i]);
+                        }
 
                         // Easier value switch
                         if (eventData.Value > 4)
@@ -87,16 +122,16 @@ namespace BeatGame.Logic.Volumetrics
                         switch (eventData.Value)
                         {
                             case 0:
-                                TurnOff();
+                                TurnOff(eventData.PropID);
                                 break;
                             case 1:
-                                TurnOn();
+                                TurnOn(eventData.PropID);
                                 break;
                             case 2:
-                                Flash();
+                                Flash(eventData.PropID);
                                 break;
                             case 3:
-                                Fade();
+                                Fade(eventData.PropID);
                                 break;
                             default:
                                 break;
@@ -108,42 +143,65 @@ namespace BeatGame.Logic.Volumetrics
             }
         }
 
-        public virtual void TurnOff()
+        public virtual void TurnOff(int propID)
         {
-            currentColor.a = 0;
-            material.SetColor("_Color", currentColor);
-        }
+            var range = GetRangeByPropID(propID);
 
-        public virtual void TurnOn()
-        {
-            currentColor.a = maxAlpha;
-            material.SetColor("_Color", currentColor);
-        }
-
-        public virtual void Flash()
-        {
-            StopAllCoroutines();
-            TurnOn();
-        }
-
-        public virtual void Fade()
-        {
-            StopAllCoroutines();
-            TurnOn();
-            StartCoroutine(FadeVolume());
-        }
-
-        protected IEnumerator FadeVolume()
-        {
-            currentColor.a = maxAlpha;
-            while (currentColor.a > 0)
+            for (int i = range.startIndex; i < range.endIndex; i++)
             {
-                currentColor.a -= maxAlpha / .55f * Time.deltaTime;
-                material.SetColor("_Color", currentColor);
+                currentColors[i].a = 0;
+                materials[i].SetColor("_Color", currentColors[i]);
+            }
+        }
+
+        public virtual void TurnOn(int propID)
+        {
+            var range = GetRangeByPropID(propID);
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
+            {
+                currentColors[i].a = maxAlpha;
+                materials[i].SetColor("_Color", currentColors[i]);
+            }
+        }
+
+        public virtual void Flash(int propID)
+        {
+            var range = GetRangeByPropID(propID);
+
+            TurnOn(propID);
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
+            {
+                if (fadeRoutines[i] != null)
+                    StopCoroutine(fadeRoutines[i]);
+            }
+        }
+
+        public virtual void Fade(int propID)
+        {
+            var range = GetRangeByPropID(propID);
+
+            TurnOn(propID);
+
+            for (int i = range.startIndex; i < range.endIndex; i++)
+            {
+                if (fadeRoutines[i] != null)
+                    StopCoroutine(fadeRoutines[i]);
+
+                fadeRoutines[i] = StartCoroutine(FadeVolume(i));
+            }
+        }
+
+        protected IEnumerator FadeVolume(int index)
+        {
+            currentColors[index].a = maxAlpha;
+            while (currentColors[index].a > 0)
+            {
+                currentColors[index].a -= maxAlpha / .55f * Time.deltaTime;
+                materials[index].SetColor("_Color", currentColors[index]);
                 yield return null;
             }
-
-            TurnOff();
         }
     }
 }

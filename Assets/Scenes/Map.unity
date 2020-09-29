@@ -1796,7 +1796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260510316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.3, z: 65.8}
+  m_LocalPosition: {x: 0, y: -10.3, z: 88.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 61142478}
@@ -2976,6 +2976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 00000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -3065,6 +3066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 04000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -4716,6 +4718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 04000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -4959,6 +4962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 01000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -5381,6 +5385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 03000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -5692,6 +5697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 02000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -8568,7 +8574,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170679205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -120}
+  m_LocalPosition: {x: 0, y: 0, z: 140}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 316357705}
@@ -8587,7 +8593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bcc9a541613a9d44a10d7060b99191c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ringCount: 25
+  ringCount: 14
   ringGap: {x: 0, y: 0, z: 60}
   ringObject: {fileID: 316357704}
   rings:
@@ -8625,6 +8631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 4
   controllers: []
   supportedEventTypes: 01000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}
@@ -11140,6 +11147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   findLaserControllersInChildren: 1
+  groupSize: 1
   controllers: []
   supportedEventTypes: 00000000
   material: {fileID: 2100000, guid: 4ae21c24907d80b47b433d7c6f92b786, type: 2}

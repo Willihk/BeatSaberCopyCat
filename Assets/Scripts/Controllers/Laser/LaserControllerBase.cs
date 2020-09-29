@@ -20,11 +20,6 @@ namespace BeatGame.Logic.Lasers
             this.material = material;
         }
 
-        public virtual void SetColor(Color color)
-        {
-            material.SetColor("_Color", color);
-        }
-
         public virtual void SetRotation(float value) { }
     }
 }

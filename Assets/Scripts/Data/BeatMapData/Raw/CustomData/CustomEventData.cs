@@ -11,7 +11,7 @@ namespace BeatGame.Data.Map.Raw
         [JsonProperty("_color"), JsonConverter(typeof(Float4ConverterWithValidation))]
         public float4 Color { get; set; }
 
-        [JsonProperty("_propID")]
-        public int PropID { get; set; }
+        [JsonProperty("_propID", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PropID { get; set; }
     }
 }
