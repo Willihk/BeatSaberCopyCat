@@ -104,8 +104,16 @@ namespace BeatGame.Utility.ModSupport
             var position = GetPosition(rawData.LineIndex, 0, lineOffset);
             if (rawData.Type >= 40001 && rawData.Type <= 4005000)
             {
+                rawData.Type -= 4001;
                 position.y = (4 * (rawData.Type % 1000)) / 1000f;
-                obstacle.TransformData.Scale.c1.y = rawData.Type / 1000f / 1000f;
+
+                rawData.Type /= 1000;
+            }
+            else if (rawData.Type >= 1000)
+            {
+                float normalHeight = lineOffset.y * 2f;
+
+                obstacle.TransformData.Scale.c1.y = (rawData.Type - 1000) / 1000f * normalHeight;
             }
             else
             {
@@ -125,11 +133,10 @@ namespace BeatGame.Utility.ModSupport
                 obstacle.TransformData.Scale.c0.x = rawData.Width;
 
             obstacle.TransformData.Scale.c0.x *= lineOffset.x;
-            obstacle.TransformData.Scale.c1 = new float4(0, rawData.Type == 0 ? lineOffset.y * 4.5f : lineOffset.y * 2, 0, 0);
             obstacle.TransformData.Scale.c2 = new float4(0, 0, PlacementHelper.ConvertDurationToZScale((float)rawData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2, 0);
 
             obstacle.TransformData.Scale.c2.z = PlacementHelper.ConvertDurationToZScale((float)rawData.Duration, jumpSpeed, secondEquivalentOfBeat) / 2;
-            obstacle.TransformData.Position += new float3(lineOffset.x * 1.6f, 0, obstacle.TransformData.Scale.c2.z / 2);
+            obstacle.TransformData.Position += new float3(lineOffset.x * 1.6f, obstacle.TransformData.Scale.c1.y / 2, obstacle.TransformData.Scale.c2.z / 2);
 
             return obstacle;
         }
