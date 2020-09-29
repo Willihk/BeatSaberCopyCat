@@ -50,7 +50,7 @@ namespace BeatGame.UI.Controllers
                 entryObject.GetComponent<SaberEntryController>().Initizalize(SaberManager.Instance.LoadedSabers[i], i);
                 entryObject.GetComponent<Components.Tabs.TabButton>().SetTabGroup(tabGroup);
 
-                yield return new WaitForSeconds(.2f);
+                yield return new WaitForSeconds(.05f);
             }
         }
     }
