@@ -1,5 +1,6 @@
 ﻿using BeatGame.Logic.Managers;
 using System;
+using System.Security.Policy;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -10,6 +11,8 @@ using UnityEngine;
 
 public class InsideObstacleDetectionSystem : SystemBase
 {
+    public event Action OnEnteredObstacle;
+
     NativeQueue<bool> detections;
 
     EntityQuery obstacleQuery;
@@ -45,6 +48,7 @@ public class InsideObstacleDetectionSystem : SystemBase
             if (isInsideObstacle)
             {
                 HealthManager.Instance.InsideObstacle();
+                OnEnteredObstacle?.Invoke();
             }
         }
         detections.Clear();
