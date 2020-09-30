@@ -151,7 +151,6 @@ namespace BeatGame.Logic.Managers
             {
                 RawData = rawObstacleDatas,
                 UsesNoodleExtensions = usesNoodleExtensions,
-                UsesMappingExtensions = usesMappingExtensions,
                 LineOffset = SettingsManager.LineOffset,
                 NoteJumpSpeed = SongSpawningInfo.NoteJumpSpeed,
                 SecondEquivalentOfBeat = (float)SongSpawningInfo.SecondEquivalentOfBeat,
@@ -286,8 +285,6 @@ namespace BeatGame.Logic.Managers
             [ReadOnly]
             public bool UsesNoodleExtensions;
             [ReadOnly]
-            public bool UsesMappingExtensions;
-            [ReadOnly]
             public NativeArray<RawObstacleData> RawData;
             [ReadOnly]
             public float3 LineOffset;
@@ -309,10 +306,8 @@ namespace BeatGame.Logic.Managers
 
                     if (UsesNoodleExtensions)
                         obstacle = NoodleExtensions.ConvertObstacle(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
-                    else if (UsesMappingExtensions)
-                        obstacle = MappingExtensions.ConvertObstacleData(obstacle, RawData[i], NoteJumpSpeed, SecondEquivalentOfBeat, LineOffset);
 
-                        ConvertedData[i] = obstacle;
+                    ConvertedData[i] = obstacle;
                 }
             }
         }
