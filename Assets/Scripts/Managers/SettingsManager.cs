@@ -40,12 +40,6 @@ namespace BeatGame.Logic.Managers
                 CreateNewConfig();
             }
 
-            File.WriteAllText(Settings["Other"]["RootFolderPath"].StringValue + "ModSupport.json", MessagePackSerializer.SerializeToJson(new string[]
-            {
-                    "Noodle Extensions",
-                    "Chroma"
-            }));
-
             GlobalOffset.y = Settings["General"]["HeightOffset"].FloatValue;
         }
 
