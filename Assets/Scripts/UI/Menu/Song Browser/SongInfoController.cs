@@ -3,6 +3,7 @@ using BeatGame.Data.Score;
 using BeatGame.Logic.Managers;
 using BeatGame.UI.Components.Tabs;
 using Newtonsoft.Json.Linq;
+using System.CodeDom;
 using System.Collections;
 using System.IO;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace BeatGame.UI.Controllers
             songNameText.text = songData.SongInfoFileData.SongName;
 
             SetupDifficultySets(songData.SongInfoFileData.DifficultyBeatmapSets.Select(x => x.BeatmapCharacteristicName).ToArray());
-            SetupDifficulties(songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
+            SetupDifficulties();
 
             StartCoroutine(PreviewSong());
             SetStats();
@@ -71,13 +72,33 @@ namespace BeatGame.UI.Controllers
         public void DifficultySetChanged(int index)
         {
             difficultySetIndex = index;
-            SetupDifficulties(songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Select(x => x.Difficulty).ToArray());
+            SetupDifficulties();
         }
 
         public void DifficultyChanged(int index)
         {
             difficultyIndex = index;
             SetStats();
+        }
+
+        string[] GetDifficultyLabels()
+        {
+            string[] labels = new string[songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Length];
+
+            for (int i = 0; i < songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps.Length; i++)
+            {
+                var beatMap = songData.SongInfoFileData.DifficultyBeatmapSets[difficultySetIndex].DifficultyBeatmaps[i];
+
+                if (string.IsNullOrEmpty(beatMap.CustomData.DifficultyLabel))
+                {
+                    labels[i] = beatMap.Difficulty.Replace("Plus", "+");
+                }
+                else
+                {
+                    labels[i] = beatMap.CustomData.DifficultyLabel;
+                }
+            }
+            return labels;
         }
 
         void SetStats()
@@ -102,8 +123,10 @@ namespace BeatGame.UI.Controllers
                 timeValueText.text = $"{math.floor(songData.AudioClip.length / 60)}:{math.floor(songData.AudioClip.length % 60).ToString("00")}";
         }
 
-        void SetupDifficulties(string[] availableDifficulties)
+        void SetupDifficulties()
         {
+            string[] availableDifficulties = GetDifficultyLabels();
+
             for (int i = difficultyTabGroup.transform.childCount; i < availableDifficulties.Length; i++)
             {
                 var tabButtonObject = Instantiate(difficultyTabPrefab, difficultyTabGroup.transform);
@@ -113,7 +136,7 @@ namespace BeatGame.UI.Controllers
             for (int i = 0; i < availableDifficulties.Length; i++)
             {
                 var buttonObject = difficultyTabGroup.TabButtons[i].transform;
-                buttonObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = availableDifficulties[i].Replace("Plus", "+");
+                buttonObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = availableDifficulties[i];
             }
 
             for (int i = availableDifficulties.Length; i < difficultyTabGroup.transform.childCount; i++)
