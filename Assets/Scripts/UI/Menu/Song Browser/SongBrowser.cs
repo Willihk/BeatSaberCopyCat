@@ -25,11 +25,11 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         SongInfoController infoController;
 
-        string customSongFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Beat Saber Songs\";
+        string customSongFolderPath;
 
         private void Start()
         {
-            customSongFolderPath = SettingsManager.Instance.Settings["Other"]["SongFolderPath"].StringValue;
+            customSongFolderPath = SettingsManager.Instance.Settings["Other"]["RootFolderPath"].StringValue + "Beat Saber_Data\\CustomLevels\\";
 
             EnsureSongFolderExists();
             LoadSongs();

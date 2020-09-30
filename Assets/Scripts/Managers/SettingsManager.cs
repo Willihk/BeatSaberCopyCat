@@ -27,13 +27,13 @@ namespace BeatGame.Logic.Managers
 
         private void Awake()
         {
-            Debug.Log("Application Version : " + Application.version);
             if (Instance == null)
                 Instance = this;
 
             if (File.Exists(Application.persistentDataPath + configFile))
             {
                 LoadConfig();
+                UpdateSettingsIfOutdated(Settings);
             }
             else
             {
@@ -47,22 +47,58 @@ namespace BeatGame.Logic.Managers
         {
             Settings = new Configuration();
 
-            Settings["General"]["FastLoad"].IntValue = 1;
-            Settings["General"]["HeightOffset"].FloatValue = 0;
-            Settings["General"]["HitEffects"].IntValue = 1;
-            Settings["General"]["NoteSlicing"].IntValue = 1;
+            PopulateSettingsWithDefault(Settings);
 
-            Settings["Modifiers"]["NoFail"].IntValue = 0;
-            Settings["Modifiers"]["DoubleSaber"].IntValue = 0;
-            Settings["Modifiers"]["NoArrows"].IntValue = 0;
+            SaveConfig();
+        }
 
-            Settings["Audio"]["MasterVolume"].FloatValue = .7f;
-            Settings["Audio"]["MusicVolume"].FloatValue = .7f;
-            Settings["Audio"]["EffectsVolume"].FloatValue = .7f;
+        void PopulateSettingsWithDefault(Configuration settings)
+        {
+            settings["Version"]["Version"].StringValue = Application.version;
 
-            Settings["Other"]["RootFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\";
-            Settings["Other"]["SaberFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomSabers\";
-            Settings["Other"]["SongFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\Beat Saber_Data\CustomLevels\";
+            settings["General"]["FastLoad"].IntValue = 1;
+            settings["General"]["HeightOffset"].FloatValue = 0;
+            settings["General"]["HitEffects"].IntValue = 1;
+            settings["General"]["NoteSlicing"].IntValue = 1;
+
+            settings["Modifiers"]["NoFail"].IntValue = 0;
+            settings["Modifiers"]["DoubleSaber"].IntValue = 0;
+            settings["Modifiers"]["NoArrows"].IntValue = 0;
+
+            settings["Audio"]["MasterVolume"].FloatValue = .7f;
+            settings["Audio"]["MusicVolume"].FloatValue = .7f;
+            settings["Audio"]["EffectsVolume"].FloatValue = .7f;
+
+            settings["Other"]["RootFolderPath"].StringValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\BeatSaber\";
+        }
+
+        void UpdateSettingsIfOutdated(Configuration oldSettings)
+        {
+            var newSettings = new Configuration();
+            PopulateSettingsWithDefault(newSettings);
+
+            if (newSettings["Version"]["Version"].StringValue == oldSettings["Version"]["Version"].StringValue)
+                return;
+
+
+            // Needs a update
+
+            var sectionEnumerator = newSettings.GetEnumerator();
+            while (sectionEnumerator.MoveNext())
+            {
+                var settingEnumerator = sectionEnumerator.Current.GetEnumerator();
+                while (settingEnumerator.MoveNext())
+                {
+                    if (oldSettings.Contains(sectionEnumerator.Current.Name, settingEnumerator.Current.Name))
+                    {
+                        string value = oldSettings[sectionEnumerator.Current.Name][settingEnumerator.Current.Name].RawValue;
+                        newSettings[sectionEnumerator.Current.Name][settingEnumerator.Current.Name].RawValue = value;
+                    }
+                }
+            }
+
+            newSettings["Version"]["Version"].StringValue = Application.version;
+            Settings = newSettings;
 
             SaveConfig();
         }

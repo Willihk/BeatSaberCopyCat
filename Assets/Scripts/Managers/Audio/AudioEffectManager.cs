@@ -31,27 +31,20 @@ namespace BeatGame.Logic.Audio
 
         private void OnDisable()
         {
-            var system = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<InsideObstacleDetectionSystem>();
-            if (system != null)
-                system.OnEnteredObstacle += EnteredObstacle;
+            if (World.DefaultGameObjectInjectionWorld != null)
+            {
+                var system = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<InsideObstacleDetectionSystem>();
+                if (system != null)
+                    system.OnEnteredObstacle += EnteredObstacle;
+            }
         }
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.O))
-            {
-                isInsideObstacle = true;
-            }
-
             if (isInsideObstacle)
-            {
-                insideObstacleSnapshot.TransitionTo(.2f);
-
-            }
+                insideObstacleSnapshot.TransitionTo(.1f);
             else
-            {
-                defaultSnapshot.TransitionTo(.2f);
-            }
+                defaultSnapshot.TransitionTo(.1f);
 
             isInsideObstacle = false;
         }

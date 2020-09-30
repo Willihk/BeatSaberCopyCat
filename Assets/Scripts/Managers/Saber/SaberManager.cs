@@ -41,9 +41,9 @@ namespace BeatGame.Logic.Managers
 
         void EnsureFolderExists()
         {
-            if (!Directory.Exists(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue))
+            if (!Directory.Exists(SettingsManager.Instance.Settings["Other"]["RootFolderPath"].StringValue + "CustomSabers"))
             {
-                Directory.CreateDirectory(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue);
+                Directory.CreateDirectory(SettingsManager.Instance.Settings["Other"]["RootFolderPath"].StringValue + "CustomSabers");
             }
         }
 
@@ -204,7 +204,7 @@ namespace BeatGame.Logic.Managers
 
         IEnumerator LoadSabersRoutine()
         {
-            string[] allBundlePaths = Directory.GetFiles(SettingsManager.Instance.Settings["Other"]["SaberFolderPath"].StringValue, "*.saber");
+            string[] allBundlePaths = Directory.GetFiles(SettingsManager.Instance.Settings["Other"]["RootFolderPath"].StringValue + "CustomSabers", "*.saber");
 
             for (int i = 0; i < allBundlePaths.Length; i++)
             {
