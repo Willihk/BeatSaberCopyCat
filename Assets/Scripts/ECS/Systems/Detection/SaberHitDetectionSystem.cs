@@ -19,7 +19,7 @@ public class SaberHitDetectionSystem : SystemBase
     NativeArray<float3> raycastOffsets;
     NativeList<SaberData> saberDatas;
 
-    NativeQueue<SaberNoteHitData> detections;
+    NativeQueue<SaberHit> detections;
 
     EntityQuery noteQuery;
 
@@ -27,7 +27,7 @@ public class SaberHitDetectionSystem : SystemBase
 
     protected override void OnCreate()
     {
-        detections = new NativeQueue<SaberNoteHitData>(Allocator.Persistent);
+        detections = new NativeQueue<SaberHit>(Allocator.Persistent);
         saberDatas = new NativeList<SaberData>(Allocator.Persistent);
         raycastOffsets = new NativeArray<float3>(5, Allocator.Persistent);
 
@@ -95,14 +95,11 @@ public class SaberHitDetectionSystem : SystemBase
         Dependency = JobHandle.CombineDependencies(Dependency, job);
 
         job.Complete();
-        while (detections.TryDequeue(out SaberNoteHitData hit))
+        while (detections.TryDequeue(out SaberHit hit))
         {
-            for (int i = 0; i < registeredControllers.Count; i++)
+            if (registeredControllers[hit.SaberIndex])
             {
-                if (registeredControllers[i].affectsNoteType == hit.Note.Type)
-                {
-                    registeredControllers[i].RegisterHit(hit);
-                }
+                registeredControllers[hit.SaberIndex].RegisterHit(hit.SaberNoteHitData);
             }
         }
     }
@@ -127,7 +124,7 @@ public class SaberHitDetectionSystem : SystemBase
         [ReadOnly]
         public EntityTypeHandle EntityType;
 
-        public NativeQueue<SaberNoteHitData>.ParallelWriter HitDetections;
+        public NativeQueue<SaberHit>.ParallelWriter HitDetections;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -149,12 +146,16 @@ public class SaberHitDetectionSystem : SystemBase
                             && distance <= SaberDatas[saberIndex].Length
                             && notes[i].Type == SaberDatas[saberIndex].AffectsNoteType)
                         {
-                            HitDetections.Enqueue(new SaberNoteHitData
+                            HitDetections.Enqueue(new SaberHit
                             {
-                                Note = notes[i],
-                                Entity = entities[i],
-                                Position = translations[i].Value,
-                                Rotation = rotations[i].Value
+                                SaberIndex = saberIndex,
+                                SaberNoteHitData = new SaberNoteHitData
+                                {
+                                    Note = notes[i],
+                                    Entity = entities[i],
+                                    Position = translations[i].Value,
+                                    Rotation = rotations[i].Value
+                                }
                             });
                             hitNote = true;
                             break;
@@ -165,6 +166,12 @@ public class SaberHitDetectionSystem : SystemBase
                 }
             }
         }
+    }
+
+    struct SaberHit
+    {
+        public int SaberIndex;
+        public SaberNoteHitData SaberNoteHitData;
     }
 
     struct SaberData
