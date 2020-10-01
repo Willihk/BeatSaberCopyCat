@@ -42,9 +42,9 @@ namespace BeatGame.Logic.Audio
         private void Update()
         {
             if (isInsideObstacle)
-                insideObstacleSnapshot.TransitionTo(.1f);
+                insideObstacleSnapshot.TransitionTo(.2f);
             else
-                defaultSnapshot.TransitionTo(.1f);
+                defaultSnapshot.TransitionTo(.3f);
 
             isInsideObstacle = false;
         }
