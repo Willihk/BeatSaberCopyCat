@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\EzySlice\EzySlice\SlicedHull.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\Mods\WorldRotation.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Data\Mod\SupportedMod.cs" />
     <Compile Include="Assets\Scripts\Controllers\VR\VRInputModule.cs" />
     <Compile Include="Assets\Scripts\Data\Saber\CustomSaberInfo.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Saber Browser\SaberEntryController.cs" />
@@ -147,10 +148,12 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Audio\AudioVisualizationSystem.cs" />
     <Compile Include="Assets\Scripts\Data\BeatMapData\Raw\RawObstacleData.cs" />
     <Compile Include="Assets\Scripts\Utility\Other\BetterBloomController.cs" />
+    <Compile Include="Assets\Scripts\Managers\Audio\AudioEffectManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\Saber\TrailHandler.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Detection\SaberHitDetectionSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Menu\Settings\CheckBoxSettingController.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ScrollBarExtensions\ScrollElementsContainer.cs" />
+    <Compile Include="Assets\Scripts\Managers\Setup\SetupManager.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\SceneIndexes.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Animation\MoveOverTimeSystem.cs" />
     <Compile Include="Assets\Scripts\EzySlice\EzySlice\Framework\IntersectionResult.cs" />
@@ -167,9 +170,6 @@
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
-    <Compile Include="Assets\Scripts\Data\Mod\SupportedMod.cs" />
-    <Compile Include="Assets\Scripts\Managers\Setup\SetupManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\Audio\AudioEffectManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />

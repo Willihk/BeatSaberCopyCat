@@ -92,7 +92,8 @@ namespace BeatGame.Logic.Managers
                     if (oldSettings.Contains(sectionEnumerator.Current.Name, settingEnumerator.Current.Name))
                     {
                         string value = oldSettings[sectionEnumerator.Current.Name][settingEnumerator.Current.Name].RawValue;
-                        newSettings[sectionEnumerator.Current.Name][settingEnumerator.Current.Name].RawValue = value;
+                        if (!string.IsNullOrEmpty(value))
+                            newSettings[sectionEnumerator.Current.Name][settingEnumerator.Current.Name].RawValue = value;
                     }
                 }
             }
