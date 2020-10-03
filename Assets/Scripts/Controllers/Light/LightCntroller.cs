@@ -80,7 +80,7 @@ namespace BeatGame.Logic.Lighting
 
         public virtual void TurnOff()
         {
-            light.intensity = 1;
+            light.intensity = defaultIntensity;
         }
 
         public virtual void TurnOn()
@@ -134,7 +134,7 @@ namespace BeatGame.Logic.Lighting
 
                 light.intensity = Mathf.Lerp(startValue, endValue, elapsed / duration);
 
-                if (light.intensity >= endValue)
+                if (light.intensity <= endValue)
                 {
                     light.intensity = endValue;
                     break;
