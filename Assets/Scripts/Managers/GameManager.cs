@@ -161,7 +161,7 @@ namespace BeatGame.Logic.Managers
                     IsPlaying = false;
                     CurrentBeat = 0;
                     audioSource.Stop();
-                    Invoke("DisplayEndScreen", 5);
+                    Invoke("DisplayEndScreen", 2);
                 }
             }
         }
@@ -197,6 +197,7 @@ namespace BeatGame.Logic.Managers
             removementSystem.RemoveAllSpawnedObjects();
             SceneFader.Instance.FadeIn(1.5f, () =>
             {
+                songClip.UnloadAudioData();
                 SceneManager.UnloadSceneAsync((int)SceneIndexes.Map);
                 SceneManager.LoadScene((int)SceneIndexes.MainMenu, LoadSceneMode.Additive);
                 SceneFader.Instance.FadeOut(.5f);
