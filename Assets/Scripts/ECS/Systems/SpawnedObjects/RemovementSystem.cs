@@ -32,13 +32,15 @@ public class RemovementSystem : SystemBase
         double currentBeat = GameManager.Instance.CurrentBeat;
         double jumpDuration = CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration;
 
-        int missedCount = 0;
+        NativeList<int> misses = new NativeList<int>(Allocator.TempJob);
         Entities.ForEach((Entity entity, in DestroyOnBeat destroyOnBeat, in Note note) =>
         {
             if (destroyOnBeat.Beat + jumpDuration * 2.2f <= currentBeat)
             {
                 if (note.Type != 3)
-                    missedCount++;
+                {
+                    misses.Add(note.Type);
+                }
 
                 commandBuffer.DestroyEntity(entity);
             }
@@ -46,11 +48,12 @@ public class RemovementSystem : SystemBase
 
         commandBuffer = new EntityCommandBuffer(Allocator.TempJob);
 
-        for (int i = 0; i < missedCount; i++)
+        for (int i = 0; i < misses.Length; i++)
         {
-            ScoreManager.Instance.MissedNote();
-            HealthManager.Instance.MissedNote();
+            GameEventManager.Instance.NoteMissed(misses[i]);
         }
+
+        misses.Dispose();
 
         new MoveOutJob
         {

@@ -11,7 +11,8 @@ namespace BeatGame.Logic.Managers
         public float MaxHealth = 50;
         public float Health = 50;
 
-        public Action OnDeath;
+        public event Action OnDeath;
+        public event Action OnHealthChanged;
 
         private void Awake()
         {
@@ -21,11 +22,17 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteMissed += MissedNote;
+
             GameManager.Instance.OnSongStart += Setup;
         }
 
         private void OnDestroy()
         {
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteMissed -= MissedNote;
+
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart -= Setup;
         }
@@ -42,6 +49,7 @@ namespace BeatGame.Logic.Managers
             {
                 Health = 100;
             }
+            OnHealthChanged?.Invoke();
         }
 
         public void RemoveHealth(float amount)
@@ -50,10 +58,11 @@ namespace BeatGame.Logic.Managers
             if (Health <= 0)
             {
                 if (SettingsManager.Instance.Settings["Modifiers"]["NoFail"].IntValue != 1)
-                {
                     OnDeath?.Invoke();
-                }
+
+                Health = 0;
             }
+            OnHealthChanged?.Invoke();
         }
 
         public void HitNote()
@@ -61,7 +70,7 @@ namespace BeatGame.Logic.Managers
             AddHealth(1);
         }
 
-        public void MissedNote()
+        public void MissedNote(int type)
         {
             RemoveHealth(15);
         }
