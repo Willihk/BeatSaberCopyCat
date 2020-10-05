@@ -143,8 +143,7 @@ public class SaberHitDetectionSystem : SystemBase
                     for (int saberIndex = 0; saberIndex < SaberDatas.Length; saberIndex++)
                     {
                         if (renderBounds[i].Value.ToBounds().IntersectRay(new Ray(SaberDatas[saberIndex].Position + RaycastOffsets[offsetIndex], SaberDatas[saberIndex].Forward), out float distance)
-                            && distance <= SaberDatas[saberIndex].Length
-                            && notes[i].Type == SaberDatas[saberIndex].AffectsNoteType)
+                            && distance <= SaberDatas[saberIndex].Length)
                         {
                             HitDetections.Enqueue(new SaberHit
                             {

@@ -28,6 +28,9 @@ namespace BeatGame.Logic.Managers
                 GameManager.Instance.OnSongStart += ResetScore;
 
             if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteHit += HitNote;
+
+            if (GameEventManager.Instance != null)
                 GameEventManager.Instance.OnNoteMissed += MissedNote;
 
             if (SettingsManager.Instance != null)
@@ -42,16 +45,19 @@ namespace BeatGame.Logic.Managers
                 GameManager.Instance.OnSongStart -= ResetScore;
 
             if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteHit -= HitNote;
+
+            if (GameEventManager.Instance != null)
                 GameEventManager.Instance.OnNoteMissed -= MissedNote;
 
             if (SettingsManager.Instance != null)
                 SettingsManager.Instance.OnConfigChanged -= CalcMultiplier;
         }
 
-        public void AddScore(int amount)
+        public void HitNote(int type)
         {
             AddCombo();
-            CurrentScore += (int)(amount * CurrentMultiplier * TotalMultiplier);
+            CurrentScore += (int)(100 * CurrentMultiplier * TotalMultiplier);
         }
 
         public void AddCombo()

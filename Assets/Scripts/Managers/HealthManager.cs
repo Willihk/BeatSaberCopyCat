@@ -25,6 +25,12 @@ namespace BeatGame.Logic.Managers
             if (GameEventManager.Instance != null)
                 GameEventManager.Instance.OnNoteMissed += MissedNote;
 
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteHit += HitNote;
+
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteBadCut += NoteBadCut;
+
             GameManager.Instance.OnSongStart += Setup;
         }
 
@@ -32,6 +38,12 @@ namespace BeatGame.Logic.Managers
         {
             if (GameEventManager.Instance != null)
                 GameEventManager.Instance.OnNoteMissed -= MissedNote;
+
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteBadCut -= NoteBadCut;
+
+            if (GameEventManager.Instance != null)
+                GameEventManager.Instance.OnNoteHit -= HitNote;
 
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart -= Setup;
@@ -65,10 +77,15 @@ namespace BeatGame.Logic.Managers
             OnHealthChanged?.Invoke();
         }
 
-        public void HitNote()
+        public void HitNote(int type)
         {
             AddHealth(1);
         }
+
+        public void NoteBadCut(int type)
+        {
+            RemoveHealth(10);
+        } 
 
         public void MissedNote(int type)
         {

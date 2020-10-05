@@ -93,7 +93,7 @@ namespace BeatGame.Logic.Saber
             velocity = (tipPoint.position - (Vector3)previousTipPosition).magnitude;
 
 
-            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out UnityEngine.RaycastHit raycastHit, 1.25f))
+            if (Physics.Raycast(raycastPoints[0].position, raycastPoints[0].forward, out RaycastHit raycastHit, 1.25f))
             {
                 if (!isInContact)
                 {
@@ -117,8 +117,6 @@ namespace BeatGame.Logic.Saber
                     if (hit.Note.Type == affectsNoteType && IsValidHit(hit.Position, hit.Rotation, hit.Note.CutDirection))
                     {
                         HandleHit(hit.Position);
-                        HealthManager.Instance.HitNote();
-                        ScoreManager.Instance.AddScore(100);
                         EntityManager.DestroyEntity(hit.Entity);
                     }
                     else if (hit.Note.Type == 3)
@@ -152,7 +150,7 @@ namespace BeatGame.Logic.Saber
             hits.Add(hitData);
         }
 
-        void HandleHit(float3 notePosition)
+        void HandleHit(float3 notePosition, bool badCut = false)
         {
             if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
                 Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
@@ -165,7 +163,15 @@ namespace BeatGame.Logic.Saber
                 hitVFX.SendEvent("Burst");
             }
 
-            SaberHitAudioManager.Instance.PlaySound();
+            if (!badCut)
+            {
+                SaberHitAudioManager.Instance.PlaySound();
+                GameEventManager.Instance.NoteHit(affectsNoteType);
+            }
+            else
+            {
+                GameEventManager.Instance.NoteBadCut(affectsNoteType);
+            }
 
             SliceNote();
         }
