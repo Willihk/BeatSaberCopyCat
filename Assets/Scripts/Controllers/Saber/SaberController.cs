@@ -158,7 +158,7 @@ namespace BeatGame.Logic.Saber
                     Pulse(.03f, 300, 1, SteamVR_Input_Sources.RightHand);
                 else
                     Pulse(.03f, 300, 1, SteamVR_Input_Sources.LeftHand);
-                yield return null;
+                yield return new WaitForSeconds(.1f);
             }
         }
 
