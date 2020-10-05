@@ -60,6 +60,7 @@ namespace BeatGame.Logic.Managers
             settings["General"]["HeightOffset"].FloatValue = 0;
             settings["General"]["HitEffects"].IntValue = 1;
             settings["General"]["NoteSlicing"].IntValue = 1;
+            settings["General"]["SaberContactVibration"].IntValue = 1;
 
             settings["Modifiers"]["NoFail"].IntValue = 0;
             settings["Modifiers"]["DoubleSaber"].IntValue = 0;

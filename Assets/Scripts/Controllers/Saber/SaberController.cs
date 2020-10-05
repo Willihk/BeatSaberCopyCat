@@ -101,8 +101,11 @@ namespace BeatGame.Logic.Saber
                     isInContact = true;
                     hitVFX.SendEvent("Contact");
 
-                    StopAllCoroutines();
-                    StartCoroutine(ContactControllerFeedback());
+                    if (SettingsManager.Instance.Settings["General"]["SaberContactVibration"].IntValue == 1)
+                    {
+                        StopAllCoroutines();
+                        StartCoroutine(ContactControllerFeedback());
+                    }
                 }
 
                 hitVFX.transform.position = raycastHit.point;
