@@ -124,6 +124,12 @@ namespace BeatGame.Logic.Saber
                         HealthManager.Instance.HitBomb();
                         EntityManager.DestroyEntity(hit.Entity);
                     }
+                    else
+                    {
+                        SliceNote();
+                        GameEventManager.Instance.NoteBadCut(hit.Note.Type);
+                        EntityManager.DestroyEntity(hit.Entity);
+                    }
                 }
             }
             hits.Clear();

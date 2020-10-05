@@ -25,5 +25,10 @@ namespace BeatGame.Logic.Managers
         {
             OnNoteMissed?.Invoke(type);
         }
+
+        public void NoteBadCut(int type)
+        {
+            OnNoteBadCut?.Invoke(type);
+        }
     }
 }
