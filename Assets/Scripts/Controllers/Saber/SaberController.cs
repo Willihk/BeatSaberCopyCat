@@ -116,7 +116,7 @@ namespace BeatGame.Logic.Saber
                     // Hit Note
                     if (hit.Note.Type == affectsNoteType && IsValidHit(hit.Position, hit.Rotation, hit.Note.CutDirection))
                     {
-                        HandleHit(hit.Position);
+                        HandleHit(hit.Position, hit.Note.Type);
                         EntityManager.DestroyEntity(hit.Entity);
                     }
                     else if (hit.Note.Type == 3)
@@ -127,7 +127,7 @@ namespace BeatGame.Logic.Saber
                     }
                     else
                     {
-                        HandleHit(hit.Position);
+                        HandleHit(hit.Position, hit.Note.Type, true);
                         GameEventManager.Instance.NoteBadCut(hit.Note.Type);
                         EntityManager.DestroyEntity(hit.Entity);
                     }
@@ -150,7 +150,7 @@ namespace BeatGame.Logic.Saber
             hits.Add(hitData);
         }
 
-        void HandleHit(float3 notePosition, bool badCut = false)
+        void HandleHit(float3 notePosition, int type, bool badCut = false)
         {
             if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
                 Pulse(.03f, 160, 1, SteamVR_Input_Sources.RightHand);
@@ -173,7 +173,7 @@ namespace BeatGame.Logic.Saber
                 GameEventManager.Instance.NoteBadCut(affectsNoteType);
             }
 
-            SliceNote();
+            SliceNote(type);
         }
 
         bool IsValidHit(float3 notePosition, quaternion noteRotation, int noteCutDirection)
@@ -205,7 +205,7 @@ namespace BeatGame.Logic.Saber
             return false;
         }
 
-        private void SliceNote()
+        private void SliceNote(int type)
         {
             if (SettingsManager.Instance.Settings["General"]["NoteSlicing"].IntValue == 1)
             {
@@ -213,7 +213,7 @@ namespace BeatGame.Logic.Saber
 
                 Vector3 direction = orientation * Vector3.up;
 
-                SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, affectsNoteType, velocity * 9);
+                SaberSliceManager.Instance.Slice(fakeNoteTransform, direction, transform.parent.right, type, velocity * 9);
             }
         }
 
