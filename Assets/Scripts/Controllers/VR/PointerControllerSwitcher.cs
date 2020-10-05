@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Valve.VR;
+using BeatGame.Logic.VR;
 
 namespace Assets.Scripts.Controllers.VR
 {
@@ -13,6 +14,8 @@ namespace Assets.Scripts.Controllers.VR
 
         [SerializeField]
         Transform pointer;
+        [SerializeField]
+        SteamInputModule inputModule;
 
         [SerializeField]
         SteamVR_Action_Boolean interactWithUIAction;
@@ -28,12 +31,14 @@ namespace Assets.Scripts.Controllers.VR
             if (interactWithUIAction.GetStateDown(SteamVR_Input_Sources.RightHand))
             {
                 pointer.SetParent(rightController);
+                inputModule.m_Source = SteamVR_Input_Sources.RightHand;
                 pointer.transform.localPosition = Vector3.zero;
                 pointer.transform.localRotation = Quaternion.identity;
             }
-            else if (interactWithUIAction.GetStateDown(SteamVR_Input_Sources.RightHand))
+            else if (interactWithUIAction.GetStateDown(SteamVR_Input_Sources.LeftHand))
             {
                 pointer.SetParent(leftController);
+                inputModule.m_Source = SteamVR_Input_Sources.LeftHand;
                 pointer.transform.localPosition = Vector3.zero;
                 pointer.transform.localRotation = Quaternion.identity;
             }

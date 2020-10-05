@@ -25,7 +25,8 @@ namespace BeatGame.Data.Score
                 && LevelAuthor.Equals(other.LevelAuthor)
                 && other.Difficulty != null
                 && Difficulty.Equals(other.Difficulty)
-                && other.DifficultySet != null
+                && !string.IsNullOrEmpty(DifficultySet)
+                && !string.IsNullOrEmpty(other.DifficultySet)
                 && DifficultySet.Equals(other.DifficultySet);
         }
 
