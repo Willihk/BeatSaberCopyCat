@@ -502,42 +502,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 42137907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821e42e183a8c754e9d751614563add9, type: 3}
+  m_Script: {fileID: 11500000, guid: d1fcc6a7f5a47964f8993da80a084e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   noteType: 0
   missImage: {fileID: 2017382652}
-  startPosition: {x: -200, y: 0, z: -1000}
-  endPosition: {x: -400, y: 50, z: 0}
-  startColor:
-    r: 1
-    g: 0.5
-    b: 0.5
-    a: 0.5
-  endColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  startPosition: {x: -200, y: 50, z: -1000}
+  endPosition: {x: -400, y: 0, z: 0}
+  startColor: {r: 1, g: 0.5, b: 0.5, a: 0.5}
+  endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
+    serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: -0.0023498535
-      inSlope: 3.678986
-      outSlope: 3.678986
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2679245
+      outSlope: 1.2679245
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0671417
-    - time: 0.65896255
-      value: 0.9644426
-      inSlope: 0.12576938
-      outSlope: 0.12576938
+      outWeight: 0.1991854
+    - serializedVersion: 3
+      time: 0.52296335
+      value: 0.93976015
+      inSlope: 0.33350798
+      outSlope: 0.33350798
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34370503
-    - time: 1
+      inWeight: 0.33073705
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -6025,42 +6021,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 784680566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3001ae60becb98b469e0dfb3f867782a, type: 3}
+  m_Script: {fileID: 11500000, guid: dec8d3b6afa10004cbdb35d6a944bcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteType: 1
+  noteType: 0
   missImage: {fileID: 570125965}
-  startPosition: {x: 200, y: 0, z: -1000}
-  endPosition: {x: 400, y: 50, z: 0}
-  startColor:
-    r: 1
-    g: 0.5
-    b: 0.5
-    a: 0.5
-  endColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  startPosition: {x: 200, y: 50, z: -1000}
+  endPosition: {x: 400, y: 0, z: 0}
+  startColor: {r: 1, g: 0.5, b: 0.5, a: 0.5}
+  endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
+    serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: -0.0023498535
-      inSlope: 3.678986
-      outSlope: 3.678986
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2679245
+      outSlope: 1.2679245
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0671417
-    - time: 0.65896255
-      value: 0.9644426
-      inSlope: 0.12576938
-      outSlope: 0.12576938
+      outWeight: 0.1991854
+    - serializedVersion: 3
+      time: 0.52296335
+      value: 0.93976015
+      inSlope: 0.33350798
+      outSlope: 0.33350798
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34370503
-    - time: 1
+      inWeight: 0.33073705
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -11194,42 +11186,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434886063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3001ae60becb98b469e0dfb3f867782a, type: 3}
+  m_Script: {fileID: 11500000, guid: dec8d3b6afa10004cbdb35d6a944bcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   noteType: 0
   missImage: {fileID: 363366652}
-  startPosition: {x: -200, y: 0, z: -1000}
-  endPosition: {x: -400, y: 50, z: 0}
-  startColor:
-    r: 1
-    g: 0.5
-    b: 0.5
-    a: 0.5
-  endColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  startPosition: {x: -200, y: 50, z: -1000}
+  endPosition: {x: -400, y: 0, z: 0}
+  startColor: {r: 1, g: 0.5, b: 0.5, a: 0.5}
+  endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
+    serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: -0.0023498535
-      inSlope: 3.678986
-      outSlope: 3.678986
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2679245
+      outSlope: 1.2679245
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0671417
-    - time: 0.65896255
-      value: 0.9644426
-      inSlope: 0.12576938
-      outSlope: 0.12576938
+      outWeight: 0.1991854
+    - serializedVersion: 3
+      time: 0.52296335
+      value: 0.93976015
+      inSlope: 0.33350798
+      outSlope: 0.33350798
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34370503
-    - time: 1
+      inWeight: 0.33073705
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -12203,42 +12191,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1681453314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821e42e183a8c754e9d751614563add9, type: 3}
+  m_Script: {fileID: 11500000, guid: d1fcc6a7f5a47964f8993da80a084e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   noteType: 1
   missImage: {fileID: 1248957900}
-  startPosition: {x: 200, y: 0, z: -1000}
-  endPosition: {x: 400, y: 50, z: 0}
-  startColor:
-    r: 1
-    g: 0.5
-    b: 0.5
-    a: 0.5
-  endColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
+  startPosition: {x: 200, y: 50, z: -1000}
+  endPosition: {x: 400, y: 0, z: 0}
+  startColor: {r: 1, g: 0.5, b: 0.5, a: 0.5}
+  endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
+    serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: -0.0023498535
-      inSlope: 3.678986
-      outSlope: 3.678986
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2679245
+      outSlope: 1.2679245
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0671417
-    - time: 0.65896255
-      value: 0.9644426
-      inSlope: 0.12576938
-      outSlope: 0.12576938
+      outWeight: 0.1991854
+    - serializedVersion: 3
+      time: 0.52296335
+      value: 0.93976015
+      inSlope: 0.33350798
+      outSlope: 0.33350798
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34370503
-    - time: 1
+      inWeight: 0.33073705
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -14525,7 +14509,34 @@ MonoBehaviour:
   endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2679245
+      outSlope: 1.2679245
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1991854
+    - serializedVersion: 3
+      time: 0.52296335
+      value: 0.93976015
+      inSlope: 0.33350798
+      outSlope: 0.33350798
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33073705
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
