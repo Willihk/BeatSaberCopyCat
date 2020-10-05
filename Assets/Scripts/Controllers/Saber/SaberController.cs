@@ -6,6 +6,7 @@ using BeatGame.Logic.Managers;
 using UnityEngine.VFX;
 using Unity.Collections;
 using BeatGame.Data.Saber;
+using System.Collections;
 
 namespace BeatGame.Logic.Saber
 {
@@ -99,7 +100,17 @@ namespace BeatGame.Logic.Saber
                 {
                     isInContact = true;
                     hitVFX.SendEvent("Contact");
+
+                    StopAllCoroutines();
+                    StartCoroutine(ContactControllerFeedback());
                 }
+
+                if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
+                    Pulse(.03f, 60, 1, SteamVR_Input_Sources.RightHand);
+                else
+                    Pulse(.03f, 60, 1, SteamVR_Input_Sources.LeftHand);
+
+
                 hitVFX.transform.position = raycastHit.point;
             }
             else
@@ -137,6 +148,18 @@ namespace BeatGame.Logic.Saber
 
             previousTipPosition = tipPoint.position;
             previousBasePosition = basePoint.position;
+        }
+
+        IEnumerator ContactControllerFeedback()
+        {
+            while (isInContact)
+            {
+                if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
+                    Pulse(.03f, 300, 1, SteamVR_Input_Sources.RightHand);
+                else
+                    Pulse(.03f, 300, 1, SteamVR_Input_Sources.LeftHand);
+                yield return null;
+            }
         }
 
         public void RegisterHit(SaberNoteHitData hitData)
