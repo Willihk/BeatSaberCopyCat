@@ -14507,8 +14507,8 @@ MonoBehaviour:
   startPosition: {x: 0, y: 50, z: -200}
   endPosition: {x: 0, y: 0, z: 0}
   randomMinOffset: {x: -200, y: 0, z: 0}
-  randomMaxOffset: {x: -200, y: 0, z: 0}
-  startColor: {r: 1, g: 1, b: 1, a: 0.36862746}
+  randomMaxOffset: {x: 200, y: 0, z: 0}
+  startColor: {r: 1, g: 1, b: 1, a: 0.40392157}
   endColor: {r: 1, g: 1, b: 1, a: 1}
   movementCurve:
     serializedVersion: 2
