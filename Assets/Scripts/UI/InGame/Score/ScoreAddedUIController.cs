@@ -82,7 +82,7 @@ namespace BeatGame.UI.Controllers
             text.rectTransform.localPosition = startPosition;
             text.text = amountAdded.ToString();
 
-            Vector3 offset = Vector3.Lerp(randomMinOffset, randomMaxOffset, Random.Range(0, 1));
+            Vector3 offset = Vector3.Lerp(randomMinOffset, randomMaxOffset, Random.Range(0, 1f));
 
             float startTime = Time.time;
 
