@@ -9,12 +9,19 @@ namespace BeatGame.UI.Controllers
     {
 
         [SerializeField]
+        int textPoolCount = 10;
+        [SerializeField]
         TextMeshProUGUI text;
 
         [SerializeField]
         Vector3 startPosition;
         [SerializeField]
         Vector3 endPosition;
+
+        [SerializeField]
+        Vector3 randomMinOffset;
+        [SerializeField]
+        Vector3 randomMaxOffset;
 
         [SerializeField]
         Color startColor = new Color(1, .5f, .5f, .5f);
@@ -24,8 +31,21 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         AnimationCurve movementCurve;
 
+        TextMeshProUGUI[] textPoolObjects;
+
+
         private void OnEnable()
         {
+            if (textPoolObjects == null)
+            {
+                textPoolObjects = new TextMeshProUGUI[textPoolCount];
+                text.enabled = false;
+                for (int i = 0; i < textPoolCount; i++)
+                {
+                    textPoolObjects[i] = Instantiate(text.gameObject, text.transform.parent).GetComponent<TextMeshProUGUI>();
+                }
+            }
+
             text.enabled = false;
             if (ScoreManager.Instance != null)
                 ScoreManager.Instance.OnScoreAdded += ScoreAdded;
@@ -39,15 +59,30 @@ namespace BeatGame.UI.Controllers
 
         void ScoreAdded(int amount)
         {
-            StopAllCoroutines();
-            StartCoroutine(Animate(.5f, amount));
+            var textObject = GetAvailableText();
+            if (textObject != null)
+                StartCoroutine(Animate(.5f, amount, textObject));
         }
 
-        IEnumerator Animate(float duration, int amountAdded)
+        TextMeshProUGUI GetAvailableText()
+        {
+            for (int i = 0; i < textPoolObjects.Length; i++)
+            {
+                if (!textPoolObjects[i].enabled)
+                {
+                    return textPoolObjects[i];
+                }
+            }
+            return null;
+        }
+
+        IEnumerator Animate(float duration, int amountAdded, TextMeshProUGUI text)
         {
             text.enabled = true;
             text.rectTransform.localPosition = startPosition;
             text.text = amountAdded.ToString();
+
+            Vector3 offset = Vector3.Lerp(randomMinOffset, randomMaxOffset, Random.Range(0, 1));
 
             float startTime = Time.time;
 
@@ -55,7 +90,7 @@ namespace BeatGame.UI.Controllers
             {
                 float elapsed = Time.time - startTime;
 
-                text.rectTransform.localPosition = Vector3.Lerp(startPosition, endPosition, movementCurve.Evaluate(elapsed / duration));
+                text.rectTransform.localPosition = Vector3.Lerp(startPosition, endPosition, movementCurve.Evaluate(elapsed / duration)) + offset;
                 text.color = Color.Lerp(startColor, endColor, movementCurve.Evaluate(elapsed / duration));
                 if (elapsed >= duration)
                     break;
