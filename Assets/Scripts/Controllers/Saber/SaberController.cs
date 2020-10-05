@@ -105,12 +105,6 @@ namespace BeatGame.Logic.Saber
                     StartCoroutine(ContactControllerFeedback());
                 }
 
-                if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
-                    Pulse(.03f, 60, 1, SteamVR_Input_Sources.RightHand);
-                else
-                    Pulse(.03f, 60, 1, SteamVR_Input_Sources.LeftHand);
-
-
                 hitVFX.transform.position = raycastHit.point;
             }
             else
@@ -155,10 +149,11 @@ namespace BeatGame.Logic.Saber
             while (isInContact)
             {
                 if (affectsNoteType == 1 || SettingsManager.Instance.Settings["Modifiers"]["DoubleSaber"].IntValue == 1)
-                    Pulse(.03f, 300, 1, SteamVR_Input_Sources.RightHand);
+                    Pulse(.05f, 100, 1, SteamVR_Input_Sources.RightHand);
                 else
-                    Pulse(.03f, 300, 1, SteamVR_Input_Sources.LeftHand);
-                yield return new WaitForSeconds(.1f);
+                    Pulse(.05f, 100, 1, SteamVR_Input_Sources.LeftHand);
+
+                yield return new WaitForSeconds(.03f);
             }
         }
 
