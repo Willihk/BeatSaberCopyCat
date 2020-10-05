@@ -55,16 +55,11 @@ namespace BeatGame.Logic.Managers
 
             foreach (Transform child in leftSaberHolder.transform)
             {
-                if (child.TryGetComponent(out EventManager manager) && GameEventManager.Instance != null)
-                    GameEventManager.Instance.OnNoteHit -= (int type) => { manager.OnSlice.Invoke(); };
-
                 Destroy(child.gameObject);
             }
 
             foreach (Transform child in rightSaberHolder.transform)
             {
-                if (child.TryGetComponent(out EventManager manager) && GameEventManager.Instance != null)
-                    GameEventManager.Instance.OnNoteHit -= (int type) => { manager.OnSlice.Invoke(); };
                 Destroy(child.gameObject);
             }
 
@@ -73,12 +68,6 @@ namespace BeatGame.Logic.Managers
 
             CreateTrail(newLeftSaber.gameObject);
             CreateTrail(newRightSaber.gameObject, false);
-
-            if (newLeftSaber.TryGetComponent(out EventManager leftManager) && GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit += (int type) => { leftManager.OnSlice.Invoke(); };
-
-            if (newRightSaber.TryGetComponent(out EventManager rightManager) && GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit += (int type) => { rightManager.OnSlice.Invoke(); };
 
             newLeftSaber.gameObject.SetActive(true);
             newRightSaber.gameObject.SetActive(true);
