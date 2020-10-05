@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\Controllers\Laser\MasterLaserController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\EventPlayingSystem.cs" />
     <Compile Include="Assets\Scripts\Data\Enums\UIPointerEvent.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\MissedNoteUIController.cs" />
     <Compile Include="Assets\Scripts\ECS\Components\MaterialProperties\ColorData.cs" />
     <Compile Include="Assets\Scripts\Controllers\Volumetric\LightBeamController.cs" />
     <Compile Include="Assets\Scripts\Controllers\VR\SteamInputModule.cs" />
@@ -167,13 +166,15 @@
     <Compile Include="Assets\Scripts\UI\Menu\Saber Browser\SaberBrowser.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\Managers\SettingsManager.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\ScoreUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\Score\ScoreUIController.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\SpawnedObjects\RemovementSystem.cs" />
     <Compile Include="Assets\Scripts\Utility\MessagePack\Solvers\MathematicsResolver.cs" />
     <Compile Include="Assets\Scripts\ECS\Systems\Spawning\NoteSpawningSystem.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TransitionInfo.cs" />
     <Compile Include="Assets\Scripts\Controllers\Light\LightCntroller.cs" />
-    <Compile Include="Assets\Scripts\UI\InGame\NoteBadCutUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\Score\ScoreAddedUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\Note\NoteBadCutUIController.cs" />
+    <Compile Include="Assets\Scripts\UI\InGame\Note\MissedNoteUIController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\Shaders\Volumetrics\Volumetric Sphere.shader" />
