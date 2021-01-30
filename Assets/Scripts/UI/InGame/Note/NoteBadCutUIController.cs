@@ -2,11 +2,15 @@
 using System.Collections;
 using BeatGame.Logic.Managers;
 using UnityEngine.UI;
+using BeatGame.Events;
 
 namespace BeatGame.UI.Controllers
 {
     public class NoteBadCutUIController : MonoBehaviour
     {
+        [SerializeField]
+        GameEvent<int> NoteBadCutEvent;
+
         [SerializeField]
         int noteType;
         [SerializeField]
@@ -25,17 +29,17 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         AnimationCurve movementCurve;
 
+       
+
         private void OnEnable()
         {
             missImage.enabled = false;
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteBadCut += BadCut;
+           NoteBadCutEvent.EventListeners += BadCut;
         }
 
         private void OnDisable()
         {
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteBadCut -= BadCut;
+            NoteBadCutEvent.EventListeners -= BadCut;
         }
 
         void BadCut(int type)

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
+using BeatGame.Events;
 
 namespace BeatGame.Logic.Managers
 {
@@ -17,6 +18,9 @@ namespace BeatGame.Logic.Managers
         public float TotalMultiplier;
         public event Action<int> OnScoreAdded;
 
+        public GameEvent<int> NoteHitEvent;
+        public GameEvent<int> NoteHitMissed;
+
         private void Awake()
         {
             if (Instance == null)
@@ -28,11 +32,9 @@ namespace BeatGame.Logic.Managers
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart += ResetScore;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit += HitNote;
+            NoteHitEvent.EventListeners += HitNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed += MissedNote;
+            NoteHitMissed.EventListeners += MissedNote;
 
             if (SettingsManager.Instance != null)
                 SettingsManager.Instance.OnConfigChanged += CalcMultiplier;
@@ -45,11 +47,9 @@ namespace BeatGame.Logic.Managers
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart -= ResetScore;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit -= HitNote;
+            NoteHitEvent.EventListeners -= HitNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed -= MissedNote;
+            NoteHitMissed.EventListeners -= MissedNote;
 
             if (SettingsManager.Instance != null)
                 SettingsManager.Instance.OnConfigChanged -= CalcMultiplier;

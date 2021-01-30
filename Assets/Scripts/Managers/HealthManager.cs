@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using BeatGame.Events;
 
 namespace BeatGame.Logic.Managers
 {
@@ -13,6 +14,13 @@ namespace BeatGame.Logic.Managers
 
         public event Action OnDeath;
         public event Action OnHealthChanged;
+        
+        [SerializeField]
+        GameEvent<int> NoteHitEvent;
+        [SerializeField]
+        GameEvent<int> NoteMissedEvent;
+        [SerializeField]
+        GameEvent<int> NoteBadCutEvent;
 
         private void Awake()
         {
@@ -22,28 +30,22 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed += MissedNote;
+            NoteHitEvent.EventListeners += HitNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit += HitNote;
+            NoteMissedEvent.EventListeners += MissedNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteBadCut += NoteBadCut;
+            NoteBadCutEvent.EventListeners += NoteBadCut;
 
             GameManager.Instance.OnSongStart += Setup;
         }
 
         private void OnDestroy()
         {
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed -= MissedNote;
+             NoteHitEvent.EventListeners -= HitNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteBadCut -= NoteBadCut;
+            NoteMissedEvent.EventListeners -= MissedNote;
 
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteHit -= HitNote;
+            NoteBadCutEvent.EventListeners -= NoteBadCut;
 
             if (GameManager.Instance != null)
                 GameManager.Instance.OnSongStart -= Setup;

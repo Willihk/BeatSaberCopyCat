@@ -452,6 +452,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &42137910
 Canvas:
   m_ObjectHideFlags: 0
@@ -505,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fcc6a7f5a47964f8993da80a084e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoteMissedEvent: {fileID: 11400000, guid: 7aa8eeb757000fb49a3c415ded039bd6, type: 2}
   noteType: 0
   missImage: {fileID: 2017382652}
   startPosition: {x: -200, y: 50, z: -1000}
@@ -3543,6 +3545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -4385,6 +4388,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &528715348
 Canvas:
   m_ObjectHideFlags: 0
@@ -4780,6 +4784,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &573248394
 Canvas:
   m_ObjectHideFlags: 0
@@ -4892,6 +4897,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &608831494
 Canvas:
   m_ObjectHideFlags: 0
@@ -5569,6 +5575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6024,6 +6031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec8d3b6afa10004cbdb35d6a944bcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoteBadCutEvent: {fileID: 11400000, guid: 1e760a7d49f621649bfff722b27343f7, type: 2}
   noteType: 0
   missImage: {fileID: 570125965}
   startPosition: {x: 200, y: 50, z: -1000}
@@ -6102,6 +6110,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &784680571
 Canvas:
   m_ObjectHideFlags: 0
@@ -8163,6 +8172,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1020423473
 Canvas:
   m_ObjectHideFlags: 0
@@ -11189,6 +11199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec8d3b6afa10004cbdb35d6a944bcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoteBadCutEvent: {fileID: 11400000, guid: 1e760a7d49f621649bfff722b27343f7, type: 2}
   noteType: 0
   missImage: {fileID: 363366652}
   startPosition: {x: -200, y: 50, z: -1000}
@@ -11267,6 +11278,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1434886069
 Canvas:
   m_ObjectHideFlags: 0
@@ -12194,6 +12206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fcc6a7f5a47964f8993da80a084e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoteMissedEvent: {fileID: 11400000, guid: 7aa8eeb757000fb49a3c415ded039bd6, type: 2}
   noteType: 1
   missImage: {fileID: 1248957900}
   startPosition: {x: 200, y: 50, z: -1000}
@@ -12272,6 +12285,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1681453318
 Canvas:
   m_ObjectHideFlags: 0
@@ -12514,6 +12528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -13850,6 +13865,7 @@ VisualEffect:
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
+  m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
       m_Array: []
@@ -14831,6 +14847,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2107297761
 Canvas:
   m_ObjectHideFlags: 0

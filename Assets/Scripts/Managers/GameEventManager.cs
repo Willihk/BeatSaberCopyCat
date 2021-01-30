@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using BeatGame.Events;
 
 namespace BeatGame.Logic.Managers
 {
@@ -9,11 +10,11 @@ namespace BeatGame.Logic.Managers
         public static GameEventManager Instance;
 
         // Int is sabers affected type
-        public event Action<int> OnNoteHit;
+        public GameEvent<int> OnNoteHit;
         // Int is note type
-        public event Action<int> OnNoteMissed;
+        public GameEvent<int> OnNoteMissed;
         // Int is note type
-        public event Action<int> OnNoteBadCut;
+        public GameEvent<int> OnNoteBadCut;
 
         private void Awake()
         {
@@ -21,19 +22,19 @@ namespace BeatGame.Logic.Managers
                 Instance = this;
         }
 
-        public void NoteHit(int type)
+        public void NoteHit(int value)
         {
-            OnNoteHit?.Invoke(type);
+            OnNoteHit.Raise(value);
         }
 
         public void NoteMissed(int type)
         {
-            OnNoteMissed?.Invoke(type);
+            OnNoteMissed.Raise(type);
         }
 
         public void NoteBadCut(int type)
         {
-            OnNoteBadCut?.Invoke(type);
+            OnNoteBadCut.Raise(type);
         }
     }
 }

@@ -3,11 +3,15 @@ using System.Collections;
 using UnityEngine.UI;
 using BeatGame.Logic.Managers;
 using Unity.Mathematics;
+using BeatGame.Events;
 
 namespace BeatGame.UI.Controllers
 {
     public class MissedNoteUIController : MonoBehaviour
     {
+        [SerializeField]
+        GameEvent<int> NoteMissedEvent;
+
         [SerializeField]
         int noteType;
         [SerializeField]
@@ -29,14 +33,12 @@ namespace BeatGame.UI.Controllers
         private void OnEnable()
         {
             missImage.enabled = false;
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed += MissedNote;
+            NoteMissedEvent.EventListeners += MissedNote;
         }
 
         private void OnDisable()
         {
-            if (GameEventManager.Instance != null)
-                GameEventManager.Instance.OnNoteMissed -= MissedNote;
+          NoteMissedEvent.EventListeners -= MissedNote;
         }
 
         void MissedNote(int type)

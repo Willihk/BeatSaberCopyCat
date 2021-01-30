@@ -7,11 +7,17 @@ using UnityEngine.VFX;
 using Unity.Collections;
 using BeatGame.Data.Saber;
 using System.Collections;
+using BeatGame.Events;
 
 namespace BeatGame.Logic.Saber
 {
     public class SaberController : MonoBehaviour
     {
+        [SerializeField]
+        GameEvent<int> noteHitEvent;
+        [SerializeField]
+        GameEvent<int> noteBadCutEvent;
+
         [SerializeField]
         public int affectsNoteType;
         [SerializeField]
@@ -136,7 +142,7 @@ namespace BeatGame.Logic.Saber
                     else
                     {
                         HandleHit(hit.Position, hit.Note.Type, true);
-                        GameEventManager.Instance.NoteBadCut(hit.Note.Type);
+                        noteHitEvent.Raise(hit.Note.Type);
                         EntityManager.DestroyEntity(hit.Entity);
                     }
                 }
@@ -187,11 +193,11 @@ namespace BeatGame.Logic.Saber
             if (!badCut)
             {
                 SaberHitAudioManager.Instance.PlaySound();
-                GameEventManager.Instance.NoteHit(affectsNoteType);
+               noteHitEvent.Raise(affectsNoteType);
             }
             else
             {
-                GameEventManager.Instance.NoteBadCut(affectsNoteType);
+               noteBadCutEvent.Raise(affectsNoteType);
             }
 
             SliceNote(type);
