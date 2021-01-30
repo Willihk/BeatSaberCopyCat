@@ -4388,7 +4388,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &528715348
 Canvas:
   m_ObjectHideFlags: 0
@@ -8636,6 +8636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1099261307}
   - component: {fileID: 1099261308}
+  - component: {fileID: 1099261309}
   m_Layer: 5
   m_Name: Time (1)
   m_TagString: Untagged
@@ -8679,6 +8680,34 @@ MonoBehaviour:
   slider: {fileID: 701038742}
   currentTimeText: {fileID: 2113222786}
   totalTimeText: {fileID: 253003009}
+--- !u!114 &1099261309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099261306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755947e9803915d4b85e526f98c82aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 2c6b66aa0cc072640b534e22de56a586, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1099261308}
+        m_TargetAssemblyTypeName: BeatGame.UI.Controllers.SongTimeUIController, Assembly-CSharp
+        m_MethodName: Setup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1099684211
 GameObject:
   m_ObjectHideFlags: 0
@@ -14484,6 +14513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2049983748}
   - component: {fileID: 2049983749}
+  - component: {fileID: 2049983750}
   m_Layer: 0
   m_Name: Score
   m_TagString: Untagged
@@ -14559,6 +14589,35 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2049983750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049983747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d1346e27ceb954cbc864e6a6f72abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: af034eb0ca1c3c44e81571cd723f555d, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2049983749}
+        m_TargetAssemblyTypeName: BeatGame.UI.Controllers.ScoreAddedUIController,
+          Assembly-CSharp
+        m_MethodName: ScoreAdded
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2058353750
 GameObject:
   m_ObjectHideFlags: 0

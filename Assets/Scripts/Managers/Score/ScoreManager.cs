@@ -33,9 +33,6 @@ namespace BeatGame.Logic.Managers
 
         private void Start()
         {
-            if (GameManager.Instance != null)
-                GameManager.Instance.OnSongStart += ResetScore;
-
             NoteHitEvent.EventListeners += HitNote;
 
             NoteHitMissed.EventListeners += MissedNote;
@@ -48,9 +45,6 @@ namespace BeatGame.Logic.Managers
 
         private void OnDestroy()
         {
-            if (GameManager.Instance != null)
-                GameManager.Instance.OnSongStart -= ResetScore;
-
             NoteHitEvent.EventListeners -= HitNote;
 
             NoteHitMissed.EventListeners -= MissedNote;

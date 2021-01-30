@@ -1,4 +1,5 @@
 ﻿using BeatGame.Data;
+using BeatGame.Events;
 using BeatGame.Logic.Saber;
 using BeatGame.UI.Controllers;
 using System;
@@ -15,12 +16,14 @@ namespace BeatGame.Logic.Managers
     {
         public static GameManager Instance;
 
-        public event Action OnSongStart;
-
         public bool IsPlaying;
 
         public double CurrentBeat;
+
         public double LastBeat;
+
+        [SerializeField]
+        GameEvent levelSetupEvent;
 
         [SerializeField]
         SteamVR_Action_Boolean returnToMenuAction;
@@ -177,7 +180,7 @@ namespace BeatGame.Logic.Managers
 
                 ActivateSabers();
 
-                OnSongStart?.Invoke();
+                levelSetupEvent.Raise();
                 IsPlaying = true;
                 Invoke(nameof(PlaySong), CurrentSongDataManager.Instance.SongSpawningInfo.SecondEquivalentOfBeat * CurrentSongDataManager.Instance.SongSpawningInfo.HalfJumpDuration);
             });

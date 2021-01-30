@@ -19,12 +19,7 @@ namespace BeatGame.UI.Controllers
         float currentTime;
         int totalTime;
 
-        private void OnEnable()
-        {
-            GameManager.Instance.OnSongStart += Setup;
-        }
-
-        private void Setup()
+        public void Setup()
         {
             float seconds = GameManager.Instance.audioSource.clip.length;
             totalTime = (int)seconds;

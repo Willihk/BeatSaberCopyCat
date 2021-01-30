@@ -35,8 +35,6 @@ namespace BeatGame.Logic.Managers
             NoteMissedEvent.EventListeners += MissedNote;
 
             NoteBadCutEvent.EventListeners += NoteBadCut;
-
-            GameManager.Instance.OnSongStart += Setup;
         }
 
         private void OnDestroy()
@@ -46,12 +44,9 @@ namespace BeatGame.Logic.Managers
             NoteMissedEvent.EventListeners -= MissedNote;
 
             NoteBadCutEvent.EventListeners -= NoteBadCut;
-
-            if (GameManager.Instance != null)
-                GameManager.Instance.OnSongStart -= Setup;
         }
 
-        private void Setup()
+        public void Setup()
         {
             Health = MaxHealth / 2;
         }
