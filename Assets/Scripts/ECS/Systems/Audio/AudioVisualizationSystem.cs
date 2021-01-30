@@ -42,6 +42,7 @@ namespace BeatGame.Logic.Audio
 
         protected override void OnStopRunning()
         {
+            Dependency.Complete();
             frequencyBands.Dispose();
         }
 
