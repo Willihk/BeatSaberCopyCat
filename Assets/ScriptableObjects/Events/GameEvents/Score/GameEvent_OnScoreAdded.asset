@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55674587c17ebce4c9353e250274b600, type: 3}
-  m_Name: GameEvent_OnNoteMiss
+  m_Name: GameEvent_OnScoreAdded
   m_EditorClassIdentifier: 
   Enabled: 1

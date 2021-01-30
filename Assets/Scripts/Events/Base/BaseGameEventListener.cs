@@ -37,4 +37,37 @@ namespace BeatGame.Events
             _UnityEventResponse.Invoke(val);
         }
     }
+
+    public abstract class BaseGameEventListener<GE, UER> : MonoBehaviour
+        where GE : GameEvent
+        where UER : UnityEvent
+    {
+        [SerializeField]
+        protected GE _GameEvent;
+
+        [SerializeField]
+        protected UER _UnityEventResponse;
+
+        protected void OnEnable()
+        {
+            if (_GameEvent != null)
+            {
+                _GameEvent.EventListeners += TriggerResponses;
+            }
+        }
+
+        protected void OnDisable()
+        {
+            if (_GameEvent != null)
+            {
+                _GameEvent.EventListeners -= TriggerResponses;
+            }
+        }
+
+        [ContextMenu("Trigger Responses")]
+        public void TriggerResponses()
+        {
+            _UnityEventResponse.Invoke();
+        }
+    }
 }

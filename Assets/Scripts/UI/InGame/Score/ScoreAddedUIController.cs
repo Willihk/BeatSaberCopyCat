@@ -7,7 +7,6 @@ namespace BeatGame.UI.Controllers
 {
     public class ScoreAddedUIController : MonoBehaviour
     {
-
         [SerializeField]
         int textPoolCount = 10;
         [SerializeField]
@@ -33,7 +32,6 @@ namespace BeatGame.UI.Controllers
 
         TextMeshProUGUI[] textPoolObjects;
 
-
         private void OnEnable()
         {
             if (textPoolObjects == null)
@@ -47,17 +45,9 @@ namespace BeatGame.UI.Controllers
             }
 
             text.enabled = false;
-            if (ScoreManager.Instance != null)
-                ScoreManager.Instance.OnScoreAdded += ScoreAdded;
         }
 
-        private void OnDisable()
-        {
-            if (ScoreManager.Instance != null)
-                ScoreManager.Instance.OnScoreAdded -= ScoreAdded;
-        }
-
-        void ScoreAdded(int amount)
+        public void ScoreAdded(int amount)
         {
             var textObject = GetAvailableText();
             if (textObject != null)

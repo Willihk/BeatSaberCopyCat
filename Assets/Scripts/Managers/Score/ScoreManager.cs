@@ -16,10 +16,14 @@ namespace BeatGame.Logic.Managers
         public int CurrentMultiplierCount;
 
         public float TotalMultiplier;
-        public event Action<int> OnScoreAdded;
 
-        public GameEvent<int> NoteHitEvent;
-        public GameEvent<int> NoteHitMissed;
+        [SerializeField]
+        GameEvent<int> ScoreAddedEvent;
+
+        [SerializeField]
+        GameEvent<int> NoteHitEvent;
+        [SerializeField]
+        GameEvent<int> NoteHitMissed;
 
         private void Awake()
         {
@@ -59,7 +63,7 @@ namespace BeatGame.Logic.Managers
         {
             AddCombo();
             CurrentScore += (int)(100 * CurrentMultiplier * TotalMultiplier);
-            OnScoreAdded?.Invoke(100);
+            ScoreAddedEvent.Raise(100);
         }
 
         public void AddCombo()
