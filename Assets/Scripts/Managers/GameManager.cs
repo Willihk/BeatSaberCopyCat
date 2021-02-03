@@ -61,12 +61,11 @@ namespace BeatGame.Logic.Managers
         private void Start()
         {
             removementSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<RemovementSystem>();
-            HealthManager.Instance.OnDeath += GameOver;
             LoadMenu();
             SceneFader.Instance.FadeOut(1);
         }
 
-        void GameOver()
+        public void GameOver()
         {
             IsPlaying = false;
             CurrentBeat = 0;

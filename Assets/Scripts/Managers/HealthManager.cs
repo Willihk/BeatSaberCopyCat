@@ -12,9 +12,11 @@ namespace BeatGame.Logic.Managers
         public float MaxHealth = 50;
         public float Health = 50;
 
-        public event Action OnDeath;
-        public event Action OnHealthChanged;
-        
+        [SerializeField]
+        GameEvent PlayerDeathEvent;
+        [SerializeField]
+        GameEvent PlayerHealthChangedEvent;
+
         [SerializeField]
         GameEvent<int> NoteHitEvent;
         [SerializeField]
@@ -58,7 +60,7 @@ namespace BeatGame.Logic.Managers
             {
                 Health = 100;
             }
-            OnHealthChanged?.Invoke();
+            PlayerHealthChangedEvent.Raise();
         }
 
         public void RemoveHealth(float amount)
@@ -67,11 +69,11 @@ namespace BeatGame.Logic.Managers
             if (Health <= 0)
             {
                 if (SettingsManager.Instance.Settings["Modifiers"]["NoFail"].IntValue != 1)
-                    OnDeath?.Invoke();
+                    PlayerDeathEvent.Raise();
 
                 Health = 0;
             }
-            OnHealthChanged?.Invoke();
+            PlayerHealthChangedEvent.Raise();
         }
 
         public void HitNote(int type)

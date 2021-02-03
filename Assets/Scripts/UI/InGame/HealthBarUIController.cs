@@ -11,21 +11,7 @@ namespace BeatGame.UI.Controllers
         [SerializeField]
         Image barImage;
 
-        void OnEnable()
-        {
-            if (HealthManager.Instance != null)
-                HealthManager.Instance.OnHealthChanged += UpdateBar;
-
-            UpdateBar();
-        }
-
-        private void OnDisable()
-        {
-            if (HealthManager.Instance != null)
-                HealthManager.Instance.OnHealthChanged -= UpdateBar;
-        }
-
-        private void UpdateBar()
+        public void UpdateBar()
         {
             barImage.fillAmount = math.lerp(barImage.fillAmount, HealthManager.Instance.Health / HealthManager.Instance.MaxHealth, .1f);
             StopAllCoroutines();

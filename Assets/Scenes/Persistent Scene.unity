@@ -1650,7 +1650,6 @@ GameObject:
   - component: {fileID: 454897307}
   - component: {fileID: 454897305}
   - component: {fileID: 454897304}
-  - component: {fileID: 454897306}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1701,6 +1700,7 @@ Transform:
   - {fileID: 1644557486}
   - {fileID: 1047115274}
   - {fileID: 690257287}
+  - {fileID: 589934993}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1745,49 +1745,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 100
   Health: 50
+  PlayerDeathEvent: {fileID: 11400000, guid: d715cc05eb8189240ab1b8a2ba2f7818, type: 2}
+  PlayerHealthChangedEvent: {fileID: 11400000, guid: 87a079f6b33010544a2cdfc28585d610, type: 2}
   NoteHitEvent: {fileID: 11400000, guid: 90c00f65b12781942949799752949fd7, type: 2}
   NoteMissedEvent: {fileID: 11400000, guid: 7aa8eeb757000fb49a3c415ded039bd6, type: 2}
   NoteBadCutEvent: {fileID: 11400000, guid: 1e760a7d49f621649bfff722b27343f7, type: 2}
---- !u!114 &454897306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454897300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 755947e9803915d4b85e526f98c82aab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _GameEvent: {fileID: 11400000, guid: 2c6b66aa0cc072640b534e22de56a586, type: 2}
-  _UnityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 454897305}
-        m_TargetAssemblyTypeName: BeatGame.Logic.Managers.HealthManager, Assembly-CSharp
-        m_MethodName: Setup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 344659362}
-        m_TargetAssemblyTypeName: BeatGame.Logic.Managers.ScoreManager, Assembly-CSharp
-        m_MethodName: ResetScore
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &454897307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2115,6 +2077,106 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &589934992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 589934993}
+  - component: {fileID: 589934994}
+  - component: {fileID: 589934995}
+  m_Layer: 0
+  m_Name: Event Listeners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &589934993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589934992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 454897302}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &589934994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589934992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755947e9803915d4b85e526f98c82aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: d715cc05eb8189240ab1b8a2ba2f7818, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 454897301}
+        m_TargetAssemblyTypeName: BeatGame.Logic.Managers.GameManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &589934995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589934992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755947e9803915d4b85e526f98c82aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GameEvent: {fileID: 11400000, guid: 2c6b66aa0cc072640b534e22de56a586, type: 2}
+  _UnityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 454897305}
+        m_TargetAssemblyTypeName: BeatGame.Logic.Managers.HealthManager, Assembly-CSharp
+        m_MethodName: Setup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 344659362}
+        m_TargetAssemblyTypeName: BeatGame.Logic.Managers.ScoreManager, Assembly-CSharp
+        m_MethodName: ResetScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &592358810
 GameObject:
   m_ObjectHideFlags: 0
